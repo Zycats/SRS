@@ -1,7 +1,6 @@
 package com.zycats.srs.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,8 +9,7 @@ import javax.persistence.Table;
 public class Employee {
 
 	@Id
-	@GeneratedValue
-	private int id;
+	private String id;
 	private Role role;
 	private Department department;
 	private String email;
@@ -19,11 +17,11 @@ public class Employee {
 	private int extNo;
 	private String machineIp;
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
