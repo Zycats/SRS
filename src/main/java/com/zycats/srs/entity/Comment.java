@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,10 +17,17 @@ public class Comment {
 	@GeneratedValue
 	private int id;
 	private String message;
+
+	@ManyToOne
+	@JoinColumn(name = "comment_by")
 	private Employee commentBy;
+
 	private Timestamp datetime;
 	private Status statusFrom;
 	private Status statusTo;
+
+	@ManyToOne
+	@JoinColumn(name = "ticket_id")
 	private Ticket ticket;
 
 	public int getId() {

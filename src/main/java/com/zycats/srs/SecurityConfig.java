@@ -1,6 +1,8 @@
-package com.zycats.srs.security;
+package com.zycats.srs;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -13,6 +15,8 @@ import waffle.spring.NegotiateSecurityFilter;
 import waffle.spring.NegotiateSecurityFilterEntryPoint;
 
 @Configuration
+@ComponentScan(basePackages = { "com.zycats.srs.controller", "com.zycats.srs.service" })
+@EntityScan(basePackages = "com.zycats.srs.entity")
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {

@@ -3,6 +3,8 @@ package com.zycats.srs.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -13,8 +15,15 @@ public class Folder {
 	@GeneratedValue
 	private int id;
 	private String name;
+
+	@ManyToOne
+	@JoinColumn(name = "owner_id")
 	private Employee owner;
+
 	private String path;
+
+	@ManyToOne
+	@JoinColumn(name = "sub_category")
 	private IssueSubCategory subCategory;
 
 	public int getId() {

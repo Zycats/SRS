@@ -3,6 +3,8 @@ package com.zycats.srs.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -13,7 +15,11 @@ public class IssueSubCategory {
 	@GeneratedValue
 	private int id;
 	private String name;
+
+	@ManyToOne
+	@JoinColumn(name = "category")
 	private IssueCategory issueCategory;
+
 	private IssueType issueType;
 	private IssuePriority issuePriority;
 

@@ -1,8 +1,13 @@
 package com.zycats.srs.entity;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -13,6 +18,9 @@ public class IssueCategory {
 	@GeneratedValue
 	private int id;
 	private String name;
+
+	@OneToMany(mappedBy = "issueCategory", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<IssueSubCategory> issueSubCategories;
 
 	public int getId() {
 		return id;
@@ -28,6 +36,14 @@ public class IssueCategory {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Set<IssueSubCategory> getIssueSubCategories() {
+		return issueSubCategories;
+	}
+
+	public void setIssueSubCategories(Set<IssueSubCategory> issueSubCategories) {
+		this.issueSubCategories = issueSubCategories;
 	}
 
 	@Override

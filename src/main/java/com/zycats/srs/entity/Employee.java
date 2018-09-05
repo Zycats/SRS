@@ -2,6 +2,8 @@ package com.zycats.srs.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -11,7 +13,11 @@ public class Employee {
 	@Id
 	private String id;
 	private Role role;
+
+	@ManyToOne
+	@JoinColumn(name = "department_id")
 	private Department department;
+
 	private String email;
 	private String seatNo;
 	private int extNo;
