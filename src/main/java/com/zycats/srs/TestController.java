@@ -1,4 +1,4 @@
-package com.example;
+package com.zycats.srs;
 
 import javax.servlet.http.HttpServletRequest;
 
