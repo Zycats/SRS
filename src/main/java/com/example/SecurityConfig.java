@@ -16,30 +16,30 @@ import waffle.spring.NegotiateSecurityFilterEntryPoint;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	
+
 	@Autowired
 	private NegotiateSecurityFilter negotiateSecurityFilter;
-	
+
 	@Autowired
 	private NegotiateSecurityFilterEntryPoint entryPoint;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-			.authorizeRequests()
+				.authorizeRequests()
 				.anyRequest()
 				.authenticated()
 				.and()
-			.httpBasic()
+				.httpBasic()
 				.authenticationEntryPoint(entryPoint)
 				.and()
-			.addFilterBefore(negotiateSecurityFilter, BasicAuthenticationFilter.class);
+				.addFilterBefore(negotiateSecurityFilter, BasicAuthenticationFilter.class);
 	}
-	
+
 	@Override
 	@Autowired
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication();
 	}
-	
+
 }
