@@ -1,24 +1,26 @@
 package com.zycats.srs.entity;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "TBL_DEPARTMENT")
-public class Department {
+@Table(name = "TBL_LOCATION")
+public class Location {
 
 	@Id
 	@GeneratedValue
 	private int id;
 	private String name;
 
-	@ManyToOne
-	@JoinColumn(name = "location_id")
-	private Location location;
+	@OneToMany(mappedBy = "location", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<Department> departments;
 
 	public int getId() {
 		return id;
@@ -36,17 +38,9 @@ public class Department {
 		this.name = name;
 	}
 
-	public Location getLocation() {
-		return location;
-	}
-
-	public void setLocation(Location location) {
-		this.location = location;
-	}
-
 	@Override
 	public String toString() {
-		return "Department [id=" + id + ", name=" + name + "]";
+		return "Location [id=" + id + ", name=" + name + "]";
 	}
 
 }
