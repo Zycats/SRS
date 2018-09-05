@@ -1,4 +1,4 @@
-package com.zycats.srs;
+package com.zycats.srs.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
