@@ -18,7 +18,7 @@ import waffle.spring.NegotiateSecurityFilterEntryPoint;
 @ComponentScan(basePackages = { "com.zycats.srs.controller", "com.zycats.srs.service" })
 @EntityScan(basePackages = "com.zycats.srs.entity")
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = false)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
