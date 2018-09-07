@@ -7,6 +7,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "TBL_ISSUE_SUB_CATEGORY")
 public class IssueSubCategory {
@@ -18,6 +20,7 @@ public class IssueSubCategory {
 
 	@ManyToOne
 	@JoinColumn(name = "category")
+	@JsonIgnore
 	private IssueCategory issueCategory;
 
 	private IssueType issueType;

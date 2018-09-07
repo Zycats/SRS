@@ -7,6 +7,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "TBL_DEPARTMENT")
 public class Department {
@@ -18,6 +20,7 @@ public class Department {
 
 	@ManyToOne
 	@JoinColumn(name = "location_id")
+	@JsonIgnore
 	private Location location;
 
 	public int getId() {
