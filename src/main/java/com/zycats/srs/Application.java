@@ -12,7 +12,7 @@ public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(Application.class);
-		app.setDefaultProperties(Collections.singletonMap("server.port", "8085"));
+		app.setDefaultProperties(Collections.singletonMap("server.port", "8185"));
 		app.run(args);
 	}
 }

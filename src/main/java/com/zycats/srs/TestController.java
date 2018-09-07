@@ -29,6 +29,7 @@ public class TestController {
 		return "home-view";
 	}
 	
+	
 	@GetMapping("/autha")
 	public String getAuth()
 	{
