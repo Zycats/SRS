@@ -1,5 +1,6 @@
 package com.zycats.srs.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import com.zycats.srs.service.ILocationService;
 @RequestMapping("/rest/location/*")
 public class LocationController {
 
+	@Autowired
 	private ILocationService locationService;
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)

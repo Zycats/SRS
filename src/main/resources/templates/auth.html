@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+	<button id="btn">Click me!</button>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+		crossorigin="anonymous"></script>
+
+	<script>
+		document.getElementById("btn").addEventListener("click", function() {
+			
+			
+			
+			
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", "http://ziplsy877:8185/rest/location/add");
+			xhr.setRequestHeader("Content-Type", "application/json");
+			var obj = {
+				"name" : "Mumbai"
+			}
+			xhr.onreadystatechange = function() {
+				var DONE = 4;
+				var OK = 200;
+
+				if (xhr.readyState == DONE) {
+					if (xhr.status == OK) {
+						console.log(xhr.responseText);
+					} else {
+						console.log(xhr.status);
+					}
+				}
+			}
+
+			xhr.send(JSON.stringify(obj));
+		}, false);
+	</script>
+</body>
+</html>

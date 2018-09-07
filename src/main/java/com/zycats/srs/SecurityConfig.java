@@ -37,7 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.httpBasic()
 				.authenticationEntryPoint(entryPoint)
 				.and()
-				.addFilterBefore(negotiateSecurityFilter, BasicAuthenticationFilter.class);
+				.addFilterBefore(negotiateSecurityFilter, BasicAuthenticationFilter.class)
+				.csrf()
+				.disable();
 	}
 
 	@Override

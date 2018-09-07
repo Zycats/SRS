@@ -1,5 +1,6 @@
 package com.zycats.srs.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import com.zycats.srs.service.ITicketService;
 @RequestMapping("/rest/ticket/*")
 public class TicketController {
 
+	@Autowired
 	private ITicketService ticketService;
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)

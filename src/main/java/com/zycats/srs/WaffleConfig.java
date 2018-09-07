@@ -59,7 +59,6 @@ public class WaffleConfig {
 	// This is required for Spring Boot so it does not register the same filter
 	// twice
 	@Bean
-	@SuppressWarnings(value = "all")
 	public FilterRegistrationBean waffleNegotiateSecurityFilterRegistration(
 			NegotiateSecurityFilter waffleNegotiateSecurityFilter) {
 		FilterRegistrationBean registrationBean = new FilterRegistrationBean();
