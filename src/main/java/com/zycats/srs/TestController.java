@@ -1,8 +1,16 @@
 package com.zycats.srs;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,13 +22,20 @@ public class TestController {
 	@RequestMapping
 	public String test(Authentication auth, HttpServletRequest request) {
 		// System.out.println("amhi print kela : " + request.getRemoteAddr());
+		
+		
+		
 		return String.format(
-				"You are logged in as: %s, %s, %s, %s",
+				"You are logged in as: %s, %s, %s,%s,%n %s",
 				auth.getDetails(),
 				auth.getName(),
 				auth.getCredentials(),
-				auth.isAuthenticated());
+				auth.isAuthenticated(),
+				auth.getAuthorities()
+				
+				);
 
+		
 	}
 
 	@RequestMapping("/meta")
