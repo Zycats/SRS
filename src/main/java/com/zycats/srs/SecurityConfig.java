@@ -26,9 +26,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private NegotiateSecurityFilterEntryPoint entryPoint;
+	
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
+		
+		
+		http.authorizeRequests().antMatchers("/rest/employee/**").access("hasAnyRole('ROLE_EXEC2')");
+		
+		
+		
 		http
 				.authorizeRequests()
 				.anyRequest()
@@ -40,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.addFilterBefore(negotiateSecurityFilter, BasicAuthenticationFilter.class)
 				.csrf()
 				.disable();
+		
 	}
 
 	@Override
@@ -47,5 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication();
 	}
+	
+
 
 }
