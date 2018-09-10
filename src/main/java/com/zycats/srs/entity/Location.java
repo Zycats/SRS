@@ -38,6 +38,14 @@ public class Location {
 		this.name = name;
 	}
 
+	public Set<Department> getDepartments() {
+		return departments;
+	}
+
+	public void setDepartments(Set<Department> departments) {
+		this.departments = departments;
+	}
+
 	@Override
 	public String toString() {
 		return "Location [id=" + id + ", name=" + name + "]";
