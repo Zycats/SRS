@@ -8,6 +8,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
 @Table(name = "TBL_ISSUE_SUB_CATEGORY")
@@ -20,7 +22,7 @@ public class IssueSubCategory {
 
 	@ManyToOne
 	@JoinColumn(name = "category")
-	@JsonIgnore
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private IssueCategory issueCategory;
 
 	private IssueType issueType;
@@ -42,10 +44,12 @@ public class IssueSubCategory {
 		this.name = name;
 	}
 
+	@JsonIgnore
 	public IssueCategory getIssueCategory() {
 		return issueCategory;
 	}
 
+	@JsonProperty
 	public void setIssueCategory(IssueCategory issueCategory) {
 		this.issueCategory = issueCategory;
 	}

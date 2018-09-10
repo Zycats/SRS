@@ -19,6 +19,7 @@ public class IssueSubCategoryController {
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public IssueSubCategory add(@RequestBody IssueSubCategory issueSubCategory) {
+		System.out.println(issueSubCategory);
 		return issueSubCategoryService.add(issueSubCategory);
 	}
 
