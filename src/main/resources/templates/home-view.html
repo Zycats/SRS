@@ -14,65 +14,45 @@
 <script th:src="@{/js/bootstrap/bootstrap.js}"></script>
 <script>
 	$(document).ready(function() {
-
 		var height = $(".navBar").outerHeight();
 		height += 30;
-
 		var height2 = $(".srs-report-container").outerHeight();
-
 		$(".main-container").css({
 			"height" : "calc(100% - " + height + "px)"
 		})
-
 		$(".srs-report-container").css({
 			"margin-top" : "-" + height2 + "px"
 		})
-
 		$("#home").click(function() {
-
 			//$(".dashboard-container").css("left", "-100%");
 			//$(".srs-container").css("left", "0");
-
 			$(".card-body-status").css("font-size", "30px");
-
 			$(".main-container").css({
 				"margin-left" : "60px"
 			})
-
 			$(".dashboard-container").css({
 				"width" : "50%"
 			});
-
 			$(".mn-icon").css("margin-right", "8px");
-
 			$(".card-header").css("font-size", "14px");
-
 			$(".srs-card").css({
 				"left" : "50%"
 			})
-
 			$(".back-btn").click(function() {
-
 				$(".card-body-status").css("font-size", "50px");
-
 				$(".main-container").css({
 					"margin-left" : "100px"
 				})
-
 				$(".dashboard-container").css({
 					"width" : "100%"
 				});
-
 				$(".mn-icon").css("margin-right", "20px");
-
 				$(".card-header").css("font-size", "1rem");
-
 				$(".srs-card").css({
 					"left" : "100%"
 				})
 			})
 		})
-
 		$("#raise").click(function() {
 			console.log("raise clicked");
 			$(".srs-report-container").css({

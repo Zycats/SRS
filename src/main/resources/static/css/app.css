@@ -1,0 +1,179 @@
+html {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	overflow-x: hidden;
+}
+
+.main-container {
+	width: 100%;
+	height: auto;
+	min-height: 100%;
+	padding: 0 !important;
+	overflow: auto;
+	display: block;
+}
+
+.navbar {
+	box-shadow: 0 2px 5px #e6e6e6;
+	z-index: 10;
+}
+
+a.navbar-brand {
+	font-weight: bold;
+}
+
+.d-inline-block {
+	margin-right: 8px;
+}
+
+li {
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+div.inner-container {
+	position: relative;
+	height: auto;
+	display: block;
+	overflow: auto;
+	box-sizing: border-box;
+	border: 1px solid #CCCCCC;
+	padding: 0 !important;
+	overflow: hidden;
+}
+
+div.views-container {
+	width: 300%;
+	height: auto;
+	overflow: auto;
+}
+
+div.dashboard-container {
+	width: 33.33%;
+	height: auto;
+	overflow: auto;
+	display: block;
+	box-sizing: border-box;
+	padding: 30px 50px;
+	float: left;
+	transition: margin-left 800ms ease;
+}
+
+div.raise-container, div.history-container {
+	width: 33.33%;
+	float: left;
+	box-sizing: border-box;
+	padding: 30px 50px;
+	transition: margin-left 800ms ease;
+}
+
+h1 {
+	font-size: 26px;
+}
+
+span.username {
+	font-size: 20px;
+}
+
+.icon-card-body {
+	text-align: center;
+	font-size: 40px;
+}
+
+div.card {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+div.cards-container {
+	margin-bottom: 30px;
+}
+
+div.recent-card {
+	border: 0;
+}
+
+.recent-card-header {
+	border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.table-card-body {
+	padding: 0 !important;
+}
+div.slider{
+	width: 70%;
+	height: 100%;
+	position: fixed;
+	left: 100%;
+	top: 0;
+	box-shadow: -2px 0 2px #a6a6a6;
+	z-index: 100;
+	background-color: #FFFFFF;
+	box-sizing: border-box;
+	padding: 30px;
+	transition: left 500ms ease;
+	overflow: auto;
+}
+button.back-btn{
+	width: 36px;
+	height: 36px;
+	border-radius: 18px;
+	margin-right: 12px;
+	box-shadow: 0 0 5px #a6a6a6 !important;
+}
+p.imp{
+	color: rgb(49, 112, 143);
+	font-size: 14px;
+}
+form{
+	width: 96%;
+	height: auto;
+	min-height: 100%;
+	overflow: auto;
+	border: 1px solid #d9d9d9;
+	padding: 30px;
+	margin: 0 auto;
+	box-shadow: 0px 0px 4px #bfbfbf;
+	border-radius: 4px;
+	font-size: 14px;
+}
+.btn-info{
+	width: 100%;
+	font-size: 14px;
+}
+.dropdown-group{
+	width: 80%;
+	margin: 0 auto;
+}
+input[type=text]{
+	font-size: 14px;
+}
+.dropdown-menu{
+	width: 100%;
+}
+.form-control-textarea{
+	resize: none;
+	font-size: 14px;
+}
+.row-submit{
+	text-align: center;
+}
+.submit-btn{
+	width: auto;
+	margin: 0 auto;
+}
+.tokenLink{
+	color: #007bff;
+	cursor: pointer;
+}
+@media only screen and (max-width: 576px) {
+	div.slider{
+		width: 100%;
+		height: 100%;
+	}
+}

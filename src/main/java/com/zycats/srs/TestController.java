@@ -26,7 +26,7 @@ public class TestController {
 	@GetMapping("/home")
 	public String home()
 	{
-		return "home-view";
+		return "home-new2";
 	}
 	
 	
