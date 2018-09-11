@@ -29,6 +29,8 @@ public class EmployeeService implements IEmployeeService {
 
 		try {
 			employee = employeeRepository.findById(id).get();
+			employee.setMachineIp(machineIp);
+			employeeRepository.save(employee);
 
 		} catch (NoSuchElementException e) {
 			employee = new Employee();
