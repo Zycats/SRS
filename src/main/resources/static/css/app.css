@@ -171,6 +171,10 @@ input[type=text]{
 	color: #007bff;
 	cursor: pointer;
 }
+.modalForm{
+	box-shadow: none;
+	border: none;
+}
 @media only screen and (max-width: 576px) {
 	div.slider{
 		width: 100%;

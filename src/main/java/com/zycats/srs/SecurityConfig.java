@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		
 		
-		http.authorizeRequests().antMatchers("/rest/employee/**").access("hasAnyRole('ROLE_EXEC2')");
+		http.authorizeRequests().antMatchers("/rest/employee/**").access("hasAnyRole('ROLE_USER')");
 		
 		
 		
