@@ -18,7 +18,7 @@ import waffle.spring.NegotiateSecurityFilterEntryPoint;
 @ComponentScan(basePackages = { "com.zycats.srs.controller", "com.zycats.srs.service" })
 @EntityScan(basePackages = "com.zycats.srs.entity")
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = false)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -26,9 +26,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private NegotiateSecurityFilterEntryPoint entryPoint;
+	
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
+		
+		
+		http.authorizeRequests().antMatchers("/rest/employee/**").access("hasAnyRole('ROLE_USER')");
+		
+		
+		
 		http
 				.authorizeRequests()
 				.anyRequest()
@@ -37,7 +45,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.httpBasic()
 				.authenticationEntryPoint(entryPoint)
 				.and()
-				.addFilterBefore(negotiateSecurityFilter, BasicAuthenticationFilter.class);
+				.addFilterBefore(negotiateSecurityFilter, BasicAuthenticationFilter.class)
+				.csrf()
+				.disable();
+		
 	}
 
 	@Override
@@ -45,5 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication();
 	}
+	
+
 
 }

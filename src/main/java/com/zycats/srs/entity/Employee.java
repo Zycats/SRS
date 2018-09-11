@@ -22,6 +22,7 @@ public class Employee {
 	private String seatNo;
 	private int extNo;
 	private String machineIp;
+	public boolean firstLogin;
 
 	public String getId() {
 		return id;
@@ -77,6 +78,14 @@ public class Employee {
 
 	public void setMachineIp(String machineIp) {
 		this.machineIp = machineIp;
+	}
+
+	public boolean isFirstLogin() {
+		return firstLogin;
+	}
+
+	public void setFirstLogin(boolean firstLogin) {
+		this.firstLogin = firstLogin;
 	}
 
 	@Override

@@ -1,8 +1,15 @@
 package com.zycats.srs;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import waffle.servlet.spi.BasicSecurityFilterProvider;
 import waffle.servlet.spi.NegotiateSecurityFilterProvider;
@@ -45,6 +52,7 @@ public class WaffleConfig {
 			SecurityFilterProviderCollection securityFilterProviderCollection) {
 		NegotiateSecurityFilterEntryPoint negotiateSecurityFilterEntryPoint = new NegotiateSecurityFilterEntryPoint();
 		negotiateSecurityFilterEntryPoint.setProvider(securityFilterProviderCollection);
+		
 		return negotiateSecurityFilterEntryPoint;
 	}
 

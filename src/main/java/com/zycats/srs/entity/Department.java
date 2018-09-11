@@ -3,7 +3,11 @@ package com.zycats.srs.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "TBL_DEPARTMENT")
@@ -13,6 +17,11 @@ public class Department {
 	@GeneratedValue
 	private int id;
 	private String name;
+
+	@ManyToOne
+	@JoinColumn(name = "location_id")
+	@JsonIgnore
+	private Location location;
 
 	public int getId() {
 		return id;
@@ -28,6 +37,14 @@ public class Department {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 
 	@Override
