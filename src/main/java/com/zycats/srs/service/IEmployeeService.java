@@ -2,6 +2,7 @@ package com.zycats.srs.service;
 
 import org.springframework.security.core.Authentication;
 
+import com.zycats.srs.dto.EmployeeLocationDTO;
 import com.zycats.srs.entity.Employee;
 
 public interface IEmployeeService {
@@ -15,5 +16,7 @@ public interface IEmployeeService {
 	Employee update(Employee employee, Authentication auth);
 
 	boolean deleteEmployee(Authentication auth);
+
+	EmployeeLocationDTO getEmployeeLocation(String id, String machineIp);
 
 }
