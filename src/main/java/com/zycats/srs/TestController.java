@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class TestController {
 
 	@GetMapping("/home")
-	public String home() {
-		return "home-view";
+	public String home()
+	{
+		return "home-new2";
 	}
 
 }

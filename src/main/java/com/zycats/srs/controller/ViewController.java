@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class ViewController {
-	@RequestMapping("/auth")
+	@RequestMapping("/")
 	public String auth() {
-		return "auth";
+		return "home-new2";
 	}
 }
