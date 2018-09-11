@@ -3,6 +3,8 @@ package com.zycats.srs.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zycats.srs.entity.Employee;
+import com.zycats.srs.entity.Status;
 import com.zycats.srs.entity.Ticket;
 import com.zycats.srs.repository.TicketRepository;
 
@@ -11,6 +13,9 @@ public class TicketService implements ITicketService {
 
 	@Autowired
 	private TicketRepository ticketRepository;
+	
+	@Autowired
+	private IEmployeeService employeeService;
 
 	@Override
 	public Ticket add(Ticket ticket) {
@@ -35,5 +40,18 @@ public class TicketService implements ITicketService {
 			return false;
 		}
 		return true;
+	}
+	
+	@Override
+	public Iterable<Ticket> getTicketsByStatusAndEngineer(Status status , String engineerId){
+		
+	try{
+		Employee employee = employeeService.getEmployeeById(engineerId);
+		return ticketRepository.findAllTicketsByStatusAndEngineer(status, employee);
+	}
+	catch(IllegalArgumentException e){
+		return null;
+	}
+	
 	}
 }

@@ -78,6 +78,20 @@ public class EmployeeService implements IEmployeeService {
 		}
 		return true;
 	}
+	
+	
+	@Override
+	public Employee getEmployeeById(String id) {
+		Employee employee;
+		try {
+			employee = employeeRepository.findById(id).get();
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+		return employee;
+	}
+	
+	
 
 	private static String getIdFromAuth(String authId) {
 		return authId.replaceAll(Pattern.quote("\\"), "\\\\").split("\\\\")[1];

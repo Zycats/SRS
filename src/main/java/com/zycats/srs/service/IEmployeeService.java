@@ -16,4 +16,6 @@ public interface IEmployeeService {
 
 	boolean deleteEmployee(Authentication auth);
 
+	Employee getEmployeeById(String id);
+
 }
