@@ -69,6 +69,15 @@
 			<version>10.14.2.0</version>
 		</dependency>
 
+
+
+		<!-- https://mvnrepository.com/artifact/oracle/ojdbc6 -->
+		<dependency>
+			<groupId>oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.2.0.3</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -79,6 +88,8 @@
 			</plugin>
 		</plugins>
 	</build>
+
+
 
 
 </project>
