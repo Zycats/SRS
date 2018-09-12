@@ -59,14 +59,14 @@
 					<div class="form-group">
 						<label for="formGroupExampleInput">Ticket Classification</label> <input
 							type="text" id="disabledTextInput" class="form-control"
-							placeholder="Disabled input" disabled value="Request" ng-model="classification">
+							placeholder="Ticket Classification" disabled value="Request" ng-model="classification">
 					</div>
 				</div>
 				<div class="col">
 					<div class="form-group">
 						<label for="formGroupExampleInput">Priority</label> <input
 							type="text" class="form-control" id="formGroupExampleInput"
-							placeholder="Example input" disabled value="Medium" ng-model="priority">
+							placeholder="Ticket Priority" disabled value="Medium" ng-model="priority">
 					</div>
 				</div>
 			</div>
@@ -121,7 +121,7 @@
 				</div>
 			</div>
 			<div class="alert alert-danger alert-srs-error" ng-show="srsErrorShow">{{srsError}}</div>
-			<div class="alert alert-danger alert-srs-success" ng-show="srsSuccessShow">{{srsSuccess}}</div>
+			<div class="alert alert-success alert-srs-success" ng-show="srsSuccessShow">{{srsSuccess}}</div>
 			<div class="row row-submit">
 				<button class="btn btn-info submit-btn" ng-click="submitSrs()">Submit</button>
 			</div>

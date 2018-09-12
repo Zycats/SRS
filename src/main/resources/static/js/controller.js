@@ -14,6 +14,10 @@ srsApp.controller("userController", function($scope, $q, $http){
 		{
 			$("#firstLoginModal").modal("show");
 		}
+		else
+		{
+			$scope.loadSrsData();
+		}
 	
 	}, function error(response){
 		console.log(response);
@@ -158,17 +162,20 @@ srsApp.controller("userController", function($scope, $q, $http){
 	
 	$scope.loadSrsData = function(){
 		
-		$http({
-			url: "/rest/employee/get/employee-location",
-			method: "GET"
-		})
-		.then(function success(response){
-			$scope.empData = response.data;
-			console.log($scope.empData);
-		}, function error(response){
-			console.log(response);
-			
-		})
+		if ($scope.empData.location === undefined)
+		{
+			$http({
+				url: "/rest/employee/get/employee-location",
+				method: "GET"
+			})
+			.then(function success(response){
+				$scope.empData = response.data;
+				console.log($scope.empData);
+			}, function error(response){
+				console.log(response);
+				
+			})
+		}
 	}
 	
 	$scope.submitSrs = function(){
