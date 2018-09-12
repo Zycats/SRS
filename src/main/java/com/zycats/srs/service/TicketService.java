@@ -48,11 +48,77 @@ public class TicketService implements ITicketService {
 		return true;
 	}
 
+	/// ----------- Engineer Services ------------------/////////////////
+	
 	@Override
-	public Iterable<Ticket> getTicketsByStatusAndEngineer(Status status, String engineerId) {
+	public Iterable<Ticket> findAllTicketsByEngineer(String engineerId) {
 
 		try {
-			Employee employee = employeeService.getEmployeeById(engineerId);
+			Employee engineer = employeeService.getEmployeeById(engineerId);
+			return ticketRepository.findAllTicketsByEngineer(engineer);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+
+	}
+	
+	
+	@Override
+	public Iterable<Ticket> findAllTicketsByStatusEngineer(Status status, String engineerId) {
+
+		try {
+			Employee engineer = employeeService.getEmployeeById(engineerId);
+			return ticketRepository.findAllTicketsByStatusAndEngineer(status, engineer);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+
+	}
+
+	@Override
+	public Iterable<Ticket> findAllTicketsByCategoryEngineer(int category_id, String engineerId) {
+
+		try {
+			Employee engineer = employeeService.getEmployeeById(engineerId);
+			return ticketRepository.findAllTicketsByCategoryEngineer(category_id, engineer);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+
+	}
+
+	@Override
+	public Iterable<Ticket> findAllTicketsBySubCategoryEngineer(int sub_category_id, String engineerId) {
+
+		try {
+			Employee engineer = employeeService.getEmployeeById(engineerId);
+			return ticketRepository.findAllTicketsBySubCategoryEngineer(sub_category_id, engineer);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+
+	}
+	
+	
+	///--------------- Employee Services --------------////////////
+
+	@Override
+	public Iterable<Ticket> findAllTicketsByEmployee(String employeeId) {
+
+		try {
+			Employee employee = employeeService.getEmployeeById(employeeId);
+			return ticketRepository.findAllTicketsByEmployee(employee);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+
+	}
+	
+	@Override
+	public Iterable<Ticket> findAllTicketsByStatusEmployee(Status status, String employeeId) {
+
+		try {
+			Employee employee = employeeService.getEmployeeById(employeeId);
 			return ticketRepository.findAllTicketsByStatusAndEngineer(status, employee);
 		} catch (IllegalArgumentException e) {
 			return null;
@@ -61,40 +127,29 @@ public class TicketService implements ITicketService {
 	}
 
 	@Override
-	public Iterable<Ticket> findAllTicketsByCategory(int category_id, String engineerId) {
+	public Iterable<Ticket> findAllTicketsByCategoryEmployee(int category_id, String employeeId) {
 
 		try {
-			Employee employee = employeeService.getEmployeeById(engineerId);
-			return ticketRepository.findAllTicketsByCategory(category_id, employee);
-		} catch (IllegalArgumentException e) {
-			return null;
-		}
-
-	}
-
-	@Override
-	public Iterable<Ticket> findAllTicketsBySubCategory(int sub_category_id, String engineerId) {
-
-		try {
-			Employee employee = employeeService.getEmployeeById(engineerId);
-			return ticketRepository.findAllTicketsBySubCategory(sub_category_id, employee);
-		} catch (IllegalArgumentException e) {
-			return null;
-		}
-
-	}
-
-	@Override
-	public Iterable<Ticket> findAllTicketsByEmployee(String employeeId) {
-
-		try {
-			employeeId = EmployeeService.getIdFromAuth(employeeId);
 			Employee employee = employeeService.getEmployeeById(employeeId);
-			return ticketRepository.findAllTicketsByEmployee(employee);
+			return ticketRepository.findAllTicketsByCategoryEngineer(category_id, employee);
 		} catch (IllegalArgumentException e) {
 			return null;
 		}
 
 	}
+
+	@Override
+	public Iterable<Ticket> findAllTicketsBySubCategoryEmployee(int sub_category_id, String employeeId) {
+
+		try {
+			Employee employee = employeeService.getEmployeeById(employeeId);
+			return ticketRepository.findAllTicketsBySubCategoryEngineer(sub_category_id, employee);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+
+	}
+	
+	
 
 }

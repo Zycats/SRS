@@ -13,14 +13,26 @@ public interface ITicketService {
 
 	boolean delete(int id);
 
-	Iterable<Ticket> getTicketsByStatusAndEngineer(Status status, String engineerId);
-
-	Iterable<Ticket> findAllTicketsByCategory(int category_id, String engineerId);
-
-	Iterable<Ticket> findAllTicketsBySubCategory(int sub_category_id, String engineerId);
-
 	Ticket add(Ticket ticket, Authentication auth, String machineIp);
+	
+	///-- services related to Engineer ----////
+	
+	Iterable<Ticket> findAllTicketsByEngineer(String employeeId);
+	
+	Iterable<Ticket> findAllTicketsByStatusEngineer(Status status, String engineerId);
 
+	Iterable<Ticket> findAllTicketsByCategoryEngineer(int category_id, String engineerId);
+
+	Iterable<Ticket> findAllTicketsBySubCategoryEngineer(int sub_category_id, String engineerId);
+	
+	
+	// -- services related to Employee -----///
 	Iterable<Ticket> findAllTicketsByEmployee(String employeeId);
+	
+	Iterable<Ticket> findAllTicketsByStatusEmployee(Status status, String employeeId);
+	
+	Iterable<Ticket> findAllTicketsByCategoryEmployee(int category_id, String engineerId);
+
+	Iterable<Ticket> findAllTicketsBySubCategoryEmployee(int sub_category_id, String employeeId);
 
 }
