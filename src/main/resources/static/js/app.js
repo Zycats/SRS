@@ -1,9 +1,5 @@
 var srsApp = angular.module("srsApp", ['angular-loading-bar'])
-.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
-    
-  }]);
-var srsApp = angular.module("srsApp", [])
-.config( [
+.config([
     '$compileProvider',
     function( $compileProvider )
     {   
