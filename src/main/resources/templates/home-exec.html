@@ -25,14 +25,13 @@
 <script th:src="@{/js/main.js}"></script>
 </head>
 <body>
-	<div class="container-fluid main-container" ng-app="srsApp">
+	<div class="container-fluid main-container" ng-app="srsApp" ng-controller="dashboardController">
 		<div class="navbarContainer"
 			th:insert="fragments/navbar-fragment2 :: navbar-exec"></div>
 		<div class="container inner-container">
 			<div class="views-container">
 				<div class="dashboard-container" id="dashboard"
-					th:insert="fragments/dashboard-fragment2 :: exec-dashboard"
-					ng-controller="dashboardController"></div>
+					th:insert="fragments/dashboard-fragment2 :: exec-dashboard"></div>
 				<div class="raise-container" id="newIssuesContainer"
 					th:insert="fragments/new-issues-fragment :: newIssuesFragment"></div>
 				<div class="history-container" id="historyContainer">
@@ -42,11 +41,12 @@
 			</div>
 		</div>
 		<div class="modalContainer" th:insert="fragments/modal-fragment :: modal"></div>
-	</div>
 	<div class="slider"
-		th:insert="fragments/slider-fragment :: sliderFragment"></div>
+		th:insert="fragments/slider-fragment :: sliderFragment-exec"></div>
+	</div>
 	<script src="https://code.angularjs.org/1.7.4/angular.js"></script>
 	<script th:src="@{/js/app.js}"></script>
+	<script th:src="@{/js/moment.js}"></script>
 	<script th:src="@{/js/exec-controller.js}"></script>
 </body>
 </html>
