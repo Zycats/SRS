@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.zycats.srs.dto.EmployeeLocationDTO;
 import com.zycats.srs.entity.Employee;
 import com.zycats.srs.entity.Role;
+import com.zycats.srs.repository.DepartmentRepository;
 import com.zycats.srs.repository.EmployeeRepository;
 
 @Service
@@ -17,9 +19,23 @@ public class EmployeeService implements IEmployeeService {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
+	@Autowired
+	DepartmentRepository departmentRepository;
+
 	@Override
 	public Employee register(Employee employee) {
 		return employeeRepository.save(employee);
+	}
+
+	@Override
+	public EmployeeLocationDTO getEmployeeLocation(String id, String machineIp) {
+		EmployeeLocationDTO employeeLocationDTO = new EmployeeLocationDTO();
+		Employee employee = getEmployee(id, machineIp);
+		employeeLocationDTO.setEmployee(employee);
+		if (employee.getDepartment() != null)
+			employeeLocationDTO
+					.setLocation(departmentRepository.getDepartmentLocation(employee.getDepartment().getId()));
+		return employeeLocationDTO;
 	}
 
 	@Override
@@ -29,6 +45,8 @@ public class EmployeeService implements IEmployeeService {
 
 		try {
 			employee = employeeRepository.findById(id).get();
+			employee.setMachineIp(machineIp);
+			employeeRepository.save(employee);
 
 		} catch (NoSuchElementException e) {
 			employee = new Employee();

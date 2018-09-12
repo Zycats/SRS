@@ -1,5 +1,5 @@
 package com.zycats.srs.entity;
 
 public enum Status {
-	OPEN, CLOSED, ONHOLD
+	OPEN, CLOSED, ONHOLD, UNRESOLVABLE, WORKING
 }

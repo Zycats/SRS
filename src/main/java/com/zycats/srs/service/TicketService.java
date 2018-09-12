@@ -1,5 +1,7 @@
 package com.zycats.srs.service;
 
+import java.sql.Timestamp;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ public class TicketService implements ITicketService {
 
 	@Override
 	public Ticket add(Ticket ticket) {
+		ticket.setDatetime(new Timestamp(new java.util.Date().getTime()));
 		return ticketRepository.save(ticket);
 	}
 

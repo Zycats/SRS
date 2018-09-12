@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zycats.srs.dto.EmployeeLocationDTO;
 import com.zycats.srs.entity.Employee;
 import com.zycats.srs.service.IEmployeeService;
 
@@ -22,6 +23,11 @@ public class EmployeeRestController {
 	@RequestMapping(value = "get", method = RequestMethod.GET)
 	public Employee getEmployee(HttpServletRequest request, Authentication auth) {
 		return employeeService.getEmployee(auth.getName(), request.getRemoteAddr());
+	}
+
+	@RequestMapping(value = "get/employee-location", method = RequestMethod.GET)
+	public EmployeeLocationDTO getEmployeeLocation(HttpServletRequest request, Authentication auth) {
+		return employeeService.getEmployeeLocation(auth.getName(), request.getRemoteAddr());
 	}
 
 	@RequestMapping(value = "get/all", method = RequestMethod.GET)
