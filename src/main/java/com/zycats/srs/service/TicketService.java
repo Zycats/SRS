@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.zycats.srs.entity.Employee;
 import com.zycats.srs.entity.Status;
 import com.zycats.srs.entity.Ticket;
 import com.zycats.srs.repository.TicketRepository;
@@ -45,5 +46,17 @@ public class TicketService implements ITicketService {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public Iterable<Ticket> getTicketsByStatusAndEngineer(Status status, String engineerId) {
+
+		try {
+			Employee employee = employeeService.getEmployeeById(engineerId);
+			return ticketRepository.findAllTicketsByStatusAndEngineer(status, employee);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+
 	}
 }

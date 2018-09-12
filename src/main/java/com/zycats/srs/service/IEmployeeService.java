@@ -17,6 +17,8 @@ public interface IEmployeeService {
 
 	boolean deleteEmployee(Authentication auth);
 
+	Employee getEmployeeById(String id);
+
 	EmployeeLocationDTO getEmployeeLocation(String id, String machineIp);
 
 }
