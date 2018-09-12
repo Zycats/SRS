@@ -96,14 +96,10 @@ public class EmployeeRestController {
 	}
 
 	// accepts employeeId and returns all the tickets
-	@RequestMapping(
-					value = "get/empId",
-					method = RequestMethod.POST,
-					consumes = "application/json",
-					produces = "application/json")
-	public Iterable<Ticket> getAllTicketByEmployee(@RequestBody Map<String, String> data) {
+	@RequestMapping(value = "get/empId", produces = "application/json")
+	public Iterable<Ticket> getAllTicketByEmployee(Authentication auth) {
 
-		return ticketService.findAllTicketsByEmployee(data.get("employeeId"));
+		return ticketService.findAllTicketsByEmployee(auth.getName());
 	}
 
 }

@@ -88,6 +88,7 @@ public class TicketService implements ITicketService {
 	public Iterable<Ticket> findAllTicketsByEmployee(String employeeId) {
 
 		try {
+			employeeId = EmployeeService.getIdFromAuth(employeeId);
 			Employee employee = employeeService.getEmployeeById(employeeId);
 			return ticketRepository.findAllTicketsByEmployee(employee);
 		} catch (IllegalArgumentException e) {
