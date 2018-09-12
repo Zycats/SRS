@@ -59,4 +59,30 @@ public class TicketService implements ITicketService {
 		}
 
 	}
+	
+	@Override
+	public Iterable<Ticket> findAllTicketsByCategory(int category_id, String engineerId) {
+
+		try {
+			Employee employee = employeeService.getEmployeeById(engineerId);
+			return ticketRepository.findAllTicketsByCategory(category_id, employee);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+
+	}
+	
+	@Override
+	public Iterable<Ticket> findAllTicketsBySubCategory(int sub_category_id, String engineerId) {
+
+		try {
+			Employee employee = employeeService.getEmployeeById(engineerId);
+			return ticketRepository.findAllTicketsBySubCategory(sub_category_id, employee);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+
+	}
+	
+	
 }

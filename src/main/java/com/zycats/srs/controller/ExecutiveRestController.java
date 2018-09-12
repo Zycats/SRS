@@ -20,15 +20,35 @@ public class ExecutiveRestController {
 	@Autowired
 	private ITicketService ticketService ;
 	
-	@RequestMapping(value = "get/allTicketsByStatus", method= RequestMethod.POST,
+	//accepts status and employeeId and returns all the tickets
+	@RequestMapping(value = "get/status/empId", method= RequestMethod.POST,
 			consumes = "application/json",
 			produces="application/json")
 	public Iterable<Ticket> getAllTicketByStatus(@RequestBody Map<String, String> data){
 		
-		System.out.println(data);
-		System.out.println(data.get("status"));
-		
-		return ticketService.getTicketsByStatusAndEngineer(Status.OPEN,
+		return ticketService.getTicketsByStatusAndEngineer(Status.valueOf(data.get("status")),
 				data.get("employeeId"));
 	}
+	
+	
+	//accepts category and employeeId and returns all the tickets
+		@RequestMapping(value = "get/category/empId", method= RequestMethod.POST,
+				consumes = "application/json",
+				produces="application/json")
+		public Iterable<Ticket> getAllTicketByCategory(@RequestBody Map<String, String> data){
+			
+			return ticketService.findAllTicketsByCategory(Integer.parseInt(data.get("category_id")),
+					data.get("employeeId"));
+		}
+		
+	//accepts sub_category and employeeId and returns all the tickets
+			@RequestMapping(value = "get/sub_category/empId", method= RequestMethod.POST,
+					consumes = "application/json",
+					produces="application/json")
+			public Iterable<Ticket> getAllTicketBySubCategory(@RequestBody Map<String, String> data){
+				
+				return ticketService.findAllTicketsBySubCategory(Integer.parseInt(data.get("sub_category_id")),
+						data.get("employeeId"));
+			}	
+		
 }
