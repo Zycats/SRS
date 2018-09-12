@@ -13,5 +13,24 @@
 		</h1>
 		<hr>
 	</div>
+	<div th:fragment="sliderFragment-exec">
+		<h1 class="srs-heading">
+			<button class="btn btn-success btn-circle back-btn">
+				<i class="fas fa-chevron-right"></i>
+			</button>
+			SRS Report
+		</h1>
+		<hr>
+		
+		<br> Issue #Id: {{ issue.id }} 
+		<br> Date Time:  {{ issue.formattedTime }}
+		<br> Description:  {{ issue.description }}
+		<br> Category:  {{ issue.subCategory.name }}
+		<br> Type:  {{ issue.subCategory.issueType }}
+		<br> Raised By: {{ issue.employee.id }}
+		<br> Machine IP : {{ issue.employee.machineIp }}
+		<br> <a class="btn btn-primary" href="sip:{{ issue.employee.email }}">Skype {{ issue.employee.id }}</a>
+		 
+	</div>
 </body>
 </html>

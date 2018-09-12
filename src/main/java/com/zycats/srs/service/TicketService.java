@@ -3,8 +3,11 @@ package com.zycats.srs.service;
 import java.sql.Timestamp;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.zycats.srs.entity.Employee;
+import com.zycats.srs.entity.Status;
 import com.zycats.srs.entity.Ticket;
 import com.zycats.srs.repository.TicketRepository;
 
@@ -14,9 +17,14 @@ public class TicketService implements ITicketService {
 	@Autowired
 	private TicketRepository ticketRepository;
 
+	@Autowired
+	private IEmployeeService employeeService;
+
 	@Override
-	public Ticket add(Ticket ticket) {
+	public Ticket add(Ticket ticket, Authentication auth, String machineIp) {
 		ticket.setDatetime(new Timestamp(new java.util.Date().getTime()));
+		ticket.setEmployee(employeeService.getEmployee(auth.getName(), machineIp));
+		ticket.setStatus(Status.OPEN);
 		return ticketRepository.save(ticket);
 	}
 
@@ -38,5 +46,17 @@ public class TicketService implements ITicketService {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public Iterable<Ticket> getTicketsByStatusAndEngineer(Status status, String engineerId) {
+
+		try {
+			Employee employee = employeeService.getEmployeeById(engineerId);
+			return ticketRepository.findAllTicketsByStatusAndEngineer(status, employee);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+
 	}
 }

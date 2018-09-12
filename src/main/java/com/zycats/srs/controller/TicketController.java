@@ -1,6 +1,9 @@
 package com.zycats.srs.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +21,8 @@ public class TicketController {
 	private ITicketService ticketService;
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
-	public Ticket addTicket(@RequestBody Ticket ticket) {
-		return ticketService.add(ticket);
+	public Ticket addTicket(@RequestBody Ticket ticket, Authentication auth, HttpServletRequest request) {
+		return ticketService.add(ticket, auth, request.getRemoteAddr());
 	}
 
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.GET)

@@ -8,9 +8,8 @@
 		<h1>New SRS Raised</h1>
 		<hr>
 		<p class="imp">View latest SRSs raised</p>
-		<form>
+		<div>
 			<div class="form-group">
-				<label for="formGroupExampleInput">Category:</label>
 				<div class="row dropdown-group">
 					<div class="col">
 						<div class="dropdown">
@@ -34,12 +33,42 @@
 							</div>
 						</div>
 					</div>
+					<div class="col row-submit">
+						<button class="btn btn-info submit-btn">Submit</button>
+					</div>
 				</div>
 			</div>
-			<div class="row row-submit">
-				<button class="btn btn-info submit-btn">Submit</button>
-			</div>
-		</form>
+		</div>
+			<form class="table-responsive">
+				<table class="table" id = "issuesTable">
+					<thead>
+						<tr>
+							<th></th>
+							<th>#Id</th>
+							<th>Description</th>
+							<th>Priority</th>
+							<th>Time of Ticket</th>
+							<th>Raised By</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody>
+					<tr ng-repeat="issue in issuesData">
+						<td>
+							<button  ng-if="issue.subCategory.issueType == 'INCIDENT'" ng-click="showSlider(issue)" class="btn btn-warning btn-tag">INCIDENT</button>
+							<button  ng-if="issue.subCategory.issueType == 'REQUEST'" ng-click="showSlider(issue)" class="btn btn-primary btn-tag">REQUEST</button>
+						</td>
+						<td>{{ issue.id }}</td>
+						<td>{{ issue.description }}</td>
+						<td>{{ issue.subCategory.issuePriority }}</td>
+						<td>{{ issue.timeAgo }}</td>
+						<td>{{ issue.employee.id }}</td>
+						<td>{{ issue.status }}</td>
+					</tr>
+					</tbody>
+				</table>
+			</form>
+			
 	</div>
 </body>
 </html>
