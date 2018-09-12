@@ -175,6 +175,19 @@ input[type=text]{
 	box-shadow: none;
 	border: none;
 }
+.dropdown-item{
+	font-size: 14px;
+	cursor: pointer;
+}
+.dropdown-menu{
+	box-shadow: 0px 0px 5px #CCCCCC;
+}
+.alert-danger, .alert-success{
+	display: none;
+}
+.alert-srs-error, .alert-srs-success{
+	display: block;
+}
 @media only screen and (max-width: 576px) {
 	div.slider{
 		width: 100%;

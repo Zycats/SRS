@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="modal fade" id="progressModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true"
+		th:fragment="progressModal" data-backdrop="static"
+		data-keyboard="false">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Loading... Please Wait</h5>
+				</div>
+				<div class="modal-body">
+					<div class="progress">
+						<div
+							class="progress-bar progress-bar-striped progress-bar-animated"
+							role="progressbar" aria-valuenow="75" aria-valuemin="0"
+							aria-valuemax="100" style="width: 100%"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -122,6 +122,6 @@ $(document).ready(function() {
 	})
 	
 	$(".navbar-brand").click(function(){
-		$(".modal").modal("show");
+		$("#progressModal").modal("show");
 	})
 })
