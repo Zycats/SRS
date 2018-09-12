@@ -96,8 +96,7 @@ public class EmployeeService implements IEmployeeService {
 		}
 		return true;
 	}
-	
-	
+
 	@Override
 	public Employee getEmployeeById(String id) {
 		Employee employee;
@@ -108,10 +107,8 @@ public class EmployeeService implements IEmployeeService {
 		}
 		return employee;
 	}
-	
-	
 
-	private static String getIdFromAuth(String authId) {
+	public static String getIdFromAuth(String authId) {
 		return authId.replaceAll(Pattern.quote("\\"), "\\\\").split("\\\\")[1];
 	}
 
