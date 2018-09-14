@@ -15,6 +15,7 @@ import com.zycats.srs.dto.EmployeeLocationDTO;
 import com.zycats.srs.entity.Employee;
 import com.zycats.srs.entity.Status;
 import com.zycats.srs.entity.Ticket;
+import com.zycats.srs.service.EmployeeService;
 import com.zycats.srs.service.IEmployeeService;
 import com.zycats.srs.service.ITicketService;
 
@@ -24,9 +25,9 @@ public class EmployeeRestController {
 
 	@Autowired
 	private IEmployeeService employeeService;
-
+	
 	@Autowired
-	private ITicketService ticketService;
+	private ITicketService ticketService ;
 
 	@RequestMapping(value = "get", method = RequestMethod.GET)
 	public Employee getEmployee(HttpServletRequest request, Authentication auth) {
@@ -57,7 +58,14 @@ public class EmployeeRestController {
 	public boolean deleteEmployee(Authentication auth) {
 		return employeeService.deleteEmployee(auth);
 	}
-
+	
+	
+	
+	
+	
+	
+	
+	
 	// ticket related rest controls
 
 	// accepts status and employeeId and returns all the tickets
@@ -66,9 +74,9 @@ public class EmployeeRestController {
 					method = RequestMethod.POST,
 					consumes = "application/json",
 					produces = "application/json")
-	public Iterable<Ticket> getAllTicketByStatus(@RequestBody Map<String, String> data) {
+	public Iterable<Ticket> getAllTicketByStatus(@RequestBody Map<String, String> data, Authentication auth) {
 
-		return ticketService.getTicketsByStatusAndEngineer(Status.valueOf(data.get("status")), data.get("employeeId"));
+		return ticketService.findAllTicketsByStatusEmployee(Status.valueOf(data.get("status")),EmployeeService.getIdFromAuth(auth.getName()));
 	}
 
 	// accepts category and employeeId and returns all the tickets
@@ -77,10 +85,10 @@ public class EmployeeRestController {
 					method = RequestMethod.POST,
 					consumes = "application/json",
 					produces = "application/json")
-	public Iterable<Ticket> getAllTicketByCategory(@RequestBody Map<String, String> data) {
+	public Iterable<Ticket> getAllTicketByCategory(@RequestBody Map<String, String> data, Authentication auth) {
 
 		return ticketService
-				.findAllTicketsByCategory(Integer.parseInt(data.get("category_id")), data.get("employeeId"));
+				.findAllTicketsByCategoryEmployee(Integer.parseInt(data.get("category_id")), EmployeeService.getIdFromAuth(auth.getName()));
 	}
 
 	// accepts sub_category and employeeId and returns all the tickets
@@ -89,21 +97,17 @@ public class EmployeeRestController {
 					method = RequestMethod.POST,
 					consumes = "application/json",
 					produces = "application/json")
-	public Iterable<Ticket> getAllTicketBySubCategory(@RequestBody Map<String, String> data) {
+	public Iterable<Ticket> getAllTicketBySubCategory(@RequestBody Map<String, String> data,Authentication auth) {
 
 		return ticketService
-				.findAllTicketsBySubCategory(Integer.parseInt(data.get("sub_category_id")), data.get("employeeId"));
+				.findAllTicketsBySubCategoryEmployee(Integer.parseInt(data.get("sub_category_id")), EmployeeService.getIdFromAuth(auth.getName()));
 	}
 
 	// accepts employeeId and returns all the tickets
-	@RequestMapping(
-					value = "get/empId",
-					method = RequestMethod.POST,
-					consumes = "application/json",
-					produces = "application/json")
-	public Iterable<Ticket> getAllTicketByEmployee(@RequestBody Map<String, String> data) {
+	@RequestMapping(value = "get/empId", produces = "application/json")
+	public Iterable<Ticket> getAllTicketByEmployee(Authentication auth) {
 
-		return ticketService.findAllTicketsByEmployee(data.get("employeeId"));
+		return ticketService.findAllTicketsByEmployee(EmployeeService.getIdFromAuth(auth.getName()));
 	}
 
 }

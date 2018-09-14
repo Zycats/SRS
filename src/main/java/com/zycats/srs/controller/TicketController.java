@@ -39,5 +39,10 @@ public class TicketController {
 	public Iterable<Ticket> getAllTicket() {
 		return ticketService.getAll();
 	}
+	
+	
+			
+	
+	
 
 }
