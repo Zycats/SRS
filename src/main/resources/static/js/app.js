@@ -1,5 +1,5 @@
 var srsApp = angular.module("srsApp", ['angular-loading-bar'])
-.config( [
+.config([
     '$compileProvider',
     function( $compileProvider )
     {   

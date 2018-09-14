@@ -59,7 +59,7 @@ public class TicketService implements ITicketService {
 		}
 
 	}
-	
+
 	@Override
 	public Iterable<Ticket> findAllTicketsByCategory(int category_id, String engineerId) {
 
@@ -71,7 +71,7 @@ public class TicketService implements ITicketService {
 		}
 
 	}
-	
+
 	@Override
 	public Iterable<Ticket> findAllTicketsBySubCategory(int sub_category_id, String engineerId) {
 
@@ -83,6 +83,17 @@ public class TicketService implements ITicketService {
 		}
 
 	}
-	
-	
+
+	@Override
+	public Iterable<Ticket> findAllTicketsByEmployee(String employeeId) {
+
+		try {
+			Employee employee = employeeService.getEmployeeById(employeeId);
+			return ticketRepository.findAllTicketsByEmployee(employee);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+
+	}
+
 }
