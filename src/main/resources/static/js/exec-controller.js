@@ -33,6 +33,14 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 		$scope.locData = response.data;
 	})
 	
+	$http({
+		url: "/rest/options/get/status",
+		method: "GET"
+	})
+	.then(function(response){
+		$scope.statusData = response.data;
+	})
+	
 	$scope.changeLocation = function($event){
 		var target = $event.currentTarget;
 		
@@ -130,6 +138,24 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 	})
 
 	$http({
+		url: "/rest/executive/get/engId",
+		method: "GET"
+	})
+	.then(function(response){
+		var issuesData = response.data;
+		console.log(issuesData);
+		
+		issuesData.forEach(function(data){
+			data.formattedTime = String(new Date(data.datetime));
+		});
+		
+		$scope.recentIssuesData = issuesData;
+		console.log($scope.recentIssuesData);
+		
+		
+	})
+	
+	$http({
 		url: "/rest/ticket/get/all",
 		method: "GET"
 	})
@@ -154,10 +180,28 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 			$scope.issuesData.forEach(function(data){
 				data['timeAgo'] = moment(new Date(data.datetime)).fromNow();
 			})
+			
+		if($scope.recentIssuesData != null && $scope.recentIssuesData.length > 0)
+			$scope.recentIssuesData.forEach(function(data){
+				data['timeAgo'] = moment(new Date(data.datetime)).fromNow();
+			})
+	}
+	
+	getComments = function(issue){
+		$http({
+			url : "rest/comment/get/ticket/"+issue.id,
+			method: "GET"
+		}).then(function(response){
+			$scope.commentData = response.data;
+		})
+		
 	}
 	
 	$scope.showSlider = function(issue){
 		$scope.issue = issue;
+		
+		getComments(issue);
+		
 		if ($(window).outerWidth() < 576)
 		{
 			$(".slider").css({
@@ -256,6 +300,23 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 				
 			})
 		}
+	}
+	
+	$scope.comment = function(issue){
+		console.log(issue, $scope.commentStatus, $scope.commentText);
+		
+		$http({
+			url: "/rest/comment/add",
+			method: "POST",
+			data: {
+				"ticket_id" : issue,
+				"statusFrom" : issue.status,
+				"statusTo" : $scope.commentStatus,
+				"message" : $scope.commentText
+			}
+		}).then(function(data){
+			console.log(data);
+		});
 	}
 	
 })

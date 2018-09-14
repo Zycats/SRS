@@ -21,17 +21,34 @@
 			SRS Report
 		</h1>
 		<hr>
-		
-		<br> Issue #Id: {{ issue.id }} 
-		<br> Date Time:  {{ issue.formattedTime }}
-		<br> Description:  {{ issue.description }}
-		<br> Category:  {{ issue.subCategory.name }}
-		<br> Type:  {{ issue.subCategory.issueType }}
-		<br> Raised By: {{ issue.employee.id }}
-		<br> Machine IP : {{ issue.employee.machineIp }}
-		<br> <a class="btn btn-primary" href="sip:{{ issue.employee.email }}">Skype</a>
-		<a class="btn btn-warning" href="mailto:{{issue.employee.email}}?subject=Regarding #{{issue.id}}:{{issue.description}} | {{issue.status}}&amp;body=Hi%2C%0A%0AThis%20is%20in%20regards%20with%20the%20SRS%20raised%20by%20you.%20Following%20are%20the%20details%20of%20SRS-%0A%0AId%3A {{issue.id}}%0ADate%20of%20raisal%3A {{issue.formattedTime}}%0ADescription%3A%09{{issue.description}}%0ACurrent%20Status%3A%09{{issue.status}}%0AEngineer%20Assigned%3A%09{{issue.engineer.email}}%0A">Send mail</a>
-		 
+
+		<br> Issue #Id: {{ issue.id }} <br> Date Time: {{
+		issue.formattedTime }} <br> Description: {{ issue.description }}
+		<br> Category: {{ issue.subCategory.name }} <br> Type: {{
+		issue.subCategory.issueType }} <br> Raised By: {{
+		issue.employee.id }} <br> Machine IP : {{
+		issue.employee.machineIp }} <br> <a class="btn btn-primary"
+			href="sip:{{ issue.employee.email }}">Skype</a> <a
+			class="btn btn-warning"
+			href="mailto:{{issue.employee.email}}?subject=Regarding #{{issue.id}}:{{issue.description}} | {{issue.status}}&amp;body=Hi%2C%0A%0AThis%20is%20in%20regards%20with%20the%20SRS%20raised%20by%20you.%20Following%20are%20the%20details%20of%20SRS-%0A%0AId%3A {{issue.id}}%0ADate%20of%20raisal%3A {{issue.formattedTime}}%0ADescription%3A%09{{issue.description}}%0ACurrent%20Status%3A%09{{issue.status}}%0AEngineer%20Assigned%3A%09{{issue.engineer.email}}%0A">Send
+			mail</a> <br> Comments:
+		<hr>
+		<div ng-repeat="comment in commentData">
+			<span><strong>{{comment.commentBy.id}}</strong></span> : <span>{{comment.message}}</span>&nbsp;&nbsp;
+			<small>{{comment.datetime}}</small><br>
+		</div>
+
+		<br>
+		<br> Comment :
+		<textarea rows="4" style="width: 100%;" ng-model="commentText"
+			id="commentText"></textarea>
+		<select class="form-control" ng-model="commentStatus"
+			id="commentStatus">
+			<option ng-repeat="status in statusData" value="{{status}}">{{status}}</option>
+		</select>
+		<button class="btn btn-success" ng-click="comment(issue)">Add
+			Comment</button>
+
 	</div>
 </body>
 </html>

@@ -81,7 +81,7 @@
 		</h1>
 		<hr>
 		<div class="row cards-container">
-			<div class="col-xl-4">
+				<div class="col-xl-4">
 				<div class="card text-white bg-info mb-3" style="max-width: 18rem;">
 					<div class="card-header">Issues Raised</div>
 					<div class="card-body icon-card-body">
@@ -91,11 +91,11 @@
 				</div>
 			</div>
 			<div class="col-xl-4">
-				<div class="card text-white bg-success mb-3"
+				<div class="card text-white bg-warning mb-3"
 					style="max-width: 18rem;">
-					<div class="card-header">Issues Resolved</div>
+					<div class="card-header">Issues On Hold</div>
 					<div class="card-body icon-card-body">
-						<i class="fas fa-check-circle mn-icon"></i> <span
+						<i class="fas fa-stopwatch mn-icon"></i> <span
 							class="info-title">10</span>
 					</div>
 				</div>
@@ -103,9 +103,28 @@
 			<div class="col-xl-4">
 				<div class="card text-white bg-danger mb-3"
 					style="max-width: 18rem;">
-					<div class="card-header">Unresolved Issues</div>
+					<div class="card-header">Issues Resolved</div>
 					<div class="card-body icon-card-body">
-						<i class="fas fa-exclamation-circle mn-icon"></i> <span
+						<i class="fas fa-check mn-icon"></i> <span
+							class="info-title">10</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-4">
+				<div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+					<div class="card-header">Issues Working On</div>
+					<div class="card-body icon-card-body">
+						<i class="fas fa-tasks mn-icon"></i> <span
+							class="info-title">20</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-4">
+				<div class="card text-black bg-default mb-3"
+					style="max-width: 18rem;">
+					<div class="card-header">Issues Unresolvable</div>
+					<div class="card-body icon-card-body">
+						<i class="fas fa-exclamation-triangle mn-icon"></i> <span
 							class="info-title">10</span>
 					</div>
 				</div>
@@ -114,34 +133,35 @@
 		<div class="card recent-card">
 			<div class="card-header recent-card-header">Recenlty Raised
 				Issues</div>
-			<div class="card-body table-card-body">
-				<table class="table table-striped table-bordered">
+			<form class="table-responsive">
+				<table class="table" id = "issuesTable">
 					<thead>
 						<tr>
-							<th>Token No</th>
+							<th></th>
+							<th>#Id</th>
 							<th>Description</th>
+							<th>Priority</th>
+							<th>Time of Ticket</th>
+							<th>Raised By</th>
 							<th>Status</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td><span class="tokenLink">1234</span></td>
-							<td>Internet is not working.</td>
-							<td>Unresolved</td>
-						</tr>
-						<tr>
-							<td><span class="tokenLink">1235</span></td>
-							<td>Install more ram</td>
-							<td>Resolved</td>
-						</tr>
-						<tr>
-							<td><span class="tokenLink">1236</span></td>
-							<td>Change the whole system</td>
-							<td>Unresolvable</td>
-						</tr>
+					<tr ng-repeat="issue in recentIssuesData">
+						<td>
+							<button  ng-if="issue.subCategory.issueType == 'INCIDENT'" ng-click="showSlider(issue)" class="btn btn-warning btn-tag">INCIDENT</button>
+							<button  ng-if="issue.subCategory.issueType == 'REQUEST'" ng-click="showSlider(issue)" class="btn btn-primary btn-tag">REQUEST</button>
+						</td>
+						<td>{{ issue.id }}</td>
+						<td>{{ issue.description }}</td>
+						<td>{{ issue.subCategory.issuePriority }}</td>
+						<td>{{ issue.timeAgo }}</td>
+						<td>{{ issue.employee.id }}</td>
+						<td>{{ issue.status }}</td>
+					</tr>
 					</tbody>
 				</table>
-			</div>
+			</form>
 		</div>
 	</div>
 

@@ -1,9 +1,13 @@
 package com.zycats.srs.service;
 
+import java.sql.Timestamp;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.zycats.srs.entity.Comment;
+import com.zycats.srs.entity.Employee;
 import com.zycats.srs.repository.CommentRepository;
 
 @Service
@@ -12,8 +16,14 @@ public class CommentService implements ICommentService {
 	@Autowired
 	private CommentRepository commentRepository;
 
+	@Autowired
+	private IEmployeeService employeeService;
+
 	@Override
-	public Comment add(Comment comment) {
+	public Comment add(Comment comment, Authentication auth) {
+		Employee employee = employeeService.getEmployeeById(EmployeeService.getIdFromAuth(auth.getName()));
+		comment.setCommentBy(employee);
+		comment.setDatetime(new Timestamp(new java.util.Date().getTime()));
 		return commentRepository.save(comment);
 	}
 
@@ -35,5 +45,10 @@ public class CommentService implements ICommentService {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public Iterable<Comment> getByTicketId(int ticketId) {
+		return commentRepository.getByTicketId(ticketId);
 	}
 }
