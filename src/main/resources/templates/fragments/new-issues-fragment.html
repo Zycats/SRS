@@ -14,27 +14,27 @@
 					<div class="col">
 						<div class="dropdown">
 							<button class="btn btn-info dropdown-toggle" type="button"
-								id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+								id="changeIssueCategoryButton" data-toggle="dropdown" aria-haspopup="true"
 								aria-expanded="false">Select Main Category</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-								<a class="dropdown-item" href="#!">Action</a> <a
-									class="dropdown-item" href="#!">Another action</a>
+								<a class="dropdown-item" ng-repeat="cat in categoryData"
+									ng-click="changeCategory($event)" id={{cat.id}}>{{cat.name}}</a>
 							</div>
 						</div>
 					</div>
 					<div class="col">
 						<div class="dropdown">
 							<button class="btn btn-info dropdown-toggle" type="button"
-								id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+								id="changeIssueSubCategoryButton" data-toggle="dropdown" aria-haspopup="true"
 								aria-expanded="false">Select Sub-Category</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-								<a class="dropdown-item" href="#!">Action</a> <a
-									class="dropdown-item" href="#!">Another action</a>
+							<a class="dropdown-item" ng-repeat="subCat in subCategoryData"
+									ng-click="changeSubCategory($event)" id={{subCat.id}}>{{subCat.name}}</a>
 							</div>
 						</div>
 					</div>
 					<div class="col row-submit">
-						<button class="btn btn-info submit-btn">Submit</button>
+						<button class="btn btn-info submit-btn" id="filter-btn" ng-click="filterData()">Submit</button>
 					</div>
 				</div>
 			</div>

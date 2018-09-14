@@ -18,6 +18,14 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 	})
 	
 	$http({
+		url: "/rest/issue-category/get/all",
+		method: "GET"
+	})
+	.then(function(response){
+		$scope.categoryData = response.data;
+	})
+	
+	$http({
 		url: "/rest/location/get/all",
 		method: "GET"
 	})
@@ -145,7 +153,6 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 		if($scope.issuesData != null && $scope.issuesData.length > 0)
 			$scope.issuesData.forEach(function(data){
 				data['timeAgo'] = moment(new Date(data.datetime)).fromNow();
-				console.log("updated scope time : ", $scope.issuesData);
 			})
 	}
 	
@@ -165,5 +172,91 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 		}
 		$("body").css("overflow", "hidden");
 	}
+	
+	
+	$scope.changeCategory = function($event){
+		var target = $event.currentTarget;
+		
+		$("#changeIssueCategoryButton").text(target.innerHTML);
+		$("#changeIssueSubCategoryButton").text("Select Sub-Category");
+		
+		for (cat of $scope.categoryData)
+		{
+			if (cat.id == target.id)
+			{
+				$scope.selectedCategory = cat;
+				$scope.subCategoryData = cat.issueSubCategories;
+				$scope.subCategory = null;
+				break;
+			}
+		}
+	}
+	
+	$scope.changeSubCategory = function($event){
+		var target = $event.currentTarget;
+		
+		for (subCat of $scope.subCategoryData)
+		{
+			if (subCat.id == target.id)
+			{
+				$scope.subCategory = subCat;
+				break;
+			}	
+		}
+		
+		$("#changeIssueSubCategoryButton").text(target.innerHTML);
+	}
+	
+	$scope.filterData = function(){
+		if($scope.selectedCategory == null)
+			return;
+		if($scope.subCategory == null){
+
+			$http({
+				url: "/rest/executive/get/category/engId",
+				method: "POST",
+				data: {
+					"category_id": $scope.selectedCategory.id
+				}
+			})
+			.then(function(response){
+				var issuesData = response.data;
+				console.log(issuesData);
+				
+				issuesData.forEach(function(data){
+					data.formattedTime = String(new Date(data.datetime));
+				});
+				
+				$scope.issuesData = issuesData;
+				console.log($scope.issuesData);
+				
+				
+			})
+		}
+		else{
+
+			$http({
+				url: "/rest/executive/get/sub_category/engId",
+				method: "POST",
+				data: {
+					"sub_category_id": $scope.subCategory.id
+				}
+			})
+			.then(function(response){
+				var issuesData = response.data;
+				console.log(issuesData);
+				
+				issuesData.forEach(function(data){
+					data.formattedTime = String(new Date(data.datetime));
+				});
+				
+				$scope.issuesData = issuesData;
+				console.log($scope.issuesData);
+				
+				
+			})
+		}
+	}
+	
 })
 
