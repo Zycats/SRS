@@ -5,8 +5,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,22 +25,20 @@ public class EmployeeRestController {
 
 	@Autowired
 	private IEmployeeService employeeService;
-	
-	@Autowired
-	private ITicketService ticketService ;
 
-	@MessageMapping("/employee/get")
-	@SendTo("topic/employee/observe")
+	@Autowired
+	private ITicketService ticketService;
+
 	@RequestMapping(value = "get", method = RequestMethod.GET)
 	public Employee getEmployee(HttpServletRequest request, Authentication auth) {
-		
+
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return employeeService.getEmployee(auth.getName(), request.getRemoteAddr());
 	}
 
@@ -70,14 +66,7 @@ public class EmployeeRestController {
 	public boolean deleteEmployee(Authentication auth) {
 		return employeeService.deleteEmployee(auth);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	// ticket related rest controls
 
 	// accepts status and employeeId and returns all the tickets
@@ -88,7 +77,9 @@ public class EmployeeRestController {
 					produces = "application/json")
 	public Iterable<Ticket> getAllTicketByStatus(@RequestBody Map<String, String> data, Authentication auth) {
 
-		return ticketService.findAllTicketsByStatusEmployee(Status.valueOf(data.get("status")),EmployeeService.getIdFromAuth(auth.getName()));
+		return ticketService.findAllTicketsByStatusEmployee(
+				Status.valueOf(data.get("status")),
+				EmployeeService.getIdFromAuth(auth.getName()));
 	}
 
 	// accepts category and employeeId and returns all the tickets
@@ -99,8 +90,9 @@ public class EmployeeRestController {
 					produces = "application/json")
 	public Iterable<Ticket> getAllTicketByCategory(@RequestBody Map<String, String> data, Authentication auth) {
 
-		return ticketService
-				.findAllTicketsByCategoryEmployee(Integer.parseInt(data.get("category_id")), EmployeeService.getIdFromAuth(auth.getName()));
+		return ticketService.findAllTicketsByCategoryEmployee(
+				Integer.parseInt(data.get("category_id")),
+				EmployeeService.getIdFromAuth(auth.getName()));
 	}
 
 	// accepts sub_category and employeeId and returns all the tickets
@@ -109,10 +101,11 @@ public class EmployeeRestController {
 					method = RequestMethod.POST,
 					consumes = "application/json",
 					produces = "application/json")
-	public Iterable<Ticket> getAllTicketBySubCategory(@RequestBody Map<String, String> data,Authentication auth) {
+	public Iterable<Ticket> getAllTicketBySubCategory(@RequestBody Map<String, String> data, Authentication auth) {
 
-		return ticketService
-				.findAllTicketsBySubCategoryEmployee(Integer.parseInt(data.get("sub_category_id")), EmployeeService.getIdFromAuth(auth.getName()));
+		return ticketService.findAllTicketsBySubCategoryEmployee(
+				Integer.parseInt(data.get("sub_category_id")),
+				EmployeeService.getIdFromAuth(auth.getName()));
 	}
 
 	// accepts employeeId and returns all the tickets
@@ -121,20 +114,21 @@ public class EmployeeRestController {
 
 		return ticketService.findAllTicketsByEmployee(EmployeeService.getIdFromAuth(auth.getName()));
 	}
-	
-	
+
 	// accepts employeeId and returns no. of the tickets
-			@RequestMapping(value = "get/ticket-no", produces = "application/json")
-			public Object getAllTicketNo(Authentication auth) {
+	@RequestMapping(value = "get/ticket-no", produces = "application/json")
+	public Object getAllTicketNo(Authentication auth) {
 
-				return ticketService.getNoOfIssues(EmployeeService.getIdFromAuth(auth.getName()));
-			}
-			
-			// accepts employeeId and returns no. of the tickets having some status
-			@RequestMapping(value = "get/status/ticket-no", produces = "application/json")
-			public Object getAllTicketNoByStatusEmployee(@RequestBody Map<String, String> data,Authentication auth) {
+		return ticketService.getNoOfIssues(EmployeeService.getIdFromAuth(auth.getName()));
+	}
 
-				return ticketService.getNoOfIssuesByStatusEmployee(Status.valueOf(data.get("status")), EmployeeService.getIdFromAuth(auth.getName()));
-			}
+	// accepts employeeId and returns no. of the tickets having some status
+	@RequestMapping(value = "get/status/ticket-no", produces = "application/json")
+	public Object getAllTicketNoByStatusEmployee(@RequestBody Map<String, String> data, Authentication auth) {
+
+		return ticketService.getNoOfIssuesByStatusEmployee(
+				Status.valueOf(data.get("status")),
+				EmployeeService.getIdFromAuth(auth.getName()));
+	}
 
 }
