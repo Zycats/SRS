@@ -43,18 +43,30 @@
 		</div>
 		<div class="card recent-card">
 			<div class="card-body table-card-body">
+				<h3 id="recentId">Recently Raised Issues</h3>
 				<table class="table table-striped recent-table table-curved">
 					<thead>
 						<tr>
 							<th>Classification</th>
-							<th>Token No</th>
+							<th>#Id</th>
 							<th>Description</th>
+							<th>Priority</th>
+							<th>Time of Ticket</th>
 							<th>Assigned Engineer</th>
 							<th>Status</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
+						<tr ng-repeat="recent in recentSrs" ng-cloak>
+							<td><button class= ng-click="showSlider(recent)">{{recent.subCategory.issueType}}</button></td>
+							<td><span class="tokenLink" >{{recent.id}}</span></td>
+							<td class="description">{{recent.description}}</td>
+							<td>{{recent.subCategory.issuePriority}}</td>
+							<td>{{recent.timeAgo}}</td>
+							<td>{{recent.engineer.id}}</td>
+							<td>{{recent.status}}</td>
+						</tr>
+						<!--<tr>
 							<td><button class="btn btn-warning btn-sm">Incident</button></td>
 							<td><span class="tokenLink">1234</span></td>
 							<td class="description">Internet is not working. Internet is not working. Internet is not working. Internet is not working. Internet is not working. Internet is not working. Internet is not working.</td>
@@ -71,7 +83,7 @@
 							<td><span class="tokenLink">1236</span></td>
 							<td>Change the whole system</td>
 							<td>Unresolvable</td>
-						</tr>
+						</tr> -->
 					</tbody>
 				</table>
 			</div>

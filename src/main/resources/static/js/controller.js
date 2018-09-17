@@ -1,4 +1,4 @@
-srsApp.controller("userController", function($scope, $q, $http){
+srsApp.controller("userController", function($scope, $http){
 	
 	$scope.srsErrorShow = false;
 	$scope.srsSuccessShow = false;
@@ -16,6 +16,7 @@ srsApp.controller("userController", function($scope, $q, $http){
 		}
 		else
 		{
+			$scope.loadRecentSRS();
 			$scope.loadSrsData();
 		}
 	
@@ -220,6 +221,60 @@ srsApp.controller("userController", function($scope, $q, $http){
 				$scope.srsSuccess = "Your SRS has been raised successfully with #ID: " + response.data.id;
 			})
 		}
+	}
+	
+	$scope.loadRecentSRS = function(){
+		$http({
+			url: "/rest/employee/get/empId",
+			method: "GET"
+		})
+		.then(function(response){
+			$scope.recentSrs = response.data;
+			for (recent of $scope.recentSrs)
+			{
+				if (recent.engineer == null)
+				{
+					recent.engineer = {
+							"id": "Not Assigned."
+					}
+				}
+			}
+			getTimeAgo();
+		})
+	}
+	
+	function getTimeAgo(){
+		if($scope.recentSrs != null && $scope.recentSrs.length > 0)
+			$scope.recentSrs.forEach(function(data){
+				data['timeAgo'] = moment(new Date(data.datetime)).fromNow();
+				if (data.subCategory.issuePriority == "INCIDENT")
+				{
+					data["class"] = "btn btn-warning btn-sm";
+				}
+				else
+				{
+					data["class"] = "btn btn-primary btn-sm";
+				}
+				console.log("updated scope time : ", $scope.recentSrs);
+			})
+	}
+	
+	$scope.showSlider = function(recent){
+		
+		if ($(window).outerWidth() < 576)
+		{
+			$(".slider").css({
+				"left": "0"
+			});
+		}
+		else
+		{
+			$(".slider").css({
+				"left": "30%",
+			});
+		}
+		$("body").css("overflow", "hidden");
+		
 	}
 	
 })

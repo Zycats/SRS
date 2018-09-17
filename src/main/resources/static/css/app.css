@@ -117,7 +117,7 @@ div.recent-card {
     white-space: nowrap;
 }
 td.description{
-	width: 60%;
+	width: 45%;
 }
 .recent-card-header {
 	border: 1px solid rgba(0, 0, 0, 0.125);
@@ -208,6 +208,13 @@ input[type=text]{
 }
 .alert-srs-error, .alert-srs-success{
 	display: block;
+}
+.btn-sm{
+	font-size: 12px;
+}
+h3#recentId{
+	font-size: 20px;
+	margin-bottom: 20px;
 }
 @media only screen and (max-width: 576px) {
 	div.slider{
