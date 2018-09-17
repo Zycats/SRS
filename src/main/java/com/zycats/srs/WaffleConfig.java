@@ -1,15 +1,8 @@
 package com.zycats.srs;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import waffle.servlet.spi.BasicSecurityFilterProvider;
 import waffle.servlet.spi.NegotiateSecurityFilterProvider;
@@ -17,6 +10,7 @@ import waffle.servlet.spi.SecurityFilterProvider;
 import waffle.servlet.spi.SecurityFilterProviderCollection;
 import waffle.spring.NegotiateSecurityFilter;
 import waffle.spring.NegotiateSecurityFilterEntryPoint;
+import waffle.spring.WindowsAuthenticationProvider;
 import waffle.windows.auth.impl.WindowsAuthProviderImpl;
 
 @Configuration
@@ -74,5 +68,13 @@ public class WaffleConfig {
 		registrationBean.setEnabled(false);
 		return registrationBean;
 	}
-
+	
+	@Bean
+    public WindowsAuthenticationProvider windowsAuthenticationProvider(final WindowsAuthProviderImpl windowsAuthProvider) {
+     WindowsAuthenticationProvider provider = new WindowsAuthenticationProvider();
+     provider.setAuthProvider(windowsAuthProvider);
+     return provider;
+    }
+	
+	 
 }

@@ -316,6 +316,12 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 			}
 		}).then(function(data){
 			console.log(data);
+			getComments(issue);
+			$scope.issuesData.forEach(function(i){
+				if(i.id == issue.id){
+					i.status = data.data.statusTo;
+				}
+			})
 		});
 	}
 	

@@ -7,8 +7,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.zycats.srs.entity.Employee;
+import com.zycats.srs.entity.Role;
 import com.zycats.srs.entity.Status;
 import com.zycats.srs.entity.Ticket;
+import com.zycats.srs.exception.InsufficientPriviledgesException;
 import com.zycats.srs.repository.TicketRepository;
 
 @Service
@@ -149,7 +151,31 @@ public class TicketService implements ITicketService {
 		}
 
 	}
+
 	
 	
+// general service for Employee	
+	@Override
+	public Integer getNoOfIsseuesByStatusEmployee(Status status, String employeeId) {
+		
+		return null;
+	}
+
+
+	// general service for Engineer
+	@Override
+	public Object getNoOfIsseuesByStatusEngineer() {
+		
+		return ticketRepository.getNoOfTickets();
+	}
+
+	@Override
+	public Ticket update(Ticket ticket, Authentication auth) throws InsufficientPriviledgesException {
+		if (!(employeeService.getEmployeeById(EmployeeService.getIdFromAuth(auth.getName())).getRole().equals(
+				Role.EXECUTIVE))) {
+			throw new InsufficientPriviledgesException("Only " + Role.EXECUTIVE + " is allowed to update ticket");
+		}
+		return ticketRepository.save(ticket);
+	}
 
 }

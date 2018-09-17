@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import waffle.spring.NegotiateSecurityFilter;
 import waffle.spring.NegotiateSecurityFilterEntryPoint;
+import waffle.spring.WindowsAuthenticationProvider;
 
 @Configuration
 @ComponentScan(basePackages = { "com.zycats.srs.controller", "com.zycats.srs.service" })
@@ -26,6 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private NegotiateSecurityFilterEntryPoint entryPoint;
+	
+	@Autowired
+	private WindowsAuthenticationProvider windowsAuthenticationProvider;
 	
 
 	@Override
@@ -46,6 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authenticationEntryPoint(entryPoint)
 				.and()
 				.addFilterBefore(negotiateSecurityFilter, BasicAuthenticationFilter.class)
+				.authenticationProvider(windowsAuthenticationProvider)
+				.formLogin().and()
 				.csrf()
 				.disable();
 		

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zycats.srs.entity.Comment;
+import com.zycats.srs.exception.InsufficientPriviledgesException;
 import com.zycats.srs.service.ICommentService;
 
 @RestController
@@ -19,7 +20,8 @@ public class CommentController {
 	private ICommentService commentService;
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
-	public Comment addComment(@RequestBody Comment comment, Authentication auth) {
+	public Comment addComment(@RequestBody Comment comment, Authentication auth)
+			throws InsufficientPriviledgesException {
 		return commentService.add(comment, auth);
 	}
 
