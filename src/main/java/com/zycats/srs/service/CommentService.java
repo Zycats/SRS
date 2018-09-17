@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.zycats.srs.entity.Comment;
 import com.zycats.srs.entity.Employee;
+import com.zycats.srs.exception.InsufficientPriviledgesException;
 import com.zycats.srs.repository.CommentRepository;
 
 @Service
@@ -17,13 +18,18 @@ public class CommentService implements ICommentService {
 	private CommentRepository commentRepository;
 
 	@Autowired
+	private ITicketService ticketService;
+
+	@Autowired
 	private IEmployeeService employeeService;
 
 	@Override
-	public Comment add(Comment comment, Authentication auth) {
+	public Comment add(Comment comment, Authentication auth) throws InsufficientPriviledgesException {
 		Employee employee = employeeService.getEmployeeById(EmployeeService.getIdFromAuth(auth.getName()));
 		comment.setCommentBy(employee);
 		comment.setDatetime(new Timestamp(new java.util.Date().getTime()));
+		comment.getTicket().setStatus(comment.getStatusTo());
+		ticketService.update(comment.getTicket(), auth);
 		return commentRepository.save(comment);
 	}
 

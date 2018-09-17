@@ -88,6 +88,7 @@ public class Comment {
 		return ticket;
 	}
 
+	@JsonProperty
 	public void setTicket(Ticket ticket) {
 		this.ticket = ticket;
 	}
