@@ -327,3 +327,25 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 	
 })
 
+var stompClient = null;
+
+
+function connect() {
+    var socket = new SockJS('/srs-websocket');
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/topic/employee/observe', function (response) {
+            console.log(JSON.parse(response));
+        });
+        stompClient.send("/app/employee/get");
+    });
+    
+}
+
+function sendReq(){
+	
+}
+
+connect();
+sendReq();

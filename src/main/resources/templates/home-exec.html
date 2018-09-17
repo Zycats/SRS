@@ -25,7 +25,8 @@
 <script th:src="@{/js/main.js}"></script>
 </head>
 <body>
-	<div class="container-fluid main-container" ng-app="srsApp" ng-controller="dashboardController">
+	<div class="container-fluid main-container" ng-app="srsApp"
+		ng-controller="dashboardController">
 		<div class="navbarContainer"
 			th:insert="fragments/navbar-fragment2 :: navbar-exec"></div>
 		<div class="container inner-container">
@@ -40,14 +41,18 @@
 				</div>
 			</div>
 		</div>
-		<div class="modalContainer" th:insert="fragments/modal-fragment :: modal"></div>
-	<div class="slider"
-		th:insert="fragments/slider-fragment :: sliderFragment-exec"></div>
+		<div class="modalContainer"
+			th:insert="fragments/modal-fragment :: modal"></div>
+		<div class="slider"
+			th:insert="fragments/slider-fragment :: sliderFragment-exec"></div>
 	</div>
 	<script src="https://code.angularjs.org/1.7.4/angular.js"></script>
-	<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.js'></script>
+	<script type='text/javascript'
+		src='https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.js'></script>
 	<script th:src="@{/js/app.js}"></script>
 	<script th:src="@{/js/moment.js}"></script>
+	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
 	<script th:src="@{/js/exec-controller.js}"></script>
 </body>
 </html>

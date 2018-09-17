@@ -8,6 +8,7 @@ srsApp.controller("userController", function($scope, $http){
 		method: "GET"
 	})
 	.then(function success(response){
+		
 		$scope.empData = response.data;
 		
 		if ($scope.empData.firstLogin)
@@ -170,8 +171,12 @@ srsApp.controller("userController", function($scope, $http){
 				method: "GET"
 			})
 			.then(function success(response){
+				var tmp = response.data.employee.id.split(".")[0];
+				response.data.employee.displayName = tmp[0].toUpperCase() + tmp.substr(1);
+				
 				$scope.empData = response.data;
 				console.log($scope.empData);
+				
 			}, function error(response){
 				console.log(response);
 				
