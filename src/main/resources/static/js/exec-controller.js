@@ -309,13 +309,19 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 			url: "/rest/comment/add",
 			method: "POST",
 			data: {
-				"ticket_id" : issue,
+				"ticket" : issue,
 				"statusFrom" : issue.status,
 				"statusTo" : $scope.commentStatus,
 				"message" : $scope.commentText
 			}
 		}).then(function(data){
 			console.log(data);
+			getComments(issue);
+			$scope.issuesData.forEach(function(i){
+				if(i.id == issue.id){
+					i.status = data.data.statusTo;
+				}
+			})
 		});
 	}
 	

@@ -7,8 +7,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.zycats.srs.entity.Employee;
+import com.zycats.srs.entity.Role;
 import com.zycats.srs.entity.Status;
 import com.zycats.srs.entity.Ticket;
+import com.zycats.srs.exception.InsufficientPriviledgesException;
 import com.zycats.srs.repository.TicketRepository;
 
 @Service
@@ -49,7 +51,7 @@ public class TicketService implements ITicketService {
 	}
 
 	/// ----------- Engineer Services ------------------/////////////////
-	
+
 	@Override
 	public Iterable<Ticket> findAllTicketsByEngineer(String engineerId) {
 
@@ -61,8 +63,7 @@ public class TicketService implements ITicketService {
 		}
 
 	}
-	
-	
+
 	@Override
 	public Iterable<Ticket> findAllTicketsByStatusEngineer(Status status, String engineerId) {
 
@@ -98,9 +99,8 @@ public class TicketService implements ITicketService {
 		}
 
 	}
-	
-	
-	///--------------- Employee Services --------------////////////
+
+	/// --------------- Employee Services --------------////////////
 
 	@Override
 	public Iterable<Ticket> findAllTicketsByEmployee(String employeeId) {
@@ -113,7 +113,7 @@ public class TicketService implements ITicketService {
 		}
 
 	}
-	
+
 	@Override
 	public Iterable<Ticket> findAllTicketsByStatusEmployee(Status status, String employeeId) {
 
@@ -149,7 +149,14 @@ public class TicketService implements ITicketService {
 		}
 
 	}
-	
-	
+
+	@Override
+	public Ticket update(Ticket ticket, Authentication auth) throws InsufficientPriviledgesException {
+		if (!(employeeService.getEmployeeById(EmployeeService.getIdFromAuth(auth.getName())).getRole().equals(
+				Role.EXECUTIVE))) {
+			throw new InsufficientPriviledgesException("Only " + Role.EXECUTIVE + " is allowed to update ticket");
+		}
+		return ticketRepository.save(ticket);
+	}
 
 }
