@@ -230,36 +230,33 @@ srsApp.controller("userController", function($scope, $http){
 		})
 		.then(function(response){
 			$scope.recentSrs = response.data;
-			for (recent of $scope.recentSrs)
-			{
-				if (recent.engineer == null)
+			
+			$scope.recentSrs.forEach(function(data){
+				data.formattedTime = String(new Date(data.datetime));
+				if (data.engineer == null)
 				{
-					recent.engineer = {
-							"id": "Not Assigned."
+					data.engineer = {
+						"id": "Not Assigned."
 					}
 				}
-			}
+			});
+
 			getTimeAgo();
 		})
 	}
+	
 	
 	function getTimeAgo(){
 		if($scope.recentSrs != null && $scope.recentSrs.length > 0)
 			$scope.recentSrs.forEach(function(data){
 				data['timeAgo'] = moment(new Date(data.datetime)).fromNow();
-				if (data.subCategory.issuePriority == "INCIDENT")
-				{
-					data["class"] = "btn btn-warning btn-sm";
-				}
-				else
-				{
-					data["class"] = "btn btn-primary btn-sm";
-				}
 				console.log("updated scope time : ", $scope.recentSrs);
 			})
 	}
 	
 	$scope.showSlider = function(recent){
+		
+		$scope.issue = recent;
 		
 		if ($(window).outerWidth() < 576)
 		{

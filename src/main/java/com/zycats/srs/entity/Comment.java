@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
 @Table(name = "TBL_COMMENT")
@@ -30,7 +32,7 @@ public class Comment {
 
 	@ManyToOne
 	@JoinColumn(name = "ticket_id")
-	@JsonIgnore
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private Ticket ticket;
 
 	public int getId() {
@@ -81,6 +83,7 @@ public class Comment {
 		this.statusTo = statusTo;
 	}
 
+	@JsonIgnore
 	public Ticket getTicket() {
 		return ticket;
 	}

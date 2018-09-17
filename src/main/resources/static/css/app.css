@@ -190,7 +190,9 @@ input[type=text]{
 }
 .tokenLink{
 	color: #007bff;
-	cursor: pointer;
+}
+.idTd{
+	text-align: center;
 }
 .modalForm{
 	box-shadow: none;
@@ -216,6 +218,10 @@ h3#recentId{
 	font-size: 20px;
 	margin-bottom: 20px;
 }
+.view-btn{
+	float: right;
+	font-size: 11px;
+}
 @media only screen and (max-width: 576px) {
 	div.slider{
 		width: 100%;
@@ -224,5 +230,5 @@ h3#recentId{
 }
 .btn-tag{
 	font-size: 10px!important;
-	margin-top: -5px!important;
+	width: 100%;
 }

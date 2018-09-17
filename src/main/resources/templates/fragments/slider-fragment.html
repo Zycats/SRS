@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 </head>
 <body>
-	<div th:fragment="sliderFragment">
+	<!-- 	<div th:fragment="sliderFragment">
 		<h1 class="srs-heading">
 			<button class="btn btn-success btn-circle back-btn">
 				<i class="fas fa-chevron-right"></i>
@@ -12,25 +12,69 @@
 			SRS Report
 		</h1>
 		<hr>
-	</div>
+	</div> -->
 	<div th:fragment="sliderFragment-exec">
 		<h1 class="srs-heading">
 			<button class="btn btn-success btn-circle back-btn">
 				<i class="fas fa-chevron-right"></i>
 			</button>
-			SRS Report
+			SRS Report #{{issue.id}}
 		</h1>
 		<hr>
-		
-		<br> Issue #Id: {{ issue.id }} 
-		<br> Date Time:  {{ issue.formattedTime }}
-		<br> Description:  {{ issue.description }}
-		<br> Category:  {{ issue.subCategory.name }}
-		<br> Type:  {{ issue.subCategory.issueType }}
-		<br> Raised By: {{ issue.employee.id }}
-		<br> Machine IP : {{ issue.employee.machineIp }}
-		<br> <a class="btn btn-primary" href="sip:{{ issue.employee.email }}">Skype {{ issue.employee.id }}</a>
-		 
+		<div class="container-fluid srs-details">
+			<div class="row">
+				<div class="col-xl-3">Issue #Id:</div>
+				<div class="col-xl-9">{{ issue.id }}</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-3"> Date Time:</div>
+				<div class="col-xl-9">{{ issue.formattedTime }}</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-3">Description:</div>
+				<div class="col-xl-9">{{ issue.description }}</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-3">Category:</div>
+				<div class="col-xl-9">{{ issue.subCategory.name }}</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-3">Type:</div>
+				<div class="col-xl-9">{{ issue.subCategory.issueType }}</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-3">Raised By:</div>
+				<div class="col-xl-9">{{ issue.employee.id }}</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-4">Machine IP:</div>
+				<div class="col-xl-8">{{issue.employee.machineIp }}</div>
+			</div>
+		</div>
+		 <a class="btn btn-primary"
+			href="sip:{{ issue.employee.email }}">Skype</a> <a
+			class="btn btn-warning"
+			href="mailto:{{issue.employee.email}}?subject=Regarding #{{issue.id}}:{{issue.description}} | {{issue.status}}&amp;body=Hi%2C%0A%0AThis%20is%20in%20regards%20with%20the%20SRS%20raised%20by%20you.%20Following%20are%20the%20details%20of%20SRS-%0A%0AId%3A {{issue.id}}%0ADate%20of%20raisal%3A {{issue.formattedTime}}%0ADescription%3A%09{{issue.description}}%0ACurrent%20Status%3A%09{{issue.status}}%0AEngineer%20Assigned%3A%09{{issue.engineer.email}}%0A">Send
+			mail</a> <br> Comments:
+		<hr>
+		<div ng-repeat="comment in commentData">
+			<span><strong>{{comment.commentBy.id}}</strong></span> : <span>{{comment.message}}</span>&nbsp;&nbsp;
+			<small>{{comment.datetime}}</small><br>
+		</div>
+
+		<br> <br>
+		<div ng-if="empData.role == 'EXECUTIVE'" class="newCommentBox">
+			Comment :
+			<textarea rows="4" style="width: 100%;" ng-model="commentText"
+				id="commentText"></textarea>
+			<select class="form-control" ng-model="commentStatus"
+				id="commentStatus">
+				<option ng-repeat="status in statusData" value="{{status}}">{{status}}</option>
+			</select>
+			<button class="btn btn-success" ng-click="comment(issue)">Add
+				Comment</button>
+		</div>
+
 	</div>
 </body>
 </html>
