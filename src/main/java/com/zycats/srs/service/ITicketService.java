@@ -37,13 +37,20 @@ public interface ITicketService {
 
 	Iterable<Ticket> findAllTicketsBySubCategoryEmployee(int sub_category_id, String employeeId);
 	
+////////////////////////////	
 	
-	// general method For Employee
+	Object getNoOfIssues(String employeeId);
 	
-	Integer getNoOfIsseuesByStatusEmployee(Status status,String employeeId); 
+	Object getNoOfIssues();
+	
+////////////////////////////	
+	// general methods For Employee
+	
+	Object getNoOfIssuesByStatusEmployee(Status status,String employeeId); 
 	
 	
-	//general method for Engineer
-	
-	Object getNoOfIsseuesByStatusEngineer();
+	//general methods for Engineer
+
+	Object getNoOfIssuesByStatusEngineer(Status status, String employeeId);
+
 }

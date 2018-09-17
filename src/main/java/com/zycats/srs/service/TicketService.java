@@ -153,22 +153,54 @@ public class TicketService implements ITicketService {
 	}
 
 	
+// returns total no. of issues / tickets
+	@Override
+	public Object getNoOfIssues(){
+		return ticketRepository.getNoOfTickets();
+	}
+	
+	
+	
+	@Override
+	public Object getNoOfIssues(String employeeId){
+		try{
+			Employee employee = employeeService.getEmployeeById(employeeId);
+			return ticketRepository.getNoOfTicketsByEmployee(employee);
+		}catch (IllegalArgumentException e) {
+			return null;
+		}
+		
+	}
+	
 	
 // general service for Employee	
 	@Override
-	public Integer getNoOfIsseuesByStatusEmployee(Status status, String employeeId) {
+	public Object getNoOfIssuesByStatusEmployee(Status status, String employeeId) {
 		
-		return null;
+		try {
+			Employee employee = employeeService.getEmployeeById(employeeId);
+			return ticketRepository.getNoOfTicketsByStatusEmployee(status, employee);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
 	}
 
-
+	
+//------------------------------------------------------------------------------------------------///////	
+	
 	// general service for Engineer
 	@Override
-	public Object getNoOfIsseuesByStatusEngineer() {
+	public Object getNoOfIssuesByStatusEngineer(Status status , String employeeId) {
 		
-		return ticketRepository.getNoOfTickets();
+		try {
+			Employee engineer = employeeService.getEmployeeById(employeeId);
+			return ticketRepository.getNoOfTicketsByStatusEngineer(status, engineer);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
 	}
 
+	
 	@Override
 	public Ticket update(Ticket ticket, Authentication auth) throws InsufficientPriviledgesException {
 		if (!(employeeService.getEmployeeById(EmployeeService.getIdFromAuth(auth.getName())).getRole().equals(

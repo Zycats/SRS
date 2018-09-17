@@ -49,6 +49,24 @@ public interface TicketRepository extends CrudRepository<Ticket, Integer> {
 			@Param("employee") Employee employee);
 	
 	
-	@Query(value = "SELECT COUNT(t.id) as demo FROM Ticket t")
+//-------------------------------------------------COUNTS ---------------------------------------------------////	
+	
+	// -- ticket count queries ----------///
+	@Query(value = "SELECT COUNT(t.id) FROM Ticket t")
 	Object getNoOfTickets();
+	
+		//---- Executive Related Queries----------//////
+	@Query(value = "SELECT COUNT(t.id) FROM Ticket t where t.status = :enumStatus and t.engineer = :engineer")
+	Object getNoOfTicketsByStatusEngineer(@Param("enumStatus") Status status,
+			@Param("engineer") Employee engineer);
+	
+	//---- Employee Related Queries----------//////
+	
+	@Query(value = "SELECT COUNT(t.id) FROM Ticket t WHERE t.employee = :employee")
+	Object getNoOfTicketsByEmployee(@Param("employee") Employee employee);
+	
+	@Query(value = "SELECT COUNT(t.id) FROM Ticket t where t.status = :enumStatus and t.employee = :employee")
+	Object getNoOfTicketsByStatusEmployee(@Param("enumStatus") Status status,
+			@Param("employee") Employee employee);
+	
 }

@@ -1,21 +1,95 @@
 srsApp.controller("dashboardController", function($scope, $http, $interval){
 	$scope.issuesData = [];
-	
 	$http({
 		url: "/rest/employee/get",
 		method: "GET"
 	})
 	.then(function success(response){
 		$scope.empData = response.data;
-		
+		console.log($scope.empData.role)
 		if ($scope.empData.firstLogin)
 		{
 			$("#firstLoginModal").modal("show");
 		}
+		var role = ($scope.empData.role).toLowerCase();
+		
+		$http({
+			url : "/rest/"+role+"/get/ticket-no",
+			method : "POST"
+			
+		}).then(function success(response){
+			
+			console.log("this are issues : "+response.data)
+			$scope.issuesRaised = response.data;
+		})
+		
+		$http({
+			url : "/rest/"+role+"/get/status/ticket-no",
+			method : "POST",
+			data : {
+				"status" : "ONHOLD"
+			}	
+			
+		}).then(function success(response){
+			
+			console.log("this are issues : "+response.data)
+			$scope.issuesOnHold = response.data;
+		})
+		
+		$http({
+			url : "/rest/"+role+"/get/status/ticket-no",
+			method : "POST",
+			data : {
+				"status" : "CLOSED"
+			}	
+			
+		}).then(function success(response){
+			
+			console.log("this are issues : "+response.data)
+			$scope.issuesResolved = response.data;
+		})
+		
+		$http({
+			url : "/rest/"+role+"/get/status/ticket-no",
+			method : "POST",
+			data : {
+				"status" : "WORKING"
+			}	
+			
+		}).then(function success(response){
+			
+			console.log("this are issues : "+response.data)
+			$scope.issuesWorkingOn = response.data;
+		})
+		
+		$http({
+			url : "/rest/"+role+"/get/status/ticket-no",
+			method : "POST",
+			data : {
+				"status" : "UNRESOLVABLE"
+			}	
+			
+		}).then(function success(response){
+			
+			console.log("this are issues : "+response.data)
+			$scope.issuesUnresolvable = response.data;
+		})	
+		
+		
+		
+		
 	
 	}, function error(response){
 		console.log(response);
 	})
+	
+	
+	
+
+	
+	
+	
+	
 	
 	$http({
 		url: "/rest/issue-category/get/all",
