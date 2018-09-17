@@ -48,4 +48,7 @@ public interface TicketRepository extends CrudRepository<Ticket, Integer> {
 	List<Ticket> findAllTicketsBySubCategoryEmployee(@Param("sub_category_id") int sub_category_id,
 			@Param("employee") Employee employee);
 	
+	
+	@Query(value = "SELECT COUNT(t.id) as demo FROM Ticket t")
+	Object getNoOfTickets();
 }

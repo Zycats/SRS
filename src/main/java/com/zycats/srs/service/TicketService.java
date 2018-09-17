@@ -149,6 +149,23 @@ public class TicketService implements ITicketService {
 		}
 
 	}
+
+	
+	
+// general service for Employee	
+	@Override
+	public Integer getNoOfIsseuesByStatusEmployee(Status status, String employeeId) {
+		
+		return null;
+	}
+
+
+	// general service for Engineer
+	@Override
+	public Object getNoOfIsseuesByStatusEngineer() {
+		
+		return ticketRepository.getNoOfTickets();
+	}
 	
 	
 

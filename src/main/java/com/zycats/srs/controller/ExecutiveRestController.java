@@ -66,5 +66,12 @@ public class ExecutiveRestController {
 		}
 	
 	
+		// accepts employeeId and returns all the tickets
+				@RequestMapping(value = "get/ticketNo/engId", produces = "application/json")
+				public Object getAllTicketNoByEmployee(Authentication auth) {
+
+					return ticketService.getNoOfIsseuesByStatusEngineer();
+				}
+			
 		
 }
