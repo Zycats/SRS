@@ -121,5 +121,20 @@ public class EmployeeRestController {
 
 		return ticketService.findAllTicketsByEmployee(EmployeeService.getIdFromAuth(auth.getName()));
 	}
+	
+	
+	// accepts employeeId and returns no. of the tickets
+			@RequestMapping(value = "get/ticket-no", produces = "application/json")
+			public Object getAllTicketNo(Authentication auth) {
+
+				return ticketService.getNoOfIssues(EmployeeService.getIdFromAuth(auth.getName()));
+			}
+			
+			// accepts employeeId and returns no. of the tickets having some status
+			@RequestMapping(value = "get/status/ticket-no", produces = "application/json")
+			public Object getAllTicketNoByStatusEmployee(@RequestBody Map<String, String> data,Authentication auth) {
+
+				return ticketService.getNoOfIssuesByStatusEmployee(Status.valueOf(data.get("status")), EmployeeService.getIdFromAuth(auth.getName()));
+			}
 
 }

@@ -25,6 +25,48 @@ srsApp.controller("userController", function($scope, $http){
 		console.log(response);
 	})
 	
+// ----- ticket counts for employee-------------///	
+		$http({
+			url : "/rest/employee/get/ticket-no",
+			method : "POST"
+			
+		}).then(function success(response){
+			
+			console.log("this are issues : "+response.data)
+			$scope.issuesRaised = response.data;
+		})
+				
+		$http({
+			url : "/rest/employee/get/status/ticket-no",
+			method : "POST",
+			data : {
+				"status" : "CLOSED"
+			}	
+			
+		}).then(function success(response){
+			
+			console.log("this are issues : "+response.data)
+			$scope.issuesResolved = response.data;
+		})
+		
+		$http({
+			url : "/rest/employee/get/status/ticket-no",
+			method : "POST",
+			data : {
+				"status" : "UNRESOLVABLE"
+			}	
+			
+		}).then(function success(response){
+			
+			console.log("this are issues : "+response.data)
+			$scope.issuesUnresolvable = response.data;
+		})
+		
+//------------------------------------------------------------------------		
+	
+	
+	
+	
 	$http({
 		url: "/rest/location/get/all",
 		method: "GET"

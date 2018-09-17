@@ -60,18 +60,25 @@ public class ExecutiveRestController {
 
 		// accepts employeeId and returns all the tickets
 		@RequestMapping(value = "get/engId", produces = "application/json")
-		public Iterable<Ticket> getAllTicketByEmployee(Authentication auth) {
+		public Iterable<Ticket> getAllTicketByEngineer(Authentication auth) {
 
 			return ticketService.findAllTicketsByEngineer(EmployeeService.getIdFromAuth(auth.getName()));
 		}
 	
 	
 		// accepts employeeId and returns all the tickets
-				@RequestMapping(value = "get/ticketNo/engId", produces = "application/json")
-				public Object getAllTicketNoByEmployee(Authentication auth) {
+			@RequestMapping(value = "get/ticket-no", produces = "application/json")
+			public Object getAllTicketNo(Authentication auth) {
 
-					return ticketService.getNoOfIsseuesByStatusEngineer();
-				}
+				return ticketService.getNoOfIssues();
+			}
+			
+			// accepts employeeId and returns all the tickets having some status
+			@RequestMapping(value = "get/status/ticket-no", produces = "application/json")
+			public Object getAllTicketNoByStatusEngineer(@RequestBody Map<String, String> data,Authentication auth) {
+
+				return ticketService.getNoOfIssuesByStatusEngineer(Status.valueOf(data.get("status")), EmployeeService.getIdFromAuth(auth.getName()));
+			}
 			
 		
 }

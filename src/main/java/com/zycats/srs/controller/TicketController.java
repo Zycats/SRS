@@ -40,9 +40,5 @@ public class TicketController {
 		return ticketService.getAll();
 	}
 	
-	
-			
-	
-	
 
 }
