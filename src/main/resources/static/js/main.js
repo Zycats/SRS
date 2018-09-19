@@ -197,10 +197,8 @@ $(document).ready(function() {
 			$('.dropdown-menu.show').removeClass("show");
 		}
 	})
-	
 
-
-	$(document).keypress(function(e) {
+	$(document).keydown(function(e) {
 		
 		e.stopPropagation();
 		
@@ -211,5 +209,8 @@ $(document).ready(function() {
 			$(".slider").css({"left": "100%"});
 			$("body").css("overflow", "auto");
 	  	}
+		else if (e.keyCode == 9){
+			return;
+		}
 	});
 })
