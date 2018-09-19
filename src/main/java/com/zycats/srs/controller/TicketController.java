@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zycats.srs.entity.Ticket;
@@ -30,8 +31,8 @@ public class TicketController {
 		return ticketService.delete(id);
 	}
 
-	@RequestMapping(value = "get/{id}", method = RequestMethod.POST)
-	public Ticket getTicketById(@PathVariable int id) {
+	@RequestMapping(value = "get", method = RequestMethod.GET)
+	public Ticket getTicketById(@RequestParam Integer id) {
 		return ticketService.getById(id);
 	}
 
@@ -39,6 +40,5 @@ public class TicketController {
 	public Iterable<Ticket> getAllTicket() {
 		return ticketService.getAll();
 	}
-	
 
 }

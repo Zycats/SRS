@@ -116,6 +116,7 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 	})
 	
 	$scope.changeLocation = function($event){
+		$event.stopPropagation();
 		var target = $event.currentTarget;
 		
 		$("#locationButton").text(target.innerHTML);
@@ -134,6 +135,7 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 	}
 	
 	$scope.changeDept = function($event){
+		$event.stopPropagation();
 		var target = $event.currentTarget;
 		$("#deptButton").text(target.innerHTML);
 		for (dept of $scope.departments)
@@ -293,6 +295,7 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 	
 	
 	$scope.changeCategory = function($event){
+		$event.stopPropagation();
 		var target = $event.currentTarget;
 		
 		$("#changeIssueCategoryButton").text(target.innerHTML);
@@ -311,6 +314,7 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 	}
 	
 	$scope.changeSubCategory = function($event){
+		$event.stopPropagation();
 		var target = $event.currentTarget;
 		
 		for (subCat of $scope.subCategoryData)
@@ -399,27 +403,28 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 		});
 	}
 	
-})
-
-var stompClient = null;
-
-
-function connect() {
-    var socket = new SockJS('/srs-websocket');
-    stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
-        console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/employee/observe', function (response) {
-            console.log(JSON.parse(response));
-        });
-        stompClient.send("/app/employee/get");
-    });
-    
-}
-
-function sendReq(){
+	function getTicket(id){
+		$http({
+			url : "/rest/ticket/get?id=" + id,
+			method: "GET"
+		}).then(function success(response){
+			console.log(response);
+			if(response.data == null || response.data == undefined || response.data == ""){
+				alert("No ticket with Ticket Id : " + id);
+			} else {
+				response.data.formattedTime = String(new Date(response.data.datetime));
+				$scope.showSlider(response.data);
+			}
+		}, function error(error){				
+			alert("No ticket with Ticket Id : " + id);
+		})
+	}
 	
-}
-
-connect();
-sendReq();
+	$scope.search = function(keyEvent){
+		keyEvent.stopPropagation();
+		if(keyEvent.which == 13){
+			getTicket($scope.searchTicketId);
+		}
+	}
+	
+})

@@ -22,7 +22,7 @@ srsApp.controller("userController", function($scope, $http){
 		}
 	
 	}, function error(response){
-		console.log(response);
+		
 	})
 	
 // ----- ticket counts for employee-------------///	
@@ -32,7 +32,7 @@ srsApp.controller("userController", function($scope, $http){
 			
 		}).then(function success(response){
 			
-			console.log("this are issues : "+response.data)
+			
 			$scope.issuesRaised = response.data;
 		})
 				
@@ -45,7 +45,7 @@ srsApp.controller("userController", function($scope, $http){
 			
 		}).then(function success(response){
 			
-			console.log("this are issues : "+response.data)
+			
 			$scope.issuesResolved = response.data;
 		})
 		
@@ -58,7 +58,7 @@ srsApp.controller("userController", function($scope, $http){
 			
 		}).then(function success(response){
 			
-			console.log("this are issues : "+response.data)
+			
 			$scope.issuesUnresolvable = response.data;
 		})
 		
@@ -91,7 +91,7 @@ srsApp.controller("userController", function($scope, $http){
 		
 		for (loc of $scope.locData)
 		{
-			console.log(target.id, loc.id);
+			
 			if (loc.id == target.id)
 			{
 				$scope.locId = loc.id;
@@ -115,8 +115,9 @@ srsApp.controller("userController", function($scope, $http){
 	}
 	
 	$scope.changeCategory = function($event){
-		var target = $event.currentTarget;
 		
+		var target = $event.currentTarget;
+		$('.dropdown-menu').removeClass("show");
 		$("#catButton").text(target.innerHTML);
 		$("#subCatButton").text("Select Sub-Category");
 		
@@ -132,7 +133,7 @@ srsApp.controller("userController", function($scope, $http){
 	
 	$scope.changeSubCategory = function($event){
 		var target = $event.currentTarget;
-		
+		$('.dropdown-menu').removeClass("show");
 		for (subCat of $scope.subCatData)
 		{
 			if (subCat.id == target.id)
@@ -149,6 +150,7 @@ srsApp.controller("userController", function($scope, $http){
 	
 	$scope.changeOsType = function($event){
 		var target = $event.currentTarget;
+		$('.dropdown-menu').removeClass("show");
 		$("#osTypeButton").text(target.innerHTML);
 		$scope.osType = target.innerHTML;
 	}
@@ -164,7 +166,7 @@ srsApp.controller("userController", function($scope, $http){
 		}
 		else if ($scope.empData.seatNo === null || $scope.empData.seatNo === undefined || $scope.empData.seatNo === "")
 		{
-			console.log($scope.empData.seatNo);
+			
 			$(".alert-danger").css("display", "block");
 			$scope.genError = "Please enter your Seat Number. If not assigned enter 0."
 		}
@@ -217,7 +219,7 @@ srsApp.controller("userController", function($scope, $http){
 				response.data.employee.displayName = tmp[0].toUpperCase() + tmp.substr(1);
 				
 				$scope.empData = response.data;
-				console.log($scope.empData);
+				
 				
 			}, function error(response){
 				console.log(response);
@@ -297,7 +299,7 @@ srsApp.controller("userController", function($scope, $http){
 		if($scope.recentSrs != null && $scope.recentSrs.length > 0)
 			$scope.recentSrs.forEach(function(data){
 				data['timeAgo'] = moment(new Date(data.datetime)).fromNow();
-				console.log("updated scope time : ", $scope.recentSrs);
+				
 			})
 	}
 	
