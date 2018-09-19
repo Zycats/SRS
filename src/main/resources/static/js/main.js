@@ -8,7 +8,7 @@ $(document).ready(function() {
 	$(".inner-container").css({
 		"min-height" : height + "px"
 	})
-
+	
 	$("#raise").click(function() {
 		if (currentPos != 1) {
 			if (currentPos == 0) {
@@ -85,6 +85,8 @@ $(document).ready(function() {
 			});
 			currentPos = 0;
 		}
+		
+		
 	})
 	
 	$("#home-exec").click(function() {
@@ -198,18 +200,52 @@ $(document).ready(function() {
 		}
 	})
 	
-
-
-	$(document).keypress(function(e) {
-		
+	
+	$("#changeIssueCategoryButton").click(function(e){
 		e.stopPropagation();
 		
-		console.log("key pressed");
+		console.log("button clicked!!!");
+		
+		if ($('#issueCategoryDropdownMenu').is(":hidden")){
+		    $('#issueCategoryDropdownMenu').addClass('show');
+		  }
+		else
+		{
+			$('.dropdown-menu.show').removeClass("show");
+		}
+	})
+	
+	$("#changeIssueSubCategoryButton").click(function(e){
+		e.stopPropagation();
+		
+		console.log("button clicked!!!");
+		
+		if ($('#issueSubCategoryDropdownMenu').is(":hidden")){
+		    $('#issueSubCategoryDropdownMenu').addClass('show');
+		  }
+		else
+		{
+			$('.dropdown-menu.show').removeClass("show");
+		}
+	})
+
+
+	$(document).keydown(function(e) {
+		
+		e.stopPropagation();
+		console.log(e.keyCode);
+		
 		
 		if(e.keyCode == 27) {
 			console.log("escape pressed!!!");
 			$(".slider").css({"left": "100%"});
 			$("body").css("overflow", "auto");
 	  	}
+		
+		$('#ticketSearchInput').focus();
+	});
+	
+	$('.slider').click(function(e){
+		e.stopPropagation();
 	});
 })

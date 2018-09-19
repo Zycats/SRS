@@ -295,9 +295,8 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 	
 	
 	$scope.changeCategory = function($event){
-		$event.stopPropagation();
 		var target = $event.currentTarget;
-		
+		$('.dropdown-menu').removeClass("show");
 		$("#changeIssueCategoryButton").text(target.innerHTML);
 		$("#changeIssueSubCategoryButton").text("Select Sub-Category");
 		
@@ -314,9 +313,9 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 	}
 	
 	$scope.changeSubCategory = function($event){
-		$event.stopPropagation();
-		var target = $event.currentTarget;
 		
+		var target = $event.currentTarget;
+		$('.dropdown-menu').removeClass("show");
 		for (subCat of $scope.subCategoryData)
 		{
 			if (subCat.id == target.id)
@@ -425,6 +424,12 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 		if(keyEvent.which == 13){
 			getTicket($scope.searchTicketId);
 		}
+	}
+
+	var params = new window.URLSearchParams(window.location.search);
+	console.log()
+	if(params.get("srs") !== "" && params.get("srs") != undefined){
+		getTicket(params.get("srs"));
 	}
 	
 })
