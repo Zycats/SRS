@@ -59,8 +59,8 @@
 					<tbody>
 						<tr ng-repeat="recent in recentSrs" ng-cloak>
 							<td>
-								<button  ng-if="recent.subCategory.issueType == 'INCIDENT'" ng-click="showSlider(recent)" class="btn btn-warning btn-tag">INCIDENT</button>
-								<button  ng-if="recent.subCategory.issueType == 'REQUEST'" ng-click="showSlider(recent)" class="btn btn-primary btn-tag">REQUEST</button>
+								<button  ng-if="recent.subCategory.issueType == 'INCIDENT'" ng-click="showSlider(recent); $event.stopPropagation(); console.log('clicked on main container');" class="btn btn-warning btn-tag">INCIDENT</button>
+								<button  ng-if="recent.subCategory.issueType == 'REQUEST'" ng-click="showSlider(recent); $event.stopPropagation(); console.log('clicked on main container');" class="btn btn-primary btn-tag">REQUEST</button>
 							</td>
 							<td class="idTd"><span class="tokenLink">{{recent.id}}</span></td>
 							<td class="description">{{recent.description}}</td>

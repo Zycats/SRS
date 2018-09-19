@@ -13,7 +13,7 @@
 		</h1>
 		<hr>
 	</div> -->
-	<div th:fragment="sliderFragment-exec">
+	<div th:fragment="sliderFragment-exec" class="sliderDiv">
 		<h1 class="srs-heading">
 			<button class="btn btn-success btn-circle back-btn">
 				<i class="fas fa-chevron-right"></i>
@@ -22,41 +22,56 @@
 		</h1>
 		<hr>
 		<div class="container-fluid srs-details">
-			<div class="row">
-				<div class="col-xl-3">Issue #Id:</div>
-				<div class="col-xl-9">{{ issue.id }}</div>
+			<div class="row srs-row">
+				<div class="col-xl-3 srs-col srs-col-heading">Issue #Id:</div>
+				<div class="col-xl-9 srs-col">{{ issue.id }}</div>
 			</div>
-			<div class="row">
-				<div class="col-xl-3"> Date Time:</div>
-				<div class="col-xl-9">{{ issue.formattedTime }}</div>
+			<div class="row srs-row">
+				<div class="col-xl-3 srs-col srs-col-heading">Date Time:</div>
+				<div class="col-xl-9 srs-col">{{ issue.formattedTime }}</div>
 			</div>
-			<div class="row">
-				<div class="col-xl-3">Description:</div>
-				<div class="col-xl-9">{{ issue.description }}</div>
+			<div class="row srs-row">
+				<div class="col-xl-3 srs-col srs-col-heading">Description:</div>
+				<div class="col-xl-9 srs-col">{{ issue.description }}</div>
 			</div>
-			<div class="row">
-				<div class="col-xl-3">Category:</div>
-				<div class="col-xl-9">{{ issue.subCategory.name }}</div>
+			<div class="row srs-row">
+				<div class="col-xl-3 srs-col srs-col-heading">Category:</div>
+				<div class="col-xl-9 srs-col">{{ issue.subCategory.name }}</div>
 			</div>
-			<div class="row">
-				<div class="col-xl-3">Type:</div>
-				<div class="col-xl-9">{{ issue.subCategory.issueType }}</div>
+			<div class="row srs-row">
+				<div class="col-xl-3 srs-col srs-col-heading">Type:</div>
+				<div class="col-xl-9 srs-col">{{ issue.subCategory.issueType
+					}}</div>
 			</div>
-			<div class="row">
-				<div class="col-xl-3">Raised By:</div>
-				<div class="col-xl-9">{{ issue.employee.id }}</div>
+			<div class="row srs-row">
+				<div class="col-xl-3 srs-col srs-col-heading">Raised By:</div>
+				<div class="col-xl-9 srs-col">{{ issue.employee.id }}</div>
 			</div>
-			<div class="row">
-				<div class="col-xl-4">Machine IP:</div>
-				<div class="col-xl-8">{{issue.employee.machineIp }}</div>
+			<div class="row srs-row">
+				<div class="col-xl-3 srs-col srs-col-heading">Assigned
+					Engineer:</div>
+				<div class="col-xl-9 srs-col">{{ issue.engineer.id }}</div>
+			</div>
+			<div class="row srs-row">
+				<div class="col-xl-3 srs-col srs-col-heading">Machine IP:</div>
+				<div class="col-xl-9 srs-col">{{issue.employee.machineIp }}</div>
+			</div>
+			<div class="row srs-row">
+				<div class="col">
+					<a href="sip:{{ issue.employee.email }}" id="skypeBtn"
+						class="btn btn-primary btnLink"> Skype </a> 
+					<a
+						class="btnLink btn btn-warning"
+						href="mailto:{{issue.employee.email}}?subject=Regarding #{{issue.id}}:{{issue.description}} | {{issue.status}}&amp;body=Hi%2C%0A%0AThis%20is%20in%20regards%20with%20the%20SRS%20raised%20by%20you.%20Following%20are%20the%20details%20of%20SRS-%0A%0AId%3A {{issue.id}}%0ADate%20of%20raisal%3A {{issue.formattedTime}}%0ADescription%3A%09{{issue.description}}%0ACurrent%20Status%3A%09{{issue.status}}%0AEngineer%20Assigned%3A%09{{issue.engineer.email}}%0A">Email</a>
+				</div>
 			</div>
 		</div>
-		 <a class="btn btn-primary"
+		<!-- <a class="btn btn-primary"
 			href="sip:{{ issue.employee.email }}">Skype</a> <a
 			class="btn btn-warning"
 			href="mailto:{{issue.employee.email}}?subject=Regarding #{{issue.id}}:{{issue.description}} | {{issue.status}}&amp;body=Hi%2C%0A%0AThis%20is%20in%20regards%20with%20the%20SRS%20raised%20by%20you.%20Following%20are%20the%20details%20of%20SRS-%0A%0AId%3A {{issue.id}}%0ADate%20of%20raisal%3A {{issue.formattedTime}}%0ADescription%3A%09{{issue.description}}%0ACurrent%20Status%3A%09{{issue.status}}%0AEngineer%20Assigned%3A%09{{issue.engineer.email}}%0A">Send
-			mail</a> <br> Comments:
-		<hr>
+			mail</a> -->
+		<!--<hr>
 		<div ng-repeat="comment in commentData">
 			<span><strong>{{comment.commentBy.id}}</strong></span> : <span>{{comment.message}}</span>&nbsp;&nbsp;
 			<small>{{comment.datetime}}</small><br>
@@ -73,6 +88,40 @@
 			</select>
 			<button class="btn btn-success" ng-click="comment(issue)">Add
 				Comment</button>
+		</div> -->
+
+		<div class="card comments-card">
+			<div class="card-header">Comments</div>
+			<div class="card-body">
+				<div class="comment-row">
+					<div class="comment-body">
+						<span class="comment-by">{{ issue.engineer.id }}:</span> This is a
+						demo comment. This is a demo comment. This is a demo comment. This
+						is a demo comment. This is a demo comment. This is a demo comment.
+						This is a demo comment. This is a demo comment. This is a demo
+						comment.
+					</div>
+					<div class="comment-status-button">
+						<span class="comment-time">18th Sept 2018, 04: 14 PM</span>
+						<div class="status-btn">
+							<button class="btn btn-sm btn-primary closeButton">Closed</button>
+						</div>
+					</div>
+				</div>
+				<div class="comment-row">
+					<span class="comment-by">{{ issue.engineer.id }}:</span> This is a
+					demo comment. This is a demo comment. This is a demo comment. This
+					is a demo comment. This is a demo comment. This is a demo comment.
+					This is a demo comment. This is a demo comment. This is a demo
+					comment.
+					<div class="comment-status-button">
+						<span class="comment-time">18th Sept 2018, 04: 14 PM</span>
+						<div class="status-btn">
+							<button class="btn btn-sm btn-primary closeButton">Closed</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 
 	</div>
