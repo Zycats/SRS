@@ -28,4 +28,11 @@ public class ViewController {
 			return "Invalid role!";
 		}
 	}
+	
+	/*@RequestMapping("/login")
+	public String customLogin(){
+		return "login";
+	}*/
+	
+	
 }

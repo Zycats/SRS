@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private WindowsAuthenticationProvider windowsAuthenticationProvider;
-	
+
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -41,20 +41,39 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		
 		
-		http
-				.authorizeRequests()
-				.anyRequest()
-				.authenticated()
-				.and()
-				.httpBasic()
-				.authenticationEntryPoint(entryPoint)
-				.and()
-				.addFilterBefore(negotiateSecurityFilter, BasicAuthenticationFilter.class)
-				.authenticationProvider(windowsAuthenticationProvider)
-				.formLogin().and()
-				.csrf()
-				.disable();
+		/*http
+		.authorizeRequests()
+        .anyRequest().authenticated()
+    .and()
+         // Set authentication provider here
+        .formLogin()
+			.loginPage("/login")
+			.permitAll()
+			.and()
 		
+			.addFilterBefore(negotiateSecurityFilter, BasicAuthenticationFilter.class)
+	        .httpBasic()
+	        .authenticationEntryPoint(entryPoint)
+	        .and()
+	        .authenticationProvider(windowsAuthenticationProvider)*/
+	        
+	
+	
+	http
+			
+	.authorizeRequests()
+	.anyRequest()
+	.authenticated()
+	.and()
+	.httpBasic()
+	.authenticationEntryPoint(entryPoint)
+	.and()
+	.addFilterBefore(negotiateSecurityFilter, BasicAuthenticationFilter.class)
+	.csrf()
+	.disable();
+	
+		
+	
 	}
 
 	@Override
