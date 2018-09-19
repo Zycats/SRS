@@ -7,6 +7,9 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
 	crossorigin="anonymous">
+	<link
+	href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i"
+	rel="stylesheet">
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
 	integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
@@ -27,9 +30,13 @@
 <body>
 	<div class="container-fluid main-container" ng-app="srsApp"
 		ng-controller="dashboardController">
+		<div class="status-bubble">
+			<span class="from">{{from}}</span> &#8594; <span class="to">{{to}}</span>
+			<div class="triangle"></div>
+		</div>
 		<div class="navbarContainer"
 			th:insert="fragments/navbar-fragment2 :: navbar-exec"></div>
-		<div class="container inner-container">
+		<div class="container-fluid inner-container">
 			<div class="views-container">
 				<div class="dashboard-container" id="dashboard"
 					th:insert="fragments/dashboard-fragment2 :: exec-dashboard"></div>

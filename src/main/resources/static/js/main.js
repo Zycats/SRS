@@ -8,7 +8,7 @@ $(document).ready(function() {
 	$(".inner-container").css({
 		"min-height" : height + "px"
 	})
-
+	
 	$("#raise").click(function() {
 		if (currentPos != 1) {
 			if (currentPos == 0) {
@@ -85,6 +85,8 @@ $(document).ready(function() {
 			});
 			currentPos = 0;
 		}
+		
+		
 	})
 	
 	$("#home-exec").click(function() {
@@ -147,7 +149,7 @@ $(document).ready(function() {
 		var width = $(this).outerWidth();
 		$(".status-bubble").css({
 			"left": (offset.left - 75 + (width/2)) + "px",
-			"top": (offset.top - 100) + "px"
+			"top": (offset.top - 58) + "px"
 		})
 		$(".status-bubble").stop(true, true).fadeIn();
 	})
@@ -160,7 +162,7 @@ $(document).ready(function() {
 		e.stopPropagation();
 		
 		console.log("button clicked!!!");
-		
+
 		if ($('#catDropdownMenu').is(":hidden")){
 		    $('#catDropdownMenu').addClass('show');
 		  }
@@ -197,10 +199,43 @@ $(document).ready(function() {
 			$('.dropdown-menu.show').removeClass("show");
 		}
 	})
+	
+	$("#changeIssueCategoryButton").click(function(e){
+		e.stopPropagation();
+		
+		console.log("button clicked!!!");
+		
+		if ($('#issueCategoryDropdownMenu').is(":hidden")){
+		    $('#issueCategoryDropdownMenu').addClass('show');
+		  }
+		else
+		{
+			$('.dropdown-menu.show').removeClass("show");
+		}
+	})
+	
+	$("#changeIssueCategoryButton").click(function(e){
+		e.stopPropagation();
+		
+		console.log("button clicked!!!");
+		
+		if ($('#issueCategoryDropdownMenu').is(":hidden")){
+		    $('#issueCategoryDropdownMenu').addClass('show');
+		  }
+		else
+		{
+			$('.dropdown-menu.show').removeClass("show");
+		}
+	})
 
 	$(document).keydown(function(e) {
 		
 		e.stopPropagation();
+		
+		if (!($(".commentText").is(":focus")))
+		{
+			$('.search input[type=text]').focus();
+		}
 		
 		console.log("key pressed");
 		
@@ -212,5 +247,9 @@ $(document).ready(function() {
 		else if (e.keyCode == 9){
 			return;
 		}
+	});
+	
+	$('.slider').click(function(e){
+		e.stopPropagation();
 	});
 })

@@ -14,6 +14,12 @@
 		<hr>
 	</div> -->
 	<div th:fragment="sliderFragment-exec" class="sliderDiv">
+		<div class="search slider-search">
+			<i class="fas fa-search"></i> <input id="ticketSearchSliderInput"
+				type="text" placeholder="Ticket Id" ng-keypress="search($event);"
+				ng-model="searchTicketId" />
+			<div class="loader"></div>
+		</div>
 		<h1 class="srs-heading">
 			<button class="btn btn-success btn-circle back-btn">
 				<i class="fas fa-chevron-right"></i>
@@ -59,8 +65,7 @@
 			<div class="row srs-row">
 				<div class="col">
 					<a href="sip:{{ issue.employee.email }}" id="skypeBtn"
-						class="btn btn-primary btnLink"> Skype </a> 
-					<a
+						class="btn btn-primary btnLink"> Skype </a> <a
 						class="btnLink btn btn-warning"
 						href="mailto:{{issue.employee.email}}?subject=Regarding #{{issue.id}}:{{issue.description}} | {{issue.status}}&amp;body=Hi%2C%0A%0AThis%20is%20in%20regards%20with%20the%20SRS%20raised%20by%20you.%20Following%20are%20the%20details%20of%20SRS-%0A%0AId%3A {{issue.id}}%0ADate%20of%20raisal%3A {{issue.formattedTime}}%0ADescription%3A%09{{issue.description}}%0ACurrent%20Status%3A%09{{issue.status}}%0AEngineer%20Assigned%3A%09{{issue.engineer.email}}%0A">Email</a>
 				</div>
@@ -77,18 +82,7 @@
 			<small>{{comment.datetime}}</small><br>
 		</div>
 
-		<br> <br>
-		<div ng-if="empData.role == 'EXECUTIVE'" class="newCommentBox">
-			Comment :
-			<textarea rows="4" style="width: 100%;" ng-model="commentText"
-				id="commentText"></textarea>
-			<select class="form-control" ng-model="commentStatus"
-				id="commentStatus">
-				<option ng-repeat="status in statusData" value="{{status}}">{{status}}</option>
-			</select>
-			<button class="btn btn-success" ng-click="comment(issue)">Add
-				Comment</button>
-		</div> -->
+		<br> <br>-->
 
 		<div class="card comments-card">
 			<div class="card-header">Comments</div>
@@ -104,7 +98,8 @@
 					<div class="comment-status-button">
 						<span class="comment-time">18th Sept 2018, 04: 14 PM</span>
 						<div class="status-btn">
-							<button class="btn btn-sm btn-primary closeButton">Closed</button>
+							<button class="btn btn-sm btn-primary closeButton" id="1"
+								ng-mouseover="changeFromTo($event)">Closed</button>
 						</div>
 					</div>
 				</div>
@@ -117,11 +112,42 @@
 					<div class="comment-status-button">
 						<span class="comment-time">18th Sept 2018, 04: 14 PM</span>
 						<div class="status-btn">
-							<button class="btn btn-sm btn-primary closeButton">Closed</button>
+							<button class="btn btn-sm btn-primary closeButton" id="2"
+								ng-mouseover="changeFromTo($event)">Closed</button>
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
+		
+		<div ng-if="empData.role == 'EXECUTIVE'" class="newCommentBox">
+			<div class="textareaDiv">
+				<label for="comment">Comment :</label>
+				<textarea rows="3" style="width: 100%;" ng-model="commentText"
+					class="commentText" id="commentText" name="comment"></textarea>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button"
+							id="statusDropdownBtn" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false">Select Status</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+							<a class="dropdown-item" href="#!">Action</a> <a
+								class="dropdown-item" href="#!">Another action</a>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<button class="btn btn-primary" id="commentSubmitBtn">Submit</button>
+				</div>
+			</div>
+			<!-- <select class="form-control" ng-model="commentStatus"
+				id="commentStatus">
+				<option ng-repeat="status in statusData" value="{{status}}">{{status}}</option>
+			</select>
+			<button class="btn btn-success" ng-click="comment(issue)">Add
+				Comment</button> -->
 		</div>
 
 	</div>
