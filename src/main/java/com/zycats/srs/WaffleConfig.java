@@ -75,6 +75,7 @@ public class WaffleConfig {
      provider.setAuthProvider(windowsAuthProvider);
      return provider;
     }
+
 	
 	 
 }
