@@ -115,8 +115,9 @@ srsApp.controller("userController", function($scope, $http){
 	}
 	
 	$scope.changeCategory = function($event){
-		var target = $event.currentTarget;
 		
+		var target = $event.currentTarget;
+		$('.dropdown-menu').removeClass("show");
 		$("#catButton").text(target.innerHTML);
 		$("#subCatButton").text("Select Sub-Category");
 		
@@ -132,7 +133,7 @@ srsApp.controller("userController", function($scope, $http){
 	
 	$scope.changeSubCategory = function($event){
 		var target = $event.currentTarget;
-		
+		$('.dropdown-menu').removeClass("show");
 		for (subCat of $scope.subCatData)
 		{
 			if (subCat.id == target.id)
@@ -149,6 +150,7 @@ srsApp.controller("userController", function($scope, $http){
 	
 	$scope.changeOsType = function($event){
 		var target = $event.currentTarget;
+		$('.dropdown-menu').removeClass("show");
 		$("#osTypeButton").text(target.innerHTML);
 		$scope.osType = target.innerHTML;
 	}

@@ -17,9 +17,9 @@
 							<button class="btn btn-info dropdown-toggle" type="button"
 								id="catButton" data-toggle="dropdown" aria-haspopup="true"
 								aria-expanded="false">Select Main Category</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+							<div class="dropdown-menu" id="catDropdownMenu" aria-labelledby="dropdownMenu1">
 								<a class="dropdown-item" ng-repeat="cat in catData"
-									ng-click="changeCategory($event); $event.stopPropagation();" id={{cat.id}}>{{cat.name}}</a>
+									ng-click="changeCategory($event);" id={{cat.id}}>{{cat.name}}</a>
 							</div>
 						</div>
 					</div>
@@ -28,9 +28,9 @@
 							<button class="btn btn-info dropdown-toggle" type="button"
 								id="subCatButton" data-toggle="dropdown" aria-haspopup="true"
 								aria-expanded="false">Select Sub-Category</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+							<div class="dropdown-menu" id="subCatDropdownMenu" aria-labelledby="dropdownMenu1">
 								<a class="dropdown-item" ng-repeat="subCat in subCatData"
-									ng-click="changeSubCategory($event); $event.stopPropagation();" id={{subCat.id}}>{{subCat.name}}</a>
+									ng-click="changeSubCategory($event);" id={{subCat.id}}>{{subCat.name}}</a>
 							</div>
 						</div>
 					</div>
@@ -96,7 +96,7 @@
 							<button class="btn btn-info dropdown-toggle" type="button"
 								id="osTypeButton" data-toggle="dropdown" aria-haspopup="true"
 								aria-expanded="false">Select OS Type</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+							<div class="dropdown-menu" id="osDropDownMenu" aria-labelledby="dropdownMenu1">
 								<a class="dropdown-item" ng-repeat="osType in osTypes"
 									ng-click="changeOsType($event)" id={{osType}}>{{osType}}</a>
 							</div>

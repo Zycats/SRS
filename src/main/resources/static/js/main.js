@@ -154,4 +154,46 @@ $(document).ready(function() {
 	$(".closeButton").mouseleave(function(){
 		$(".status-bubble").stop(true, true).fadeOut();
 	})
+	
+	$("#catButton").click(function(e){
+		e.stopPropagation();
+		
+		console.log("button clicked!!!");
+		
+		if ($('#catDropdownMenu').is(":hidden")){
+		    $('#catDropdownMenu').addClass('show');
+		  }
+		else
+		{
+			$('.dropdown-menu.show').removeClass("show");
+		}
+	})
+	
+	$("#subCatButton").click(function(e){
+		e.stopPropagation();
+		
+		console.log("button clicked!!!");
+		
+		if ($('#subCatDropdownMenu').is(":hidden")){
+		    $('#subCatDropdownMenu').addClass('show');
+		  }
+		else
+		{
+			$('.dropdown-menu.show').removeClass("show");
+		}
+	})
+	
+	$("#osTypeButton").click(function(e){
+		e.stopPropagation();
+		
+		console.log("button clicked!!!");
+		
+		if ($('#osDropDownMenu').is(":hidden")){
+		    $('#osDropDownMenu').addClass('show');
+		  }
+		else
+		{
+			$('.dropdown-menu.show').removeClass("show");
+		}
+	})
 })
