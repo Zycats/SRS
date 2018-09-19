@@ -130,6 +130,7 @@ $(document).ready(function() {
 		console.log("clicked on main container");
 		$(".slider").css({"left": "100%"});
 		$("body").css("overflow", "auto");
+		$('.dropdown-menu.show').removeClass("show");
 	})
 	
 	$(".sliderDiv").click(function(e){
@@ -196,4 +197,19 @@ $(document).ready(function() {
 			$('.dropdown-menu.show').removeClass("show");
 		}
 	})
+	
+
+
+	$(document).keypress(function(e) {
+		
+		e.stopPropagation();
+		
+		console.log("key pressed");
+		
+		if(e.keyCode == 27) {
+			console.log("escape pressed!!!");
+			$(".slider").css({"left": "100%"});
+			$("body").css("overflow", "auto");
+	  	}
+	});
 })
