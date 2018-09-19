@@ -167,8 +167,8 @@
 					<tbody>
 					<tr ng-repeat="issue in recentIssuesData">
 						<td>
-							<button  ng-if="issue.subCategory.issueType == 'INCIDENT'" ng-click="showSlider(issue)" class="btn btn-warning btn-tag">INCIDENT</button>
-							<button  ng-if="issue.subCategory.issueType == 'REQUEST'" ng-click="showSlider(issue)" class="btn btn-primary btn-tag">REQUEST</button>
+							<button  ng-if="issue.subCategory.issueType == 'INCIDENT'" ng-click="showSlider(issue); $event.stopPropagation();" class="btn btn-warning btn-tag">INCIDENT</button>
+							<button  ng-if="issue.subCategory.issueType == 'REQUEST'" ng-click="showSlider(issue); $event.stopPropagation();" class="btn btn-primary btn-tag">REQUEST</button>
 						</td>
 						<td>{{ issue.id }}</td>
 						<td>{{ issue.description }}</td>

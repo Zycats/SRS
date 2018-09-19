@@ -1,6 +1,7 @@
 package com.zycats.srs.service;
 
 import java.sql.Timestamp;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -37,7 +38,11 @@ public class TicketService implements ITicketService {
 
 	@Override
 	public Ticket getById(int id) {
-		return ticketRepository.findById(id).get();
+		try {
+			return ticketRepository.findById(id).get();
+		} catch (NoSuchElementException e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -51,7 +56,7 @@ public class TicketService implements ITicketService {
 	}
 
 	/// ----------- Engineer Services ------------------/////////////////
-	
+
 	@Override
 	public Iterable<Ticket> findAllTicketsByEngineer(String engineerId) {
 
@@ -63,8 +68,7 @@ public class TicketService implements ITicketService {
 		}
 
 	}
-	
-	
+
 	@Override
 	public Iterable<Ticket> findAllTicketsByStatusEngineer(Status status, String engineerId) {
 
@@ -100,9 +104,8 @@ public class TicketService implements ITicketService {
 		}
 
 	}
-	
-	
-	///--------------- Employee Services --------------////////////
+
+	/// --------------- Employee Services --------------////////////
 
 	@Override
 	public Iterable<Ticket> findAllTicketsByEmployee(String employeeId) {
@@ -115,7 +118,7 @@ public class TicketService implements ITicketService {
 		}
 
 	}
-	
+
 	@Override
 	public Iterable<Ticket> findAllTicketsByStatusEmployee(Status status, String employeeId) {
 
@@ -152,31 +155,27 @@ public class TicketService implements ITicketService {
 
 	}
 
-	
-// returns total no. of issues / tickets
+	// returns total no. of issues / tickets
 	@Override
-	public Object getNoOfIssues(){
+	public Object getNoOfIssues() {
 		return ticketRepository.getNoOfTickets();
 	}
-	
-	
-	
+
 	@Override
-	public Object getNoOfIssues(String employeeId){
-		try{
+	public Object getNoOfIssues(String employeeId) {
+		try {
 			Employee employee = employeeService.getEmployeeById(employeeId);
 			return ticketRepository.getNoOfTicketsByEmployee(employee);
-		}catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			return null;
 		}
-		
+
 	}
-	
-	
-// general service for Employee	
+
+	// general service for Employee
 	@Override
 	public Object getNoOfIssuesByStatusEmployee(Status status, String employeeId) {
-		
+
 		try {
 			Employee employee = employeeService.getEmployeeById(employeeId);
 			return ticketRepository.getNoOfTicketsByStatusEmployee(status, employee);
@@ -185,13 +184,12 @@ public class TicketService implements ITicketService {
 		}
 	}
 
-	
-//------------------------------------------------------------------------------------------------///////	
-	
+	// ------------------------------------------------------------------------------------------------///////
+
 	// general service for Engineer
 	@Override
-	public Object getNoOfIssuesByStatusEngineer(Status status , String employeeId) {
-		
+	public Object getNoOfIssuesByStatusEngineer(Status status, String employeeId) {
+
 		try {
 			Employee engineer = employeeService.getEmployeeById(employeeId);
 			return ticketRepository.getNoOfTicketsByStatusEngineer(status, engineer);
@@ -200,7 +198,6 @@ public class TicketService implements ITicketService {
 		}
 	}
 
-	
 	@Override
 	public Ticket update(Ticket ticket, Authentication auth) throws InsufficientPriviledgesException {
 		if (!(employeeService.getEmployeeById(EmployeeService.getIdFromAuth(auth.getName())).getRole().equals(

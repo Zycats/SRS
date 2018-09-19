@@ -18,7 +18,7 @@
 								aria-expanded="false">Select Main Category</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenu1">
 								<a class="dropdown-item" ng-repeat="cat in categoryData"
-									ng-click="changeCategory($event)" id={{cat.id}}>{{cat.name}}</a>
+									ng-click="changeCategory($event);" id={{cat.id}}>{{cat.name}}</a>
 							</div>
 						</div>
 					</div>
@@ -29,12 +29,12 @@
 								aria-expanded="false">Select Sub-Category</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenu1">
 							<a class="dropdown-item" ng-repeat="subCat in subCategoryData"
-									ng-click="changeSubCategory($event)" id={{subCat.id}}>{{subCat.name}}</a>
+									ng-click="changeSubCategory($event);" id={{subCat.id}}>{{subCat.name}}</a>
 							</div>
 						</div>
 					</div>
 					<div class="col row-submit">
-						<button class="btn btn-info submit-btn" id="filter-btn" ng-click="filterData()">Submit</button>
+						<button class="btn btn-info submit-btn" id="filter-btn" ng-click="filterData(); $event.stopPropagation();">Submit</button>
 					</div>
 				</div>
 			</div>
@@ -55,8 +55,8 @@
 					<tbody>
 					<tr ng-repeat="issue in issuesData">
 						<td>
-							<button  ng-if="issue.subCategory.issueType == 'INCIDENT'" ng-click="showSlider(issue)" class="btn btn-warning btn-tag">INCIDENT</button>
-							<button  ng-if="issue.subCategory.issueType == 'REQUEST'" ng-click="showSlider(issue)" class="btn btn-primary btn-tag">REQUEST</button>
+							<button  ng-if="issue.subCategory.issueType == 'INCIDENT'" ng-click="showSlider(issue); $event.stopPropagation();" class="btn btn-warning btn-tag">INCIDENT</button>
+							<button  ng-if="issue.subCategory.issueType == 'REQUEST'" ng-click="showSlider(issue); $event.stopPropagation();" class="btn btn-primary btn-tag">REQUEST</button>
 						</td>
 						<td>{{ issue.id }}</td>
 						<td>{{ issue.description }}</td>
