@@ -12,12 +12,12 @@
 			<div class="form-group">
 				<div class="row dropdown-group">
 					<div class="col">
-						<div class="dropdown">
+						<div class="dropdown" ng-click="ignoreEvent($event); $event.stopPropagation();">
 							<button class="btn btn-info dropdown-toggle" type="button"
 								id="changeIssueCategoryButton" data-toggle="dropdown" aria-haspopup="true"
 								aria-expanded="false">Select Main Category</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-								<a class="dropdown-item" ng-repeat="cat in categoryData"
+							<div class="dropdown-menu" id="issueCategoryDropdownMenu" aria-labelledby="dropdownMenu1">
+								<a class="dropdown-item"  ng-repeat="cat in categoryData"
 									ng-click="changeCategory($event);" id={{cat.id}}>{{cat.name}}</a>
 							</div>
 						</div>
@@ -27,7 +27,7 @@
 							<button class="btn btn-info dropdown-toggle" type="button"
 								id="changeIssueSubCategoryButton" data-toggle="dropdown" aria-haspopup="true"
 								aria-expanded="false">Select Sub-Category</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+							<div class="dropdown-menu" id="issueSubCategoryDropdownMenu" aria-labelledby="dropdownMenu1">
 							<a class="dropdown-item" ng-repeat="subCat in subCategoryData"
 									ng-click="changeSubCategory($event);" id={{subCat.id}}>{{subCat.name}}</a>
 							</div>
