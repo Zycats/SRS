@@ -49,7 +49,7 @@
 			<div class="search">
 				<i class="fas fa-search"></i>
 				<input id="ticketSearchInput" type="text" placeholder="Ticket Id" ng-keypress="search($event);" ng-model="searchTicketId" />
-				<div class="loader"></div>
+				<div ng-show="loaderShow"class="loader"></div>
 			</div>
 		</div>
 	</nav>

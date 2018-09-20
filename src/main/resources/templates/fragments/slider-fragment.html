@@ -18,7 +18,7 @@
 			<i class="fas fa-search"></i> <input id="ticketSearchSliderInput"
 				type="text" placeholder="Ticket Id" ng-keypress="search($event);"
 				ng-model="searchTicketId" />
-			<div class="loader"></div>
+			<div ng-show="loaderShow" class="loader"></div>
 		</div>
 		<h1 class="srs-heading">
 			<button class="btn btn-success btn-circle back-btn">

@@ -1,4 +1,7 @@
-srsApp.controller("dashboardController", function($scope, $http, $interval){
+srsApp2.controller("dashboardController", function($scope, $http, $interval){
+	
+	$scope.loaderShow = false;
+	
 	$scope.issuesData = [];
 	$http({
 		url: "/rest/employee/get",
@@ -6,7 +9,6 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 	})
 	.then(function success(response){
 		$scope.empData = response.data;
-		console.log($scope.empData.role)
 		if ($scope.empData.firstLogin)
 		{
 			$("#firstLoginModal").modal("show");
@@ -403,6 +405,7 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 	}
 	
 	function getTicket(id){
+		$scope.loaderShow = true;
 		$http({
 			url : "/rest/ticket/get?id=" + id,
 			method: "GET"
@@ -414,8 +417,10 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 				response.data.formattedTime = String(new Date(response.data.datetime));
 				$scope.showSlider(response.data);
 			}
+			$scope.loaderShow = false;
 		}, function error(error){				
 			alert("No ticket with Ticket Id : " + id);
+			$scope.loaderShow = false;
 		})
 	}
 	
