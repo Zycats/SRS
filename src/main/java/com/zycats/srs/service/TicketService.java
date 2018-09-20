@@ -121,6 +121,17 @@ public class TicketService<ticketRepositoryPageable> implements ITicketService {
 	}
 
 	@Override
+	public Iterable<Ticket> findAllTicketsByStatus(Status status) {
+
+		try {
+			return ticketRepository.findAllTicketsByStatus(status);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+
+	}
+
+	@Override
 	public Iterable<Ticket> findAllTicketsByCategoryEngineer(int category_id, String engineerId) {
 
 		try {
@@ -246,6 +257,54 @@ public class TicketService<ticketRepositoryPageable> implements ITicketService {
 			throw new InsufficientPriviledgesException("Only " + Role.EXECUTIVE + " is allowed to update ticket");
 		}
 		return ticketRepository.save(ticket);
+	}
+
+	// get tickets by category [FOR EXECUTIVE]
+	@Override
+	public Iterable<Ticket> findAllTicketsByCategory(int category_id) {
+
+		try {
+			return ticketRepository.findAllTicketsByCategory(category_id);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+
+	}
+
+	// get tickets by sub-category [FOR EXECUTIVE]
+	@Override
+	public Iterable<Ticket> findAllTicketsBySubCategory(int sub_category_id) {
+
+		try {
+			return ticketRepository.findAllTicketsBySubCategory(sub_category_id);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+
+	}
+
+	// get tickets by category [for Engineer's NEW ISSUES view only]
+	@Override
+	public Iterable<Ticket> findAllTicketsByCategoryStatus(int category_id, Status status) {
+
+		try {
+			return ticketRepository.findAllTicketsByCategoryStatus(category_id, status);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+
+	}
+
+	// get tickets by sub-category [for Engineer's NEW ISSUES view only]
+	@Override
+	public Iterable<Ticket> findAllTicketsBySubCategoryStatus(int sub_category_id, Status status) {
+
+		try {
+			return ticketRepository.findAllTicketsBySubCategoryStatus(sub_category_id, status);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+
 	}
 
 }

@@ -149,7 +149,7 @@ $(document).ready(function() {
 		var width = $(this).outerWidth();
 		$(".status-bubble").css({
 			"left": (offset.left - 75 + (width/2)) + "px",
-			"top": (offset.top - 100) + "px"
+			"top": (offset.top - 58) + "px"
 		})
 		$(".status-bubble").stop(true, true).fadeIn();
 	})
@@ -158,11 +158,11 @@ $(document).ready(function() {
 		$(".status-bubble").stop(true, true).fadeOut();
 	})
 	
-	$("#catButton").click(function(e){
+	/*$("#catButton").click(function(e){
 		e.stopPropagation();
 		
 		console.log("button clicked!!!");
-		
+
 		if ($('#catDropdownMenu').is(":hidden")){
 		    $('#catDropdownMenu').addClass('show');
 		  }
@@ -200,7 +200,6 @@ $(document).ready(function() {
 		}
 	})
 	
-	
 	$("#changeIssueCategoryButton").click(function(e){
 		e.stopPropagation();
 		
@@ -215,34 +214,56 @@ $(document).ready(function() {
 		}
 	})
 	
-	$("#changeIssueSubCategoryButton").click(function(e){
+	$("#changeIssueCategoryButton").click(function(e){
 		e.stopPropagation();
 		
 		console.log("button clicked!!!");
 		
-		if ($('#issueSubCategoryDropdownMenu').is(":hidden")){
-		    $('#issueSubCategoryDropdownMenu').addClass('show');
+		if ($('#issueCategoryDropdownMenu').is(":hidden")){
+		    $('#issueCategoryDropdownMenu').addClass('show');
 		  }
 		else
 		{
 			$('.dropdown-menu.show').removeClass("show");
 		}
+	})*/
+	
+	$(".dropdown-toggle").click(function(e){
+		e.stopPropagation();
+		
+		console.log(this);
+		
+		var dropDown = $(this).next();
+		
+		if ($(this).next().is(":hidden"))
+		{
+			dropDown.addClass("show");
+		}
+		else
+		{
+			dropDown.removeClass("show");
+		}
 	})
-
 
 	$(document).keydown(function(e) {
 		
 		e.stopPropagation();
-		console.log(e.keyCode);
 		
+		if (!($(".commentText").is(":focus")))
+		{
+			$('.search input[type=text]').focus();
+		}
+		
+		console.log("key pressed");
 		
 		if(e.keyCode == 27) {
 			console.log("escape pressed!!!");
 			$(".slider").css({"left": "100%"});
 			$("body").css("overflow", "auto");
 	  	}
-		
-		$('#ticketSearchInput').focus();
+		else if (e.keyCode == 9){
+			return;
+		}
 	});
 	
 	$('.slider').click(function(e){

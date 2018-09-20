@@ -56,4 +56,14 @@ public interface ITicketService {
 
 	Object getNoOfIssuesByStatusEngineer(Status status, String employeeId);
 
+	Iterable<Ticket> findAllTicketsByCategory(int category_id);
+
+	Iterable<Ticket> findAllTicketsBySubCategory(int sub_category_id);
+
+	Iterable<Ticket> findAllTicketsByCategoryStatus(int category_id, Status status);
+
+	Iterable<Ticket> findAllTicketsBySubCategoryStatus(int sub_category_id, Status status);
+
+	Iterable<Ticket> findAllTicketsByStatus(Status status);
+
 }

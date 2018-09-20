@@ -1,4 +1,7 @@
-srsApp.controller("dashboardController", function($scope, $http, $interval){
+srsApp2.controller("dashboardController", function($scope, $http, $interval){
+	
+	$scope.loaderShow = false;
+	
 	$scope.issuesData = [];
 	$http({
 		url: "/rest/employee/get",
@@ -6,7 +9,6 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 	})
 	.then(function success(response){
 		$scope.empData = response.data;
-		console.log($scope.empData.role)
 		if ($scope.empData.firstLogin)
 		{
 			$("#firstLoginModal").modal("show");
@@ -19,7 +21,6 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 			
 		}).then(function success(response){
 			
-			console.log("this are issues : "+response.data)
 			$scope.issuesRaised = response.data;
 		})
 		
@@ -32,7 +33,6 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 			
 		}).then(function success(response){
 			
-			console.log("this are issues : "+response.data)
 			$scope.issuesOnHold = response.data;
 		})
 		
@@ -45,7 +45,6 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 			
 		}).then(function success(response){
 			
-			console.log("this are issues : "+response.data)
 			$scope.issuesResolved = response.data;
 		})
 		
@@ -58,7 +57,6 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 			
 		}).then(function success(response){
 			
-			console.log("this are issues : "+response.data)
 			$scope.issuesWorkingOn = response.data;
 		})
 		
@@ -71,25 +69,12 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 			
 		}).then(function success(response){
 			
-			console.log("this are issues : "+response.data)
 			$scope.issuesUnresolvable = response.data;
 		})	
 		
-		
-		
-		
-	
 	}, function error(response){
 		console.log(response);
 	})
-	
-	
-	
-
-	
-	
-	
-	
 	
 	$http({
 		url: "/rest/issue-category/get/all",
@@ -232,8 +217,9 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 	})
 	
 	$http({
-		url: "/rest/ticket/get/all",
-		method: "GET"
+		url: "/rest/executive/get/status",
+		method: "POST",
+		data: {"status" : "OPEN"}
 	})
 	.then(function(response){
 		var issuesData = response.data;
@@ -334,10 +320,11 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 		if($scope.subCategory == null){
 
 			$http({
-				url: "/rest/executive/get/category/engId",
+				url: "/rest/executive/get/category/status",
 				method: "POST",
 				data: {
-					"category_id": $scope.selectedCategory.id
+					"category_id": $scope.selectedCategory.id,
+					"status": "OPEN"
 				}
 			})
 			.then(function(response){
@@ -357,10 +344,11 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 		else{
 
 			$http({
-				url: "/rest/executive/get/sub_category/engId",
+				url: "/rest/executive/get/sub_category/status",
 				method: "POST",
 				data: {
-					"sub_category_id": $scope.subCategory.id
+					"sub_category_id": $scope.subCategory.id,
+					"status": "OPEN"
 				}
 			})
 			.then(function(response){
@@ -403,6 +391,7 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 	}
 	
 	function getTicket(id){
+		$scope.loaderShow = true;
 		$http({
 			url : "/rest/ticket/get?id=" + id,
 			method: "GET"
@@ -414,14 +403,17 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 				response.data.formattedTime = String(new Date(response.data.datetime));
 				$scope.showSlider(response.data);
 			}
+			$scope.loaderShow = false;
 		}, function error(error){				
 			alert("No ticket with Ticket Id : " + id);
+			$scope.loaderShow = false;
 		})
 	}
 	
 	$scope.search = function(keyEvent){
 		keyEvent.stopPropagation();
 		if(keyEvent.which == 13){
+			keyEvent.target.select();
 			getTicket($scope.searchTicketId);
 		}
 	}
@@ -430,6 +422,75 @@ srsApp.controller("dashboardController", function($scope, $http, $interval){
 	console.log()
 	if(params.get("srs") !== "" && params.get("srs") != undefined){
 		getTicket(params.get("srs"));
+	}
+	
+	
+	function getPriority(p){
+		switch(p){
+		case "LOW" 		:	return 0;
+		case "MEDIUM" 	:	return 1;
+		case "HIGH" 	:	return 2;
+		case "CRITICAL" : 	return 3;
+		}
+	}
+	
+	function getStatusInt(s){
+		switch(s){
+		case "OPEN" 		:	return 0;
+		case "ONHOLD" 		:	return 1;
+		case "WORKING" 		: 	return 2;
+		case "UNRESOLVABLE" : 	return 3;
+		case "CLOSED" 		:	return 4;
+		}
+	}
+	
+	$scope.IsSortByPriority = true;
+	$scope.IsSortByTime = true;
+	$scope.IsSortByStatus = true;
+	
+	$scope.sortByTime = function(sort_method = true){
+		$scope.IsSortByTime = !sort_method;
+		$scope.issuesData.sort(function(a, b){
+			x = new Date(a.datetime);
+			y = new Date(b.datetime);
+			if(x > y){
+				return sort_method ? -1 : 1;
+			} else {
+				return sort_method ? 1 : -1;
+			}
+		});
+	}
+	
+	$scope.sortByPriority = function(sort_method = true){
+		$scope.IsSortByPriority = !sort_method;
+		
+		$scope.issuesData.sort(function(a, b){
+			x = a.subCategory.issuePriority;
+			y = b.subCategory.issuePriority;
+			
+			
+			if(getPriority(x) > getPriority(y)){
+				return sort_method ? -1 : 1;
+			} else {
+				return sort_method ? 1 : -1;
+			}
+		});
+	}
+	
+	$scope.sortByStatus = function(sort_method = true){
+		$scope.IsSortByStatus = !sort_method;
+		
+		$scope.issuesData.sort(function(a, b){
+			x = a.status;
+			y = b.status;
+			
+			
+			if(getStatusInt(x) < getStatusInt(y)){
+				return sort_method ? -1 : 1;
+			} else {
+				return sort_method ? 1 : -1;
+			}
+		});
 	}
 	
 })

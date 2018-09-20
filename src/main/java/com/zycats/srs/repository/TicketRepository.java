@@ -23,16 +23,34 @@ public interface TicketRepository extends PagingAndSortingRepository<Ticket, Int
 
 	@Query(
 			value = "SELECT t from Ticket t INNER JOIN IssueSubCategory c ON t.subCategory.id = c.id WHERE c.issueCategory.id = :category_id and t.engineer = :engineer")
-	List<Ticket> findAllTicketsByCategoryEngineer(@Param("category_id") int category_id, @Param("engineer") Employee engineer);
+	List<Ticket> findAllTicketsByCategoryEngineer(@Param("category_id") int category_id,
+			@Param("engineer") Employee engineer);
 
 	@Query(value = "SELECT t from Ticket t  WHERE t.subCategory.id = :sub_category_id AND t.engineer = :engineer")
 	List<Ticket> findAllTicketsBySubCategoryEngineer(@Param("sub_category_id") int sub_category_id,
 			@Param("engineer") Employee engineer);
 
-	
-	
-	//---------------- Employee Tickets --------------------//
-	
+	@Query(
+			value = "SELECT t from Ticket t INNER JOIN IssueSubCategory c ON t.subCategory.id = c.id WHERE c.issueCategory.id = :category_id")
+	Iterable<Ticket> findAllTicketsByCategory(@Param("category_id") int category_id);
+
+	@Query(value = "SELECT t from Ticket t  WHERE t.subCategory.id = :sub_category_id")
+	List<Ticket> findAllTicketsBySubCategory(@Param("sub_category_id") int sub_category_id);
+
+	@Query(
+			value = "SELECT t from Ticket t INNER JOIN IssueSubCategory c ON t.subCategory.id = c.id WHERE c.issueCategory.id = :category_id AND t.status = :status")
+	Iterable<Ticket> findAllTicketsByCategoryStatus(@Param("category_id") int category_id,
+			@Param("status") Status status);
+
+	@Query(value = "SELECT t from Ticket t  WHERE t.subCategory.id = :sub_category_id  AND t.status = :status")
+	List<Ticket> findAllTicketsBySubCategoryStatus(@Param("sub_category_id") int sub_category_id,
+			@Param("status") Status status);
+
+	@Query(value = "SELECT t FROM Ticket t where t.status = :status")
+	Iterable<Ticket> findAllTicketsByStatus(@Param("status") Status status);
+
+	// ---------------- Employee Tickets --------------------//
+
 	@Query(value = "SELECT t from Ticket t  WHERE t.employee = :employee")
 	List<Ticket> findAllTicketsByEmployee(@Param("employee") Employee employee);
 	
