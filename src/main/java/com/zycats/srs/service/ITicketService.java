@@ -36,21 +36,30 @@ public interface ITicketService {
 	Iterable<Ticket> findAllTicketsByCategoryEmployee(int category_id, String engineerId);
 
 	Iterable<Ticket> findAllTicketsBySubCategoryEmployee(int sub_category_id, String employeeId);
-	
-////////////////////////////	
-	
+
+	////////////////////////////
+
 	Object getNoOfIssues(String employeeId);
-	
+
 	Object getNoOfIssues();
-	
-////////////////////////////	
+
+	////////////////////////////
 	// general methods For Employee
-	
-	Object getNoOfIssuesByStatusEmployee(Status status,String employeeId); 
-	
-	
-	//general methods for Engineer
+
+	Object getNoOfIssuesByStatusEmployee(Status status, String employeeId);
+
+	// general methods for Engineer
 
 	Object getNoOfIssuesByStatusEngineer(Status status, String employeeId);
+
+	Iterable<Ticket> findAllTicketsByCategory(int category_id);
+
+	Iterable<Ticket> findAllTicketsBySubCategory(int sub_category_id);
+
+	Iterable<Ticket> findAllTicketsByCategoryStatus(int category_id, Status status);
+
+	Iterable<Ticket> findAllTicketsBySubCategoryStatus(int sub_category_id, Status status);
+
+	Iterable<Ticket> findAllTicketsByStatus(Status status);
 
 }

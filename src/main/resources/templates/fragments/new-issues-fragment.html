@@ -46,10 +46,10 @@
 							<th></th>
 							<th>#Id</th>
 							<th>Description</th>
-							<th>Priority</th>
-							<th>Time of Ticket</th>
+							<th ng-click="sortByPriority(IsSortByPriority)">Priority</th>
+							<th ng-click="sortByTime(IsSortByTime)">Time of Ticket</th>
 							<th>Raised By</th>
-							<th>Status</th>
+							<th ng-click="sortByStatus(IsSortByStatus)">Status</th>
 						</tr>
 					</thead>
 					<tbody>
