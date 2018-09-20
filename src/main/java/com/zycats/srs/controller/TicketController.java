@@ -40,5 +40,11 @@ public class TicketController {
 	public Iterable<Ticket> getAllTicket() {
 		return ticketService.getAll();
 	}
+	
+	
+	@RequestMapping(value = "get/pageable", method = RequestMethod.GET)
+	public Iterable<Ticket> getAllTicketPageable() {
+		return ticketService.getAllTicketsPageable(1, 1);
+	}
 
 }

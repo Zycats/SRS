@@ -3,14 +3,14 @@ package com.zycats.srs.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.zycats.srs.entity.Employee;
 import com.zycats.srs.entity.Status;
 import com.zycats.srs.entity.Ticket;
 
-public interface TicketRepository extends CrudRepository<Ticket, Integer> {
+public interface TicketRepository extends PagingAndSortingRepository<Ticket, Integer> {
 	
 	
 	// --------------- Engineer tickets -------------------//

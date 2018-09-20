@@ -27,6 +27,9 @@ public interface ITicketService {
 	Iterable<Ticket> findAllTicketsByCategoryEngineer(int category_id, String engineerId);
 
 	Iterable<Ticket> findAllTicketsBySubCategoryEngineer(int sub_category_id, String engineerId);
+		//-------Paging Queries  ------------
+		Iterable<Ticket> getAllTicketsPageable(int page, int size);
+	
 
 	// -- services related to Employee -----///
 	Iterable<Ticket> findAllTicketsByEmployee(String employeeId);
@@ -44,7 +47,7 @@ public interface ITicketService {
 	Object getNoOfIssues();
 	
 ////////////////////////////	
-	// general methods For Employee
+	// Count methods For Employee
 	
 	Object getNoOfIssuesByStatusEmployee(Status status,String employeeId); 
 	
