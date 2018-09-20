@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,7 @@ public class TicketService implements ITicketService {
 	private IEmployeeService employeeService;
 
 	@Override
+	@CacheEvict(cacheNames = "{noOfTicketsEngineer,noOfTicketsEmployee}",allEntries=true)
 	public Ticket add(Ticket ticket, Authentication auth, String machineIp) {
 		ticket.setDatetime(new Timestamp(new java.util.Date().getTime()));
 		ticket.setEmployee(employeeService.getEmployee(auth.getName(), machineIp));
@@ -185,6 +188,7 @@ public class TicketService implements ITicketService {
 
 	// general service for Employee
 	@Override
+	@Cacheable(value = "noOfTicketsEmployee")
 	public Object getNoOfIssuesByStatusEmployee(Status status, String employeeId) {
 
 		try {
@@ -199,6 +203,7 @@ public class TicketService implements ITicketService {
 
 	// general service for Engineer
 	@Override
+	@Cacheable(value = "noOfTicketsEngineer")
 	public Object getNoOfIssuesByStatusEngineer(Status status, String employeeId) {
 
 		try {
