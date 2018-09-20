@@ -272,7 +272,7 @@ h3#recentId{
 	float: right;
 }
 div.status-bubble{
-	width: 150px;
+	width: auto;
 	height: 40px;
 	text-align: center;
 	line-height: 40px;
@@ -283,7 +283,10 @@ div.status-bubble{
 	top: 0;
 	z-index: 10000;
 	border-radius: 6px;	
-	display: none;
+	visibility: hidden;
+	tranform:visibility 100ms;
+	padding-left: 8px;
+	padding-right: 8px;
 	
 }
 .comment-time{

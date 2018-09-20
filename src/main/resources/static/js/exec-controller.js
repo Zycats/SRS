@@ -1,4 +1,4 @@
-srsApp2.controller("dashboardController", function($scope, $http, $interval){
+srsApp2.controller("dashboardController", function($scope, $http, $interval, $timeout){
 	
 	$scope.loaderShow = false;
 	
@@ -133,6 +133,39 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		}
 	}
 	
+	$scope.changeFromTo = function($event, comment){
+		$scope.from = comment.statusFrom;
+		$scope.to = comment.statusTo;
+		
+		$timeout(function(){
+			var x = $event.target.getBoundingClientRect().x;
+			var y = $event.target.getBoundingClientRect().y;
+			var width= $event.target.getBoundingClientRect().width;
+			
+			var bubbleWidth = document.getElementById('bubble').getBoundingClientRect().width;
+			
+			console.log(x, y, width, bubbleWidth);
+			
+			
+			$(".status-bubble").css({
+				"left": (x - (bubbleWidth/2) + (width/2)) + "px",
+				"top": (y - 58) + "px",
+				"visibility": "visible"
+			})
+//		$(".status-bubble").stop(true, true).fadeIn();
+			
+		}($event), 1000);
+		
+	}
+	
+	$scope.hideBubble = function(){
+		$('.status-bubble').css({
+			"visibility": "hidden"
+		})
+//		$(".status-bubble").stop(true, true).fadeOut();
+		
+	}
+	
 
 	$scope.updateEmp = function(){
 		
@@ -254,7 +287,13 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 			url : "rest/comment/get/ticket/"+issue.id,
 			method: "GET"
 		}).then(function(response){
+
+			response.data.forEach(function(data){
+				data.formattedTime = String(new Date(data.datetime));
+			});
+			
 			$scope.commentData = response.data;
+			
 		})
 		
 	}
@@ -277,6 +316,15 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 			});
 		}
 		$("body").css("overflow", "hidden");
+	}
+	
+	
+	$scope.changeCommentStatus = function($event){
+		var target = $event.currentTarget;
+		$('.dropdown-menu').removeClass("show");
+		$("#changeStatusButton").text(target.innerHTML);
+		
+		$scope.commentStatus = target.innerHTML;
 	}
 	
 	
@@ -365,6 +413,10 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 				
 			})
 		}
+	}
+	
+	$scope.commentStatusSelect = function($event){
+		console.log("hsukdfhn");
 	}
 	
 	$scope.comment = function(issue){

@@ -71,49 +71,19 @@
 				</div>
 			</div>
 		</div>
-		<!-- <a class="btn btn-primary"
-			href="sip:{{ issue.employee.email }}">Skype</a> <a
-			class="btn btn-warning"
-			href="mailto:{{issue.employee.email}}?subject=Regarding #{{issue.id}}:{{issue.description}} | {{issue.status}}&amp;body=Hi%2C%0A%0AThis%20is%20in%20regards%20with%20the%20SRS%20raised%20by%20you.%20Following%20are%20the%20details%20of%20SRS-%0A%0AId%3A {{issue.id}}%0ADate%20of%20raisal%3A {{issue.formattedTime}}%0ADescription%3A%09{{issue.description}}%0ACurrent%20Status%3A%09{{issue.status}}%0AEngineer%20Assigned%3A%09{{issue.engineer.email}}%0A">Send
-			mail</a> -->
-		<!--<hr>
-		<div ng-repeat="comment in commentData">
-			<span><strong>{{comment.commentBy.id}}</strong></span> : <span>{{comment.message}}</span>&nbsp;&nbsp;
-			<small>{{comment.datetime}}</small><br>
-		</div>
-
-		<br> <br>-->
-
+		
 		<div class="card comments-card">
 			<div class="card-header">Comments</div>
 			<div class="card-body">
-				<div class="comment-row">
+				<div class="comment-row" ng-repeat="comment in commentData">
 					<div class="comment-body">
-						<span class="comment-by">{{ issue.engineer.id }}:</span> This is a
-						demo comment. This is a demo comment. This is a demo comment. This
-						is a demo comment. This is a demo comment. This is a demo comment.
-						This is a demo comment. This is a demo comment. This is a demo
-						comment.
+						<span class="comment-by">{{ comment.commentBy.id }}:</span> {{ comment.message }}
 					</div>
 					<div class="comment-status-button">
-						<span class="comment-time">18th Sept 2018, 04: 14 PM</span>
+						<span class="comment-time">{{ comment.formattedTime }}</span>
 						<div class="status-btn">
-							<button class="btn btn-sm btn-primary closeButton" id="1"
-								ng-mouseover="changeFromTo($event)">Closed</button>
-						</div>
-					</div>
-				</div>
-				<div class="comment-row">
-					<span class="comment-by">{{ issue.engineer.id }}:</span> This is a
-					demo comment. This is a demo comment. This is a demo comment. This
-					is a demo comment. This is a demo comment. This is a demo comment.
-					This is a demo comment. This is a demo comment. This is a demo
-					comment.
-					<div class="comment-status-button">
-						<span class="comment-time">18th Sept 2018, 04: 14 PM</span>
-						<div class="status-btn">
-							<button class="btn btn-sm btn-primary closeButton" id="2"
-								ng-mouseover="changeFromTo($event)">Closed</button>
+							<button class="btn btn-sm btn-primary closeButton"
+								ng-mouseover="changeFromTo($event, comment)" ng-mouseleave="hideBubble()">{{ comment.statusTo }}</button>
 						</div>
 					</div>
 				</div>
@@ -130,24 +100,18 @@
 				<div class="col">
 					<div class="dropdown">
 						<button class="btn btn-primary dropdown-toggle" type="button"
-							id="statusDropdownBtn" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false">Select Status</button>
+							id="changeCommentStatusButton" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false" >Select Status</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-							<a class="dropdown-item" href="#!">Action</a> <a
-								class="dropdown-item" href="#!">Another action</a>
+							<a class="dropdown-item" ng-click="changeCommentStatus($event)" ng-repeat="status in statusData">{{ status }}</a>
 						</div>
 					</div>
 				</div>
 				<div class="col">
-					<button class="btn btn-primary" id="commentSubmitBtn">Submit</button>
+					<button class="btn btn-primary" id="commentSubmitBtn" ng-click="comment(issue)">Submit</button>
 				</div>
 			</div>
-			<!-- <select class="form-control" ng-model="commentStatus"
-				id="commentStatus">
-				<option ng-repeat="status in statusData" value="{{status}}">{{status}}</option>
-			</select>
-			<button class="btn btn-success" ng-click="comment(issue)">Add
-				Comment</button> -->
+			
 		</div>
 
 	</div>

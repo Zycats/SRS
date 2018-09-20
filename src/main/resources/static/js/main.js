@@ -143,20 +143,20 @@ $(document).ready(function() {
 		console.log("link clicked", this);
 	})
 	
-	$(".closeButton").mouseover(function(){
-		console.log($(this).offset());
-		var offset = $(this).offset(); 
-		var width = $(this).outerWidth();
-		$(".status-bubble").css({
-			"left": (offset.left - 75 + (width/2)) + "px",
-			"top": (offset.top - 58) + "px"
-		})
-		$(".status-bubble").stop(true, true).fadeIn();
-	})
-	
-	$(".closeButton").mouseleave(function(){
-		$(".status-bubble").stop(true, true).fadeOut();
-	})
+//	$(".closeButton").mouseover(function(){
+//		console.log($(this).offset());
+//		var offset = $(this).offset(); 
+//		var width = $(this).outerWidth();
+//		$(".status-bubble").css({
+//			"left": (offset.left - 75 + (width/2)) + "px",
+//			"top": (offset.top - 58) + "px"
+//		})
+//		$(".status-bubble").stop(true, true).fadeIn();
+//	})
+//	
+//	$(".closeButton").mouseleave(function(){
+//		$(".status-bubble").stop(true, true).fadeOut();
+//	})
 	
 	/*$("#catButton").click(function(e){
 		e.stopPropagation();
