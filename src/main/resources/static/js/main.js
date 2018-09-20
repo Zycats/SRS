@@ -158,7 +158,7 @@ $(document).ready(function() {
 		$(".status-bubble").stop(true, true).fadeOut();
 	})
 	
-	$("#catButton").click(function(e){
+	/*$("#catButton").click(function(e){
 		e.stopPropagation();
 		
 		console.log("button clicked!!!");
@@ -225,6 +225,23 @@ $(document).ready(function() {
 		else
 		{
 			$('.dropdown-menu.show').removeClass("show");
+		}
+	})*/
+	
+	$(".dropdown-toggle").click(function(e){
+		e.stopPropagation();
+		
+		console.log(this);
+		
+		var dropDown = $(this).next();
+		
+		if ($(this).next().is(":hidden"))
+		{
+			dropDown.addClass("show");
+		}
+		else
+		{
+			dropDown.removeClass("show");
 		}
 	})
 
