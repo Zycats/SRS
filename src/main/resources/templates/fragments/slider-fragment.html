@@ -90,7 +90,7 @@
 			</div>
 		</div>
 		
-		<div ng-if="empData.role == 'EXECUTIVE'" class="newCommentBox">
+		<div class="newCommentBox">
 			<div class="textareaDiv">
 				<label for="comment">Comment :</label>
 				<textarea rows="3" style="width: 100%;" ng-model="commentText"
@@ -98,7 +98,7 @@
 			</div>
 			<div class="row">
 				<div class="col">
-					<div class="dropdown">
+					<div class="dropup" ng-show="empData.role == 'EXECUTIVE'">
 						<button class="btn btn-primary dropdown-toggle" type="button"
 							id="changeCommentStatusButton" data-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false" >Select Status</button>

@@ -322,7 +322,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval, $ti
 	$scope.changeCommentStatus = function($event){
 		var target = $event.currentTarget;
 		$('.dropdown-menu').removeClass("show");
-		$("#changeStatusButton").text(target.innerHTML);
+		$("#changeCommentStatusButton").text(target.innerHTML);
 		
 		$scope.commentStatus = target.innerHTML;
 	}
@@ -439,6 +439,16 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval, $ti
 					i.status = data.data.statusTo;
 				}
 			})
+		});
+	}
+	
+	$scope.assignTicket = function(issue){
+		$http({
+			url : "/rest/ticket/update",
+			method: "POST",
+			data: issue
+		}).then(function(response){
+			
 		});
 	}
 	
