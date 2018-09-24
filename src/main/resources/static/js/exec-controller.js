@@ -1,6 +1,7 @@
 srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	
 	$scope.loaderShow = false;
+	$scope.openSrsFirst = false;
 	
 	$scope.issuesData = [];
 	$http({
@@ -215,14 +216,22 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	})
 	
 	$scope.getOpenSrs = function(){
+		/*$http.post("/rest/executive/get/status",
+			{"status" : "OPEN"},
+			{ignoreLoadingBar: $scope.openSrsFirst})*/
 		$http({
 			url: "/rest/executive/get/status",
 			method: "POST",
-			data: {"status" : "OPEN"}
+			data: {
+				"status" : "OPEN"
+			},
+			ignoreLoadingBar: $scope.openSrsFirst
 		})
 		.then(function(response){
 			var issuesData = response.data;
 			console.log(issuesData);
+			
+			$scope.openSrsFirst = true;
 			
 			issuesData.forEach(function(data){
 				data.formattedTime = String(new Date(data.datetime));
@@ -236,7 +245,6 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 					data.showAssigned = false;
 				}
 			});
-			.
 			$scope.issuesData = issuesData;
 		})
 	}
@@ -245,26 +253,11 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	
 	$scope.intervalFun = function()
 	{
-		$scope.getTimeAgo();
 		$scope.getOpenSrs();
 	}
 	
 	
-	$interval(getTimeAgo, 3000);
-	
-	$scope.getTimeAgo = function(){
-		
-		if($scope.issuesData != null && $scope.issuesData.length > 0 && $scope.issuesData != )
-			
-			$scope.issuesData.forEach(function(data){
-				data['timeAgo'] = moment(new Date(data.datetime)).fromNow();
-			})
-			
-		if($scope.recentIssuesData != null && $scope.recentIssuesData.length > 0)
-			$scope.recentIssuesData.forEach(function(data){
-				data['timeAgo'] = moment(new Date(data.datetime)).fromNow();
-			})
-	}
+	$interval($scope.intervalFun, 3000);
 	
 	getComments = function(issue){
 		$http({
@@ -525,7 +518,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		});
 	}
 	
-	$scope.changeFromTo = function($event){
+	$scope.changeFromTo = function($event, comment){
 		
 		var x = $event.target.getBoundingClientRect().x;
 		var y = $event.target.getBoundingClientRect().y;
@@ -535,7 +528,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		var bubbleWidth = document.getElementById('bubble').getBoundingClientRect().width;
 		var bubbleHeight = document.getElementById('bubble').getBoundingClientRect().height;
 		
-		console.log(x, y, width, bubbleWidth);
+		console.log(x, y, width, bubbleWidth, comment);
 		
 		
 		$(".status-bubble").css({
@@ -544,16 +537,11 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 			"opacity": "1"
 		})
 		
-		if ($event.target.id == "1")
-		{
-			$scope.from = "OPEN";
-			$scope.to = "WORKING";
-		}
-		else
-		{
-			$scope.from = "WORKING";
-			$scope.to = "URESOLVABLE";
-		}
+		
+		$scope.from = comment.statusFrom;
+		$scope.to = comment.statusTo;
+	
+		console.log(comment);
 	}
 	
 	$scope.hideBubble = function(){

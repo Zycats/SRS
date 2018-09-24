@@ -89,7 +89,7 @@
 						<span class="comment-time">{{ comment.formattedTime }}</span>
 						<div class="status-btn">
 							<button class="btn btn-sm btn-primary closeButton" id="1"
-								ng-mouseover="changeFromTo($event)" ng-mouseleave="hideBubble()">Closed</button>
+								ng-mouseover="changeFromTo($event, comment)" ng-mouseleave="hideBubble()">{{comment.statusTo}}</button>
 						</div>
 					</div>
 				</div>
