@@ -84,8 +84,9 @@ srsApp.controller("userController", function($scope, $http){
 	})
 	
 	$scope.changeLocation = function($event){
+		$event.stopPropagation();
 		var target = $event.currentTarget;
-		
+		$('.dropdown-menu').removeClass("show");
 		$("#locationButton").text(target.innerHTML);
 		$("#deptButton").text("Select Your Department");
 		
@@ -102,7 +103,9 @@ srsApp.controller("userController", function($scope, $http){
 	}
 	
 	$scope.changeDept = function($event){
+		$event.stopPropagation();
 		var target = $event.currentTarget;
+		$('.dropdown-menu').removeClass("show");
 		$("#deptButton").text(target.innerHTML);
 		for (dept of $scope.departments)
 		{

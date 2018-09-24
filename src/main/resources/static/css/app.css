@@ -272,19 +272,18 @@ h3#recentId{
 	float: right;
 }
 div.status-bubble{
-	width: 150px;
+	width: auto;
 	height: 40px;
 	text-align: center;
 	line-height: 40px;
 	background-color: rgba(0, 0, 0, 0.8);
 	color: #FFFFFF;
 	position: absolute;
-	left: 0;
-	top: 0;
 	z-index: 10000;
 	border-radius: 6px;	
-	display: none;
-	
+	padding: 0 16px;
+	opacity: 0;
+	transition: opacity 100ms;	
 }
 .comment-time{
 	font-size: 12px;
@@ -296,12 +295,12 @@ div.triangle{
 	width: 0;
 	height: 0;
 	position: absolute;
-	top: 40px;
-	left: calc(50% - 8px);
-	border-top: 8px solid rgba(0, 0, 0, 0.8);
-	border-left: 8px solid transparent;
-	border-right: 8px solid transparent;
-	border-bottom: 0;
+	top: 12px;
+	left: 100%;
+	border-top: 8px solid transparent;
+	border-left: 8px solid rgba(0, 0, 0, 0.8);
+	border-right: 0;
+	border-bottom: 8px solid transparent;
 }
 @media only screen and (max-width: 576px) {
 	div.slider{
