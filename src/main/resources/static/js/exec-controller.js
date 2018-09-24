@@ -209,47 +209,39 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		
 		issuesData.forEach(function(data){
 			data.formattedTime = String(new Date(data.datetime));
-			if (data.engineer == null)
-			{
-				data.showAssigned = true;
-			}
-			else
-			{
-				data.showAssigned = false;
-			}
 		});
 		
 		$scope.recentIssuesData = issuesData;
-		console.log($scope.recentIssuesData);
-		
-		
 	})
 	
-	$http({
-		url: "/rest/executive/get/status",
-		method: "POST",
-		data: {"status" : "OPEN"}
-	})
-	.then(function(response){
-		var issuesData = response.data;
-		console.log(issuesData);
-		
-		issuesData.forEach(function(data){
-			data.formattedTime = String(new Date(data.datetime));
+	$scope.getOpenSrs = function(){
+		$http({
+			url: "/rest/executive/get/status",
+			method: "POST",
+			data: {"status" : "OPEN"}
+		})
+		.then(function(response){
+			var issuesData = response.data;
+			console.log(issuesData);
 			
-			if (data.engineer == null)
-			{
-				data.showAssigned = true;
-			}
-			else
-			{
-				data.showAssigned = false;
-			}
-		});
-		
+			issuesData.forEach(function(data){
+				data.formattedTime = String(new Date(data.datetime));
+				
+				if (data.engineer == null)
+				{
+					data.showAssigned = true;
+				}
+				else
+				{
+					data.showAssigned = false;
+				}
+			});
 
-		$scope.issuesData = issuesData;
-	})
+			$scope.issuesData = issuesData;
+		})
+	}
+	
+	$scope.getOpenSrs();
 	
 	$interval(getTimeAgo, 3000);
 	
@@ -579,7 +571,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 			console.log(response);
 			issue.showAssigned = false;
 			getTicket(issue.id, issue);
-			
+			$scope.getOpenSrs();
 		}, function error(error){				
 			console.log(error);
 		})
