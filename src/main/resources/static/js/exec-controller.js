@@ -2,9 +2,6 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	
 	$scope.loaderShow = false;
 	
-	$scope.from = "OPEN";
-	$scope.to = "CLOSE";
-	
 	$scope.issuesData = [];
 	$http({
 		url: "/rest/employee/get",
@@ -273,6 +270,11 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 			url : "rest/comment/get/ticket/"+issue.id,
 			method: "GET"
 		}).then(function(response){
+
+			response.data.forEach(function(data){
+				data.formattedTime = String(new Date(data.datetime));
+			});
+			
 			$scope.commentData = response.data;
 		})
 		
@@ -296,6 +298,15 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 			});
 		}
 		$("body").css("overflow", "hidden");
+	}
+	
+	
+	$scope.changeCommentStatus = function($event){
+		var target = $event.currentTarget;
+		$('.dropdown-menu').removeClass("show");
+		$("#changeCommentStatusButton").text(target.innerHTML);
+		
+		$scope.commentStatus = target.innerHTML;
 	}
 	
 	

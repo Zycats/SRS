@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zycats.srs.entity.Ticket;
+import com.zycats.srs.exception.InsufficientPriviledgesException;
 import com.zycats.srs.service.ITicketService;
 
 @RestController
@@ -24,6 +25,12 @@ public class TicketController {
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public Ticket addTicket(@RequestBody Ticket ticket, Authentication auth, HttpServletRequest request) {
 		return ticketService.add(ticket, auth, request.getRemoteAddr());
+	}
+
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	public Ticket updateTicket(@RequestBody Ticket ticket, Authentication auth)
+			throws InsufficientPriviledgesException {
+		return ticketService.update(ticket, auth);
 	}
 
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
@@ -39,6 +46,11 @@ public class TicketController {
 	@RequestMapping(value = "get/all", method = RequestMethod.GET)
 	public Iterable<Ticket> getAllTicket() {
 		return ticketService.getAll();
+	}
+
+	@RequestMapping(value = "get/pageable", method = RequestMethod.GET)
+	public Iterable<Ticket> getAllTicketPageable() {
+		return ticketService.getAllTicketsPageable(1, 1);
 	}
 
 }

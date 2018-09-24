@@ -143,34 +143,7 @@ $(document).ready(function() {
 	$(".btnLink").click(function(){
 		console.log("link clicked", this);
 	})
-	
-	/*$(".closeButton").mouseover(function(){
-		console.log($(this).offset());
-		var offset = $(this).offset(); 
-		var width = $(this).outerWidth();
-		var height = $(this).outerHeight();
-		var bubbleWidth = $(".status-bubble").outerWidth();
-		
-		console.log(bubbleWidth);
-		
-		$(".status-bubble").css({
-			"left": (offset.left - (bubbleWidth/2) + (width/2)) + "px",
-			"top": (offset.top - 58) + "px"
-		})
-		
-		$(".status-bubble").css({
-			"top": (offset.top - (height/4)) + "px",
-			"right": ($(window).outerWidth()) - offset.left + 20 + "px",
-			"visibility": "visible"
-		})
-		
-		//$(".status-bubble").stop(true, true).fadeIn();
-	})*/
-	
-	$(".closeButton").mouseleave(function(){
-		//$(".status-bubble").stop(true, true).fadeOut();
-	})
-	
+
 	$(".dropdown-toggle").click(function(e){
 		e.stopPropagation();
 		
