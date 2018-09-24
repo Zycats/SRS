@@ -30,15 +30,14 @@ public class TicketService<ticketRepositoryPageable> implements ITicketService {
 	@Autowired
 	private IEmployeeService employeeService;
 
-
 	@Override
-	@CacheEvict(cacheNames = "{noOfTicketsEngineer,noOfTicketsEmployee}",allEntries=true)
+	@CacheEvict(cacheNames = "{noOfTicketsEngineer,noOfTicketsEmployee}", allEntries = true)
 	public Ticket add(Ticket ticket, Authentication auth, String machineIp) {
 		ticket.setDatetime(new Timestamp(new java.util.Date().getTime()));
 		ticket.setEmployee(employeeService.getEmployee(auth.getName(), machineIp));
 		ticket.setStatus(Status.OPEN);
 		return ticketRepository.save(ticket);
-		
+
 	}
 
 	@Override
@@ -64,35 +63,32 @@ public class TicketService<ticketRepositoryPageable> implements ITicketService {
 		}
 		return true;
 	}
-	
-	
-	///-------Pageable Queries---------------///
-	 @Transactional(readOnly=true)
-	    public Iterable<Ticket> getAllTicketsPageable(int page, int size){
-	         
-			//return ticketRepository.findAllTicketsPageable(new PageRequest(page, size, Sort.Direction.DESC, "datetime"));
-	        
-		 Pageable pageable = PageRequest.of(0, 3,Sort.by("datetime").descending());
-		 
-		 
-		 while(true){
-	            Page<Ticket> pageTicket = ticketRepository.findAll(pageable);;
-	            System.out.println("Page no: "+pageTicket.getNumber());
-	            pageTicket.getContent().forEach(System.out::println);
-	            if(!pageTicket.hasNext()){
-	                break;
-	            }
-	            pageable = pageTicket.nextPageable();
-	            
-	            System.out.println("==============================================================");
-	        }
-		 
-		 return null; 
-	        		
-	    }
-	
-	
-	
+
+	/// -------Pageable Queries---------------///
+	@Transactional(readOnly = true)
+	public Iterable<Ticket> getAllTicketsPageable(int page, int size) {
+
+		// return ticketRepository.findAllTicketsPageable(new PageRequest(page, size,
+		// Sort.Direction.DESC, "datetime"));
+
+		Pageable pageable = PageRequest.of(0, 3, Sort.by("datetime").descending());
+
+		while (true) {
+			Page<Ticket> pageTicket = ticketRepository.findAll(pageable);
+			;
+			System.out.println("Page no: " + pageTicket.getNumber());
+			pageTicket.getContent().forEach(System.out::println);
+			if (!pageTicket.hasNext()) {
+				break;
+			}
+			pageable = pageTicket.nextPageable();
+
+			System.out.println("==============================================================");
+		}
+
+		return null;
+
+	}
 
 	/// ----------- Engineer Services ------------------/////////////////
 
@@ -256,6 +252,7 @@ public class TicketService<ticketRepositoryPageable> implements ITicketService {
 				Role.EXECUTIVE))) {
 			throw new InsufficientPriviledgesException("Only " + Role.EXECUTIVE + " is allowed to update ticket");
 		}
+		System.out.println(ticket);
 		return ticketRepository.save(ticket);
 	}
 

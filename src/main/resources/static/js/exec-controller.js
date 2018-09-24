@@ -568,13 +568,12 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		issue.engineer = {
 				"id": $scope.empData.id
 		}
+		console.log("issue", issue);
 		
 		$http({
 			url : "/rest/ticket/update",
 			method: "POST",
-			data: {
-				"ticket": issue
-			}
+			data: issue
 		}).then(function success(response){
 			console.log(response);
 			issue.showAssigned = false;
