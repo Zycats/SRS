@@ -30,6 +30,7 @@ public class TicketController {
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public Ticket updateTicket(@RequestBody Ticket ticket, Authentication auth)
 			throws InsufficientPriviledgesException {
+		
 		return ticketService.update(ticket, auth);
 	}
 

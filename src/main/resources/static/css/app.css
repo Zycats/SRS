@@ -397,3 +397,9 @@ div.search{
 #statusDropdownBtn{
 	width: 100%;
 }
+#statusBtnDiv{
+	width: 100%;
+}
+#statusBtnDiv .dropdown-toggle{
+	width: 100%;
+}
