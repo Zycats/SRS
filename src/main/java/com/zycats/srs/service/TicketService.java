@@ -304,4 +304,13 @@ public class TicketService<ticketRepositoryPageable> implements ITicketService {
 
 	}
 
+	@Transactional
+	@Override
+	public Ticket setAssigned(Ticket ticket, String idFromAuth) {
+		ticket.setStatus(Status.WORKING);
+		ticket.setEngineer(employeeService.getEmployeeById(idFromAuth));
+		ticketRepository.setAssign(ticket.getEngineer().getId(), ticket.getId());
+		return null;
+	}
+
 }

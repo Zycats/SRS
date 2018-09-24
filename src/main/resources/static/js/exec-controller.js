@@ -1,7 +1,8 @@
 srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	
 	$scope.loaderShow = false;
-	
+	$scope.openSrsFirst = false;
+
 	$scope.issuesData = [];
 	$scope.history = {};
 	
@@ -20,7 +21,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		var role = ($scope.empData.role).toLowerCase();
 		
 		$http({
-			url : "/rest/executive/get/ticket-no",
+			url : "/rest/"+role+"/get/ticket-no",
 			method : "POST"
 			
 		}).then(function success(response){
@@ -29,7 +30,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		})
 		
 		$http({
-			url : "/rest/executive/get/status/ticket-no",
+			url : "/rest/"+role+"/get/status/ticket-no",
 			method : "POST",
 			data : {
 				"status" : "ONHOLD"
@@ -41,7 +42,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		})
 		
 		$http({
-			url : "/rest/executive/get/status/ticket-no",
+			url : "/rest/"+role+"/get/status/ticket-no",
 			method : "POST",
 			data : {
 				"status" : "CLOSED"
@@ -53,7 +54,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		})
 		
 		$http({
-			url : "/rest/executive/get/status/ticket-no",
+			url : "/rest/"+role+"/get/status/ticket-no",
 			method : "POST",
 			data : {
 				"status" : "WORKING"
@@ -65,7 +66,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		})
 		
 		$http({
-			url : "/rest/executive/get/status/ticket-no",
+			url : "/rest/"+role+"/get/status/ticket-no",
 			method : "POST",
 			data : {
 				"status" : "UNRESOLVABLE"
@@ -213,68 +214,55 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		
 		issuesData.forEach(function(data){
 			data.formattedTime = String(new Date(data.datetime));
-			if (data.engineer == null)
-			{
-				data.showAssigned = true;
-			}
-			else
-			{
-				data.showAssigned = false;
-			}
 		});
 		
 		$scope.recentIssuesData = issuesData;
-		console.log($scope.recentIssuesData);
-		
-		
 	})
 	
-	$http({
-		url: "/rest/executive/get/status",
-		method: "POST",
-		data: {"status" : "OPEN"}
-	})
-	.then(function(response){
-		var issuesData = response.data;
-		console.log(issuesData);
-		
-		issuesData.forEach(function(data){
-			data.formattedTime = String(new Date(data.datetime));
+	$scope.getOpenSrs = function(){
+		/*
+		 * $http.post("/rest/executive/get/status", {"status" : "OPEN"},
+		 * {ignoreLoadingBar: $scope.openSrsFirst})
+		 */
+		$http({
+			url: "/rest/executive/get/status",
+			method: "POST",
+			data: {
+				"status" : "OPEN"
+			},
+			ignoreLoadingBar: $scope.openSrsFirst
+		})
+		.then(function(response){
+			var issuesData = response.data;
+			console.log(issuesData);
 			
-			if (data.engineer == null)
-			{
-				data.showAssigned = true;
-			}
-			else
-			{
-				data.showAssigned = false;
-			}
-		});
-		
-		$scope.issuesData = issuesData;
-		console.log($scope.issuesData);
-		
-		
-	})
-	
-	
-	
-	function getTimeAgo(){
-		if($scope.issuesData != null && $scope.issuesData.length > 0)
-			$scope.issuesData.forEach(function(data){
-				data['timeAgo'] = moment(new Date(data.datetime)).fromNow();
-			})
+			$scope.openSrsFirst = true;
 			
-		if($scope.recentIssuesData != null && $scope.recentIssuesData.length > 0)
-			$scope.recentIssuesData.forEach(function(data){
-				data['timeAgo'] = moment(new Date(data.datetime)).fromNow();
-			})
-			
-		if($scope.history.issuesData != null && $scope.history.issuesData.length > 0)
-			$scope.history.issuesData.forEach(function(data){
-				data['timeAgo'] = moment(new Date(data.datetime)).fromNow();
-			})	
+			issuesData.forEach(function(data){
+				data.formattedTime = String(new Date(data.datetime));
+				
+				if (data.engineer == null)
+				{
+					data.showAssigned = true;
+				}
+				else
+				{
+					data.showAssigned = false;
+				}
+			});
+			$scope.issuesData = issuesData;
+		})
 	}
+	
+	// $scope.getOpenSrs();
+	
+	$scope.intervalFun = function()
+	{
+		$scope.getOpenSrs();
+	}
+	
+	
+	$interval($scope.intervalFun, 3000);
 	
 	getComments = function(issue){
 		$http({
@@ -535,7 +523,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		});
 	}
 	
-	$scope.changeFromTo = function($event){
+	$scope.changeFromTo = function($event, comment){
 		
 		var x = $event.target.getBoundingClientRect().x;
 		var y = $event.target.getBoundingClientRect().y;
@@ -545,7 +533,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		var bubbleWidth = document.getElementById('bubble').getBoundingClientRect().width;
 		var bubbleHeight = document.getElementById('bubble').getBoundingClientRect().height;
 		
-		console.log(x, y, width, bubbleWidth);
+		console.log(x, y, width, bubbleWidth, comment);
 		
 		
 		$(".status-bubble").css({
@@ -554,16 +542,11 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 			"opacity": "1"
 		})
 		
-		if ($event.target.id == "1")
-		{
-			$scope.from = "OPEN";
-			$scope.to = "WORKING";
-		}
-		else
-		{
-			$scope.from = "WORKING";
-			$scope.to = "URESOLVABLE";
-		}
+		
+		$scope.from = comment.statusFrom;
+		$scope.to = comment.statusTo;
+	
+		console.log(comment);
 	}
 	
 	$scope.hideBubble = function(){
@@ -583,29 +566,29 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		console.log("issue", issue);
 		
 		$http({
-			url : "/rest/ticket/update",
+			url : "/rest/executive/set/assign",
 			method: "POST",
 			data: issue
 		}).then(function success(response){
 			console.log(response);
 			issue.showAssigned = false;
 			getTicket(issue.id, issue);
-			
+			$scope.getOpenSrs();
 		}, function error(error){				
 			console.log(error);
 		})
-	}
+}
 	
 	
 	
-	//history Page Controller 
+	// history Page Controller
 	$scope.clickedForHistory = function(event) {
 		console.log(event.currentTarget.id)
 		$("#all-issues-history").trigger("click");
 		$("#all-issues-history").addClass("active")
 		$("#home-exec").removeClass("active")
 		
-		//fetch all the issues by status specific to executive
+		// fetch all the issues by status specific to executive
 		$scope.getHistoryIssues(event.currentTarget.id)
 		console.log($("#drop_"+ event.currentTarget.id).html())
 		
@@ -619,7 +602,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	}
 	
 	
-	//Methods related To History Page-------------------
+	// Methods related To History Page-------------------
 	$scope.getHistoryIssues = function(status) {
 		
 		var url = "";
@@ -652,6 +635,6 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		
 	} 
 	
-	$interval(getTimeAgo, 3000);
+	// $interval(getTimeAgo, 3000);
 	
 })

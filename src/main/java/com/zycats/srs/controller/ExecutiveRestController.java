@@ -2,6 +2,7 @@ package com.zycats.srs.controller;
 
 import java.util.Map;
 
+import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,8 +42,13 @@ public class ExecutiveRestController {
 					consumes = "application/json",
 					produces = "application/json")
 	public Iterable<Ticket> getAllTicketByStatus(@RequestBody Map<String, String> data) {
+		Iterable<Ticket> tickets = ticketService.findAllTicketsByStatus(Status.valueOf(data.get("status")));
 
-		return ticketService.findAllTicketsByStatus(Status.valueOf(data.get("status")));
+		for (Ticket ticket : tickets) {
+			ticket.setTimeAgo(new PrettyTime().format(ticket.getDatetime()));
+		}
+
+		return tickets;
 	}
 
 	// accepts category and employeeId and returns all the tickets
@@ -141,6 +147,13 @@ public class ExecutiveRestController {
 		return ticketService.getNoOfIssuesByStatusEngineer(
 				Status.valueOf(data.get("status")),
 				EmployeeService.getIdFromAuth(auth.getName()));
+	}
+
+	// assign tickets to self
+	@RequestMapping(value = "set/assign", produces = "application/json")
+	public Ticket setAsigned(@RequestBody Ticket ticket, Authentication auth) {
+
+		return ticketService.setAssigned(ticket, EmployeeService.getIdFromAuth(auth.getName()));
 	}
 
 }

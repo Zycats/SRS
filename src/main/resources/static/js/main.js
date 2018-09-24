@@ -165,7 +165,7 @@ $(document).ready(function() {
 		
 		e.stopPropagation();
 		
-		if (!($(".commentText").is(":focus")) && !($("#comment").is(":focus")))
+		if (!($(".commentText").is(":focus")) && !($("#comment").is(":focus")) && !($("#emp_seatno_input").is(":focus")))
 		{
 			$('.search input[type=text]').focus();
 		}

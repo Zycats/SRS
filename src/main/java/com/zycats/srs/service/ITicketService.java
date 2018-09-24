@@ -27,9 +27,9 @@ public interface ITicketService {
 	Iterable<Ticket> findAllTicketsByCategoryEngineer(int category_id, String engineerId);
 
 	Iterable<Ticket> findAllTicketsBySubCategoryEngineer(int sub_category_id, String engineerId);
-		//-------Paging Queries  ------------
-		Iterable<Ticket> getAllTicketsPageable(int page, int size);
-	
+
+	// -------Paging Queries ------------
+	Iterable<Ticket> getAllTicketsPageable(int page, int size);
 
 	// -- services related to Employee -----///
 	Iterable<Ticket> findAllTicketsByEmployee(String employeeId);
@@ -39,20 +39,19 @@ public interface ITicketService {
 	Iterable<Ticket> findAllTicketsByCategoryEmployee(int category_id, String engineerId);
 
 	Iterable<Ticket> findAllTicketsBySubCategoryEmployee(int sub_category_id, String employeeId);
-	
-////////////////////////////	
-	
+
+	////////////////////////////
+
 	Object getNoOfIssues(String employeeId);
-	
+
 	Object getNoOfIssues();
-	
-////////////////////////////	
+
+	////////////////////////////
 	// Count methods For Employee
-	
-	Object getNoOfIssuesByStatusEmployee(Status status,String employeeId); 
-	
-	
-	//general methods for Engineer
+
+	Object getNoOfIssuesByStatusEmployee(Status status, String employeeId);
+
+	// general methods for Engineer
 
 	Object getNoOfIssuesByStatusEngineer(Status status, String employeeId);
 
@@ -65,5 +64,7 @@ public interface ITicketService {
 	Iterable<Ticket> findAllTicketsBySubCategoryStatus(int sub_category_id, Status status);
 
 	Iterable<Ticket> findAllTicketsByStatus(Status status);
+
+	Ticket setAssigned(Ticket ticket, String idFromAuth);
 
 }

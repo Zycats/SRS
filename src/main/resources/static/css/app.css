@@ -397,3 +397,6 @@ div.search{
 #statusBtnDiv .dropdown-toggle{
 	width: 100%;
 }
+#issuesTable{
+	margin-bottom: 0;
+}
