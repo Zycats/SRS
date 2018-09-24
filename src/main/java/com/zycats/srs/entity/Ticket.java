@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity
 @Table(name = "TBL_TICKET")
@@ -36,6 +39,26 @@ public class Ticket {
 	private Status status;
 	private String description;
 	private Timestamp datetime;
+
+	@JsonInclude
+	@Transient
+	private String timeAgo;
+
+	public String getTimeAgo() {
+		return timeAgo;
+	}
+
+	public void setTimeAgo(String timeAgo) {
+		this.timeAgo = timeAgo;
+	}
+
+	public Set<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
 
 	@OneToMany(mappedBy = "ticket", fetch = FetchType.EAGER)
 	private Set<Comment> comments;
@@ -110,11 +133,5 @@ public class Ticket {
 				+ ", osType=" + osType + ", status=" + status + ", description=" + description + ", datetime="
 				+ datetime + "]";
 	}
-
-	
-	
-	
-	
-	
 
 }

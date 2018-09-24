@@ -516,7 +516,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		});
 	}
 	
-	$scope.changeFromTo = function($event){
+	$scope.changeFromTo = function($event, comment){
 		
 		var x = $event.target.getBoundingClientRect().x;
 		var y = $event.target.getBoundingClientRect().y;
@@ -526,7 +526,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		var bubbleWidth = document.getElementById('bubble').getBoundingClientRect().width;
 		var bubbleHeight = document.getElementById('bubble').getBoundingClientRect().height;
 		
-		console.log(x, y, width, bubbleWidth);
+		console.log(x, y, width, bubbleWidth, comment);
 		
 		
 		$(".status-bubble").css({
@@ -535,16 +535,11 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 			"opacity": "1"
 		})
 		
-		if ($event.target.id == "1")
-		{
-			$scope.from = "OPEN";
-			$scope.to = "WORKING";
-		}
-		else
-		{
-			$scope.from = "WORKING";
-			$scope.to = "URESOLVABLE";
-		}
+		
+		$scope.from = comment.statusFrom;
+		$scope.to = comment.statusTo;
+	
+		console.log(comment);
 	}
 	
 	$scope.hideBubble = function(){
@@ -564,7 +559,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		console.log("issue", issue);
 		
 		$http({
-			url : "/rest/ticket/update",
+			url : "/rest/executive/set/assign",
 			method: "POST",
 			data: issue
 		}).then(function success(response){
