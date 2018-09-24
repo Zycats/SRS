@@ -9,5 +9,4 @@ public interface TicketRepositoryPageable extends TicketRepository {
 
 	@Query("SELECT t FROM Ticket t")
 	Iterable<Ticket> findAllTicketsPageable(PageRequest pageRequest);
-
 }
