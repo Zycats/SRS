@@ -14,5 +14,5 @@ public interface TicketRepositoryPageable extends TicketRepository {
 
 	@Modifying
 	@Query("UPDATE Ticket t SET t = :ticket WHERE t.status = com.zycats.srs.entity.Status.OPEN")
-	Ticket setAssign(@Param("ticket") Ticket ticket);
+	int setAssign(@Param("ticket") Ticket ticket);
 }

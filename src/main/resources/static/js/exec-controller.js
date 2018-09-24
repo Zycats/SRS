@@ -564,7 +564,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		console.log("issue", issue);
 		
 		$http({
-			url : "/rest/ticket/update",
+			url : "/rest/executive/set/assign",
 			method: "POST",
 			data: issue
 		}).then(function success(response){
