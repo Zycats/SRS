@@ -143,4 +143,11 @@ public class ExecutiveRestController {
 				EmployeeService.getIdFromAuth(auth.getName()));
 	}
 
+	// assign tickets to self
+	@RequestMapping(value = "set/assign", produces = "application/json")
+	public Ticket setAsigned(@RequestBody Ticket ticket, Authentication auth) {
+
+		return ticketService.setAssigned(ticket, EmployeeService.getIdFromAuth(auth.getName()));
+	}
+
 }
