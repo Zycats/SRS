@@ -236,17 +236,26 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 					data.showAssigned = false;
 				}
 			});
-
+			.
 			$scope.issuesData = issuesData;
 		})
 	}
 	
-	$scope.getOpenSrs();
+	//$scope.getOpenSrs();
+	
+	$scope.intervalFun = function()
+	{
+		$scope.getTimeAgo();
+		$scope.getOpenSrs();
+	}
+	
 	
 	$interval(getTimeAgo, 3000);
 	
-	function getTimeAgo(){
-		if($scope.issuesData != null && $scope.issuesData.length > 0)
+	$scope.getTimeAgo = function(){
+		
+		if($scope.issuesData != null && $scope.issuesData.length > 0 && $scope.issuesData != )
+			
 			$scope.issuesData.forEach(function(data){
 				data['timeAgo'] = moment(new Date(data.datetime)).fromNow();
 			})

@@ -2,6 +2,7 @@ package com.zycats.srs.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -86,5 +87,9 @@ public interface TicketRepository extends PagingAndSortingRepository<Ticket, Int
 	@Query(value = "SELECT COUNT(t.id) FROM Ticket t where t.status = :enumStatus and t.employee = :employee")
 	Object getNoOfTicketsByStatusEmployee(@Param("enumStatus") Status status,
 			@Param("employee") Employee employee);
+	
+	@Modifying
+	@Query("UPDATE Ticket t SET t.engineer.id = :engineerId, t.status = com.zycats.srs.entity.Status.WORKING WHERE t.status = com.zycats.srs.entity.Status.OPEN and t.id=:ticketId") 
+	int setAssign(@Param("engineerId") String engineerId, @Param("ticketId") Integer ticketId);
 	
 }
