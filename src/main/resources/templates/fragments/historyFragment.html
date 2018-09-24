@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<div th:fragment="historyExeFragment">
+		<h1>History</h1>
+		<hr>
+		<p class="imp">View latest SRSs raised</p>
+		<div>
+			<div class="form-group">
+				<div class="row dropdown-group">
+					<div class="col">
+						<div class="dropdown" ng-click="ignoreEvent($event); $event.stopPropagation();">
+							<button class="btn btn-info dropdown-toggle" type="button"
+								id="changeIssueStatusButton2" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">Select Main Category</button>
+							<div class="dropdown-menu" id="issueCategoryDropdownMenu" aria-labelledby="dropdownMenu1">
+								<a class="dropdown-item"
+									ng-click="changeHistoryFilter($event);" id="drop_OPEN">Open</a>
+									
+								<a class="dropdown-item"
+									ng-click="changeHistoryFilter($event);" id="drop_ONHOLD">On Hold</a>
+									
+								<a class="dropdown-item"
+									ng-click="changeHistoryFilter($event);" id="drop_CLOSED">Resolved</a>
+									
+								<a class="dropdown-item"
+									ng-click="changeHistoryFilter($event);" id="drop_WORKING">Working On</a>
+									
+								<a class="dropdown-item"
+									ng-click="changeHistoryFilter($event);" id="drop_UNRESOLVABLE">Unresolvable</a>				
+							</div>
+						</div>
+					</div>
+					
+					<div class="col row-submit">
+						<button class="btn btn-info submit-btn" id="filter-btn" ng-click="filterData(); $event.stopPropagation();">Submit</button>
+					</div>
+				</div>
+			</div>
+		</div>
+			<form class="table-responsive">
+				<table class="table" id = "issuesTable">
+					<thead>
+						<tr>
+							<th></th>
+							<th>#Id</th>
+							<th>Description</th>
+							<th ng-click="sortByPriority(IsSortByPriority)">Priority</th>
+							<th ng-click="sortByTime(IsSortByTime)">Time of Ticket</th>
+							<th>Raised By</th>
+							<th ng-click="sortByStatus(IsSortByStatus)">Status</th>
+						</tr>
+					</thead>
+					<tbody>
+					<tr ng-repeat="issue in history.issuesData">
+						<td>
+							<button  ng-if="issue.subCategory.issueType == 'INCIDENT'" ng-click="showSlider(issue); $event.stopPropagation();" class="btn btn-warning btn-tag">INCIDENT</button>
+							<button  ng-if="issue.subCategory.issueType == 'REQUEST'" ng-click="showSlider(issue); $event.stopPropagation();" class="btn btn-primary btn-tag">REQUEST</button>
+						</td>
+						<td>{{ issue.id }}</td>
+						<td>{{ issue.description }}</td>
+						<td>{{ issue.subCategory.issuePriority }}</td>
+						<td>{{ issue.timeAgo }}</td>
+						<td>{{ issue.employee.id }}</td>
+						<td>{{ issue.status }}</td>
+					</tr>
+					</tbody>
+				</table>
+			</form>
+			
+	</div>
+
+</body>
+</html>

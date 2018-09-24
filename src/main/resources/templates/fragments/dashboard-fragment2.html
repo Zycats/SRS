@@ -12,13 +12,15 @@
 		<hr>
 		<div class="row cards-container">
 			<div class="col-xl-4">
-				<div class="card text-white bg-info mb-3" style="max-width: 18rem;">
-					<div class="card-header">Issues Raised</div>
-					<div class="card-body icon-card-body">
-						<i class="fas fa-question-circle mn-icon"></i> <span ng-cloak
-							class="info-title">{{issuesRaised}}</span>
+				<a href="#">
+					<div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+						<div class="card-header">Issues Raised</div>
+						<div class="card-body icon-card-body">
+							<i class="fas fa-question-circle mn-icon"></i> <span ng-cloak
+								class="info-title">{{issuesRaised}}</span>
+						</div>
 					</div>
-				</div>
+				</a>
 			</div>
 			<div class="col-xl-4">
 				<div class="card text-white bg-success mb-3"
@@ -100,17 +102,19 @@
 		<hr>
 		<div class="row cards-container">
 				<div class="col-xl-4">
-				<div class="card text-white bg-info mb-3" style="max-width: 18rem;">
-					<div class="card-header">Issues Raised</div>
-					<div class="card-body icon-card-body">
-						<i class="fas fa-question-circle mn-icon"></i> <span ng-cloak
-							class="info-title">{{issuesRaised}}</span>
+				
+					<div class="card text-white bg-info mb-3" style="max-width: 18rem;" id="OPEN" ng-click="clickedForHistory($event)">
+						<div class="card-header">Issues Raised</div>
+						<div class="card-body icon-card-body">
+							<i class="fas fa-question-circle mn-icon"></i> <span ng-cloak
+								class="info-title">{{issuesRaised}}</span>
+						</div>
 					</div>
-				</div>
+				
 			</div>
 			<div class="col-xl-4">
 				<div class="card text-white bg-warning mb-3"
-					style="max-width: 18rem;">
+					style="max-width: 18rem;" id="ONHOLD" ng-click="clickedForHistory($event)">
 					<div class="card-header">Issues On Hold</div>
 					<div class="card-body icon-card-body">
 						<i class="fas fa-stopwatch mn-icon"></i> <span ng-cloak
@@ -120,7 +124,7 @@
 			</div>
 			<div class="col-xl-4">
 				<div class="card text-white bg-danger mb-3"
-					style="max-width: 18rem;">
+					style="max-width: 18rem;" id="CLOSED" ng-click="clickedForHistory($event)">
 					<div class="card-header">Issues Resolved</div>
 					<div class="card-body icon-card-body">
 						<i class="fas fa-check mn-icon"></i> <span ng-cloak
@@ -129,7 +133,7 @@
 				</div>
 			</div>
 			<div class="col-xl-4">
-				<div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+				<div class="card text-white bg-success mb-3" style="max-width: 18rem;" id="WORKING" ng-click="clickedForHistory($event)">
 					<div class="card-header">Issues Working On</div>
 					<div class="card-body icon-card-body">
 						<i class="fas fa-tasks mn-icon"></i> <span ng-cloak
@@ -139,7 +143,7 @@
 			</div>
 			<div class="col-xl-4">
 				<div class="card text-black bg-default mb-3"
-					style="max-width: 18rem;">
+					style="max-width: 18rem;" id="UNRESOLVABLE" ng-click="clickedForHistory($event)">
 					<div class="card-header">Issues Unresolvable</div>
 					<div class="card-body icon-card-body">
 						<i class="fas fa-exclamation-triangle mn-icon"></i> <span ng-cloak

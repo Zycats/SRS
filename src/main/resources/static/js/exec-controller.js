@@ -3,6 +3,10 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	$scope.loaderShow = false;
 	
 	$scope.issuesData = [];
+	$scope.history = {};
+	
+	$scope.history.issuesData =[];
+	
 	$http({
 		url: "/rest/employee/get",
 		method: "GET"
@@ -16,7 +20,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		var role = ($scope.empData.role).toLowerCase();
 		
 		$http({
-			url : "/rest/"+role+"/get/ticket-no",
+			url : "/rest/executive/get/ticket-no",
 			method : "POST"
 			
 		}).then(function success(response){
@@ -25,7 +29,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		})
 		
 		$http({
-			url : "/rest/"+role+"/get/status/ticket-no",
+			url : "/rest/executive/get/status/ticket-no",
 			method : "POST",
 			data : {
 				"status" : "ONHOLD"
@@ -37,7 +41,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		})
 		
 		$http({
-			url : "/rest/"+role+"/get/status/ticket-no",
+			url : "/rest/executive/get/status/ticket-no",
 			method : "POST",
 			data : {
 				"status" : "CLOSED"
@@ -49,7 +53,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		})
 		
 		$http({
-			url : "/rest/"+role+"/get/status/ticket-no",
+			url : "/rest/executive/get/status/ticket-no",
 			method : "POST",
 			data : {
 				"status" : "WORKING"
@@ -61,7 +65,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		})
 		
 		$http({
-			url : "/rest/"+role+"/get/status/ticket-no",
+			url : "/rest/executive/get/status/ticket-no",
 			method : "POST",
 			data : {
 				"status" : "UNRESOLVABLE"
@@ -235,7 +239,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		
 	})
 	
-	$interval(getTimeAgo, 3000);
+	
 	
 	function getTimeAgo(){
 		if($scope.issuesData != null && $scope.issuesData.length > 0)
@@ -247,6 +251,11 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 			$scope.recentIssuesData.forEach(function(data){
 				data['timeAgo'] = moment(new Date(data.datetime)).fromNow();
 			})
+			
+		if($scope.history.issuesData != null && $scope.history.issuesData.length > 0)
+			$scope.history.issuesData.forEach(function(data){
+				data['timeAgo'] = moment(new Date(data.datetime)).fromNow();
+			})	
 	}
 	
 	getComments = function(issue){
@@ -492,5 +501,63 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 			}
 		});
 	}
+	
+	//history Page Controller 
+	$scope.clickedForHistory = function(event) {
+		console.log(event.currentTarget.id)
+		$("#all-issues-history").trigger("click");
+		$("#all-issues-history").addClass("active")
+		$("#home-exec").removeClass("active")
+		
+		//fetch all the issues by status specific to executive
+		$scope.getHistoryIssues(event.currentTarget.id)
+		console.log($("#drop_"+ event.currentTarget.id).html())
+		
+		
+		$("#changeIssueStatusButton2").html($("#drop_"+ event.currentTarget.id).html())
+	}
+	
+	
+	$scope.changeHistoryFilter = function(event){
+		
+	}
+	
+	
+	//Methods related To History Page-------------------
+	$scope.getHistoryIssues = function(status) {
+		
+		var url = "";
+		var methos = ""
+		if(status != "OPEN"){
+			url = "/rest/executive/get/status/engId"
+				method = "POST"
+			
+		}
+		else{
+			url = "/rest/ticket/get/all"
+				method = "GET"	
+		}
+			$http({
+				url: url,
+				method: method,
+				data: {"status" : status}
+			})
+			.then(function(response){
+				var issuesData = response.data;
+				console.log(issuesData);
+				
+				issuesData.forEach(function(data){
+					data.formattedTime = String(new Date(data.datetime));
+				});
+				
+				$scope.history.issuesData = issuesData;
+				console.log($scope.issuesData);	
+			})
+		
+	} 
+	
+	$interval(getTimeAgo, 3000);
+	
+	
 	
 })
