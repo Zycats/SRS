@@ -29,6 +29,7 @@ public class CommentService implements ICommentService {
 		comment.setCommentBy(employee);
 		comment.setDatetime(new Timestamp(new java.util.Date().getTime()));
 		comment.getTicket().setStatus(comment.getStatusTo());
+		comment.setStatusFrom(ticketService.getById(comment.getTicket().getId()).getStatus());
 		ticketService.update(comment.getTicket(), auth);
 		return commentRepository.save(comment);
 	}

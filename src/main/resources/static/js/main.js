@@ -137,97 +137,13 @@ $(document).ready(function() {
 	
 	$(".sliderDiv").click(function(e){
 		e.stopPropagation();
+		$('.dropdown-menu.show').removeClass("show");
 	})
 	
 	$(".btnLink").click(function(){
 		console.log("link clicked", this);
 	})
-	
-	$(".closeButton").mouseover(function(){
-		console.log($(this).offset());
-		var offset = $(this).offset(); 
-		var width = $(this).outerWidth();
-		$(".status-bubble").css({
-			"left": (offset.left - 75 + (width/2)) + "px",
-			"top": (offset.top - 58) + "px"
-		})
-		$(".status-bubble").stop(true, true).fadeIn();
-	})
-	
-	$(".closeButton").mouseleave(function(){
-		$(".status-bubble").stop(true, true).fadeOut();
-	})
-	
-	/*$("#catButton").click(function(e){
-		e.stopPropagation();
-		
-		console.log("button clicked!!!");
 
-		if ($('#catDropdownMenu').is(":hidden")){
-		    $('#catDropdownMenu').addClass('show');
-		  }
-		else
-		{
-			$('.dropdown-menu.show').removeClass("show");
-		}
-	})
-	
-	$("#subCatButton").click(function(e){
-		e.stopPropagation();
-		
-		console.log("button clicked!!!");
-		
-		if ($('#subCatDropdownMenu').is(":hidden")){
-		    $('#subCatDropdownMenu').addClass('show');
-		  }
-		else
-		{
-			$('.dropdown-menu.show').removeClass("show");
-		}
-	})
-	
-	$("#osTypeButton").click(function(e){
-		e.stopPropagation();
-		
-		console.log("button clicked!!!");
-		
-		if ($('#osDropDownMenu').is(":hidden")){
-		    $('#osDropDownMenu').addClass('show');
-		  }
-		else
-		{
-			$('.dropdown-menu.show').removeClass("show");
-		}
-	})
-	
-	$("#changeIssueCategoryButton").click(function(e){
-		e.stopPropagation();
-		
-		console.log("button clicked!!!");
-		
-		if ($('#issueCategoryDropdownMenu').is(":hidden")){
-		    $('#issueCategoryDropdownMenu').addClass('show');
-		  }
-		else
-		{
-			$('.dropdown-menu.show').removeClass("show");
-		}
-	})
-	
-	$("#changeIssueCategoryButton").click(function(e){
-		e.stopPropagation();
-		
-		console.log("button clicked!!!");
-		
-		if ($('#issueCategoryDropdownMenu').is(":hidden")){
-		    $('#issueCategoryDropdownMenu').addClass('show');
-		  }
-		else
-		{
-			$('.dropdown-menu.show').removeClass("show");
-		}
-	})*/
-	
 	$(".dropdown-toggle").click(function(e){
 		e.stopPropagation();
 		
@@ -249,7 +165,7 @@ $(document).ready(function() {
 		
 		e.stopPropagation();
 		
-		if (!($(".commentText").is(":focus")))
+		if (!($(".commentText").is(":focus")) && !($("#comment").is(":focus")))
 		{
 			$('.search input[type=text]').focus();
 		}

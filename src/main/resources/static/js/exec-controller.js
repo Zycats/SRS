@@ -107,7 +107,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	$scope.changeLocation = function($event){
 		$event.stopPropagation();
 		var target = $event.currentTarget;
-		
+		$('.dropdown-menu').removeClass("show");
 		$("#locationButton").text(target.innerHTML);
 		$("#deptButton").text("Select Your Department");
 		
@@ -125,6 +125,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	
 	$scope.changeDept = function($event){
 		$event.stopPropagation();
+		$('.dropdown-menu').removeClass("show");
 		var target = $event.currentTarget;
 		$("#deptButton").text(target.innerHTML);
 		for (dept of $scope.departments)
@@ -212,6 +213,14 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		
 		issuesData.forEach(function(data){
 			data.formattedTime = String(new Date(data.datetime));
+			if (data.engineer == null)
+			{
+				data.showAssigned = true;
+			}
+			else
+			{
+				data.showAssigned = false;
+			}
 		});
 		
 		$scope.recentIssuesData = issuesData;
@@ -231,6 +240,15 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		
 		issuesData.forEach(function(data){
 			data.formattedTime = String(new Date(data.datetime));
+			
+			if (data.engineer == null)
+			{
+				data.showAssigned = true;
+			}
+			else
+			{
+				data.showAssigned = false;
+			}
 		});
 		
 		$scope.issuesData = issuesData;
@@ -263,6 +281,11 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 			url : "rest/comment/get/ticket/"+issue.id,
 			method: "GET"
 		}).then(function(response){
+
+			response.data.forEach(function(data){
+				data.formattedTime = String(new Date(data.datetime));
+			});
+			
 			$scope.commentData = response.data;
 		})
 		
@@ -286,6 +309,15 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 			});
 		}
 		$("body").css("overflow", "hidden");
+	}
+	
+	
+	$scope.changeCommentStatus = function($event){
+		var target = $event.currentTarget;
+		$('.dropdown-menu').removeClass("show");
+		$("#changeCommentStatusButton").text(target.innerHTML);
+		
+		$scope.commentStatus = target.innerHTML;
 	}
 	
 	
@@ -399,7 +431,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		});
 	}
 	
-	function getTicket(id){
+	function getTicket(id, issue){
 		$scope.loaderShow = true;
 		$http({
 			url : "/rest/ticket/get?id=" + id,
@@ -407,6 +439,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		}).then(function success(response){
 			console.log(response);
 			if(response.data == null || response.data == undefined || response.data == ""){
+				issue = response.data;
 				alert("No ticket with Ticket Id : " + id);
 			} else {
 				response.data.formattedTime = String(new Date(response.data.datetime));
@@ -502,6 +535,69 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		});
 	}
 	
+	$scope.changeFromTo = function($event){
+		
+		var x = $event.target.getBoundingClientRect().x;
+		var y = $event.target.getBoundingClientRect().y;
+		var width= $event.target.getBoundingClientRect().width;
+		var heigth = $event.target.getBoundingClientRect().height;
+		
+		var bubbleWidth = document.getElementById('bubble').getBoundingClientRect().width;
+		var bubbleHeight = document.getElementById('bubble').getBoundingClientRect().height;
+		
+		console.log(x, y, width, bubbleWidth);
+		
+		
+		$(".status-bubble").css({
+			"top": (y - (bubbleHeight/4)) + "px",
+			"right": ($(window).outerWidth()) - x + 20 + "px",
+			"opacity": "1"
+		})
+		
+		if ($event.target.id == "1")
+		{
+			$scope.from = "OPEN";
+			$scope.to = "WORKING";
+		}
+		else
+		{
+			$scope.from = "WORKING";
+			$scope.to = "URESOLVABLE";
+		}
+	}
+	
+	$scope.hideBubble = function(){
+		$(".status-bubble").css({
+			"opacity": "0"
+		})	
+	}
+	
+	$scope.assignEngineer = function($event, issue)
+	{
+		$event.stopPropagation();
+		console.log("assigned clicked");
+		issue.engineer = {
+				"id": $scope.empData.id
+		}
+		issue.status = "WORKING";
+		console.log("issue", issue);
+		
+		$http({
+			url : "/rest/ticket/update",
+			method: "POST",
+			data: issue
+		}).then(function success(response){
+			console.log(response);
+			issue.showAssigned = false;
+			getTicket(issue.id, issue);
+			
+		}, function error(error){				
+			console.log(error);
+		})
+	}
+	
+	
+	
 	//history Page Controller 
 	$scope.clickedForHistory = function(event) {
 		console.log(event.currentTarget.id)
@@ -557,7 +653,5 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	} 
 	
 	$interval(getTimeAgo, 3000);
-	
-	
 	
 })
