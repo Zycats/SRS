@@ -6,8 +6,9 @@
 <body>
 	<div th:fragment="dashboard">
 		<h1>
-			Dashboard - <span class="username">Welcome <span ng-cloak>{{empData.employee.displayName}}</span> to SRS
-				System </span>
+			Dashboard - <span class="username">Welcome <span ng-cloak>{{empData.employee.displayName}}</span>
+				to SRS System
+			</span>
 		</h1>
 		<hr>
 		<div class="row cards-container">
@@ -33,7 +34,10 @@
 			<div class="col-xl-4">
 				<div class="card text-white bg-danger mb-3"
 					style="max-width: 18rem;">
-					<div class="card-header">Unresolvable Issues <button class="btn view-btn btn-sm">View All</button></div>
+					<div class="card-header">
+						Unresolvable Issues
+						<button class="btn view-btn btn-sm">View All</button>
+					</div>
 					<div class="card-body icon-card-body">
 						<i class="fas fa-exclamation-circle mn-icon"></i> <span ng-cloak
 							class="info-title">{{issuesUnresolvable}}</span>
@@ -59,8 +63,12 @@
 					<tbody>
 						<tr ng-repeat="recent in recentSrs" ng-cloak>
 							<td>
-								<button  ng-if="recent.subCategory.issueType == 'INCIDENT'" ng-click="showSlider(recent); $event.stopPropagation(); console.log('clicked on main container');" class="btn btn-warning btn-tag">INCIDENT</button>
-								<button  ng-if="recent.subCategory.issueType == 'REQUEST'" ng-click="showSlider(recent); $event.stopPropagation(); console.log('clicked on main container');" class="btn btn-primary btn-tag">REQUEST</button>
+								<button ng-if="recent.subCategory.issueType == 'INCIDENT'"
+									ng-click="showSlider(recent); $event.stopPropagation(); console.log('clicked on main container');"
+									class="btn btn-warning btn-tag">INCIDENT</button>
+								<button ng-if="recent.subCategory.issueType == 'REQUEST'"
+									ng-click="showSlider(recent); $event.stopPropagation(); console.log('clicked on main container');"
+									class="btn btn-primary btn-tag">REQUEST</button>
 							</td>
 							<td class="idTd"><span class="tokenLink">{{recent.id}}</span></td>
 							<td class="description">{{recent.description}}</td>
@@ -99,7 +107,7 @@
 		</h1>
 		<hr>
 		<div class="row cards-container">
-				<div class="col-xl-4">
+			<div class="col-xl-4">
 				<div class="card text-white bg-info mb-3" style="max-width: 18rem;">
 					<div class="card-header">Issues Raised</div>
 					<div class="card-body icon-card-body">
@@ -129,7 +137,8 @@
 				</div>
 			</div>
 			<div class="col-xl-4">
-				<div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+				<div class="card text-white bg-success mb-3"
+					style="max-width: 18rem;">
 					<div class="card-header">Issues Working On</div>
 					<div class="card-body icon-card-body">
 						<i class="fas fa-tasks mn-icon"></i> <span ng-cloak
@@ -159,22 +168,26 @@
 							<th>Description</th>
 							<th>Priority</th>
 							<th>Time of Ticket</th>
-							<th>Assigned Engineer</th>
+							<th>Raised By</th>
 							<th>Status</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="recent in recentSrs" ng-cloak>
+						<tr ng-repeat="issue in recentIssuesData">
 							<td>
-								<button  ng-if="recent.subCategory.issueType == 'INCIDENT'" ng-click="showSlider(recent); $event.stopPropagation(); console.log('clicked on main container');" class="btn btn-warning btn-tag">INCIDENT</button>
-								<button  ng-if="recent.subCategory.issueType == 'REQUEST'" ng-click="showSlider(recent); $event.stopPropagation(); console.log('clicked on main container');" class="btn btn-primary btn-tag">REQUEST</button>
+								<button ng-if="issue.subCategory.issueType == 'INCIDENT'"
+									ng-click="showSlider(issue); $event.stopPropagation();"
+									class="btn btn-warning btn-tag">INCIDENT</button>
+								<button ng-if="issue.subCategory.issueType == 'REQUEST'"
+									ng-click="showSlider(issue); $event.stopPropagation();"
+									class="btn btn-primary btn-tag">REQUEST</button>
 							</td>
-							<td class="idTd"><span class="tokenLink">{{recent.id}}</span></td>
-							<td class="description">{{recent.description}}</td>
-							<td>{{recent.subCategory.issuePriority}}</td>
-							<td>{{recent.timeAgo}}</td>
-							<td>{{recent.engineer.id}}</td>
-							<td>{{recent.status}}</td>
+							<td>{{ issue.id }}</td>
+							<td class="description">{{ issue.description }}</td>
+							<td>{{ issue.subCategory.issuePriority }}</td>
+							<td>{{ issue.timeAgo }}</td>
+							<td>{{ issue.employee.id }}</td>
+							<td>{{ issue.status }}</td>
 						</tr>
 						<!--<tr>
 							<td><button class="btn btn-warning btn-sm">Incident</button></td>
