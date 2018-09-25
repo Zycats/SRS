@@ -47,6 +47,7 @@ public class Ticket {
 	private String timeAgo;
 
 	public String getTimeAgo() {
+		this.setTimeAgo(new PrettyTime().format(datetime));
 		return timeAgo;
 	}
 
@@ -127,7 +128,6 @@ public class Ticket {
 
 	public void setDatetime(Timestamp datetime) {
 		this.datetime = datetime;
-		this.setTimeAgo(new PrettyTime().format(this.getDatetime()));
 	}
 
 	@Override
