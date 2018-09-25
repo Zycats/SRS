@@ -248,9 +248,11 @@ public class TicketService<ticketRepositoryPageable> implements ITicketService {
 
 	@Override
 	public Ticket update(Ticket ticket, Authentication auth) throws InsufficientPriviledgesException {
-		if (!(employeeService.getEmployeeById(EmployeeService.getIdFromAuth(auth.getName())).getRole().equals(
-				Role.EXECUTIVE))) {
-			throw new InsufficientPriviledgesException("Only " + Role.EXECUTIVE + " is allowed to update ticket");
+		Employee employee = employeeService.getEmployeeById(EmployeeService.getIdFromAuth(auth.getName()));
+		if (!(employee.getRole().equals(Role.EXECUTIVE))) {
+			throw new InsufficientPriviledgesException(
+					employee,
+					"Only " + Role.EXECUTIVE + " is allowed to update ticket");
 		}
 		System.out.println(ticket);
 		return ticketRepository.save(ticket);

@@ -1,6 +1,10 @@
 package com.zycats.srs.exception;
 
+import com.zycats.srs.entity.Employee;
+
 public class InsufficientPriviledgesException extends Exception {
+
+	private Employee employee;
 
 	public InsufficientPriviledgesException() {
 		super();
@@ -18,14 +22,18 @@ public class InsufficientPriviledgesException extends Exception {
 		// TODO Auto-generated constructor stub
 	}
 
-	public InsufficientPriviledgesException(String message) {
+	public InsufficientPriviledgesException(Employee employee, String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
+		this.employee = employee;
 	}
 
 	public InsufficientPriviledgesException(Throwable cause) {
 		super(cause);
 		// TODO Auto-generated constructor stub
+	}
+
+	public Employee getEmployee() {
+		return employee;
 	}
 
 }
