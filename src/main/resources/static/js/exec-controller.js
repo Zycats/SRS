@@ -606,7 +606,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	$scope.getHistoryIssues = function(status) {
 		
 		var url = "";
-		var methos = ""
+		var method = ""
 		if(status != "OPEN"){
 			url = "/rest/executive/get/status/engId"
 				method = "POST"

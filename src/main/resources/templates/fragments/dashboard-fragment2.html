@@ -47,7 +47,7 @@
 		<div class="card recent-card">
 			<div class="card-body table-card-body">
 				<h3 id="recentId">Recently Raised Issues</h3>
-				<table class="table table-striped recent-table table-curved">
+				<table class="table table-striped recent-table">
 					<thead>
 						<tr>
 							<th>Classification</th>
@@ -155,15 +155,13 @@
 			</div>
 		</div>
 		<div class="card recent-card">
-			<div class="card-header recent-card-header">Recenlty Raised
-				Issues</div>
-			<form class="table-responsive">
-				<table class="table" id = "issuesTable">
+				<h3 id="recentId">Recently Raised Issues</h3>
+				<table class="table table-striped recent-table" id = "issuesTable">
 					<thead>
 						<tr>
-							<th></th>
+							<th>Classification</th>
 							<th>#Id</th>
-							<th>Description</th>
+							<th class="description">Description</th>
 							<th>Priority</th>
 							<th>Time of Ticket</th>
 							<th>Raised By</th>
@@ -171,13 +169,13 @@
 						</tr>
 					</thead>
 					<tbody>
-					<tr ng-repeat="issue in recentIssuesData">
+					<tr ng-repeat="issue in recentIssuesData | limitTo:5">
 						<td>
 							<button  ng-if="issue.subCategory.issueType == 'INCIDENT'" ng-click="showSlider(issue); $event.stopPropagation();" class="btn btn-warning btn-tag">INCIDENT</button>
 							<button  ng-if="issue.subCategory.issueType == 'REQUEST'" ng-click="showSlider(issue); $event.stopPropagation();" class="btn btn-primary btn-tag">REQUEST</button>
 						</td>
 						<td>{{ issue.id }}</td>
-						<td>{{ issue.description }}</td>
+						<td class="description">{{ issue.description }}</td>
 						<td>{{ issue.subCategory.issuePriority }}</td>
 						<td>{{ issue.timeAgo }}</td>
 						<td>{{ issue.employee.id }}</td>
@@ -185,7 +183,6 @@
 					</tr>
 					</tbody>
 				</table>
-			</form>
 		</div>
 
 	</div>
