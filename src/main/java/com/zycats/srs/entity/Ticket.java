@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity
@@ -125,6 +127,7 @@ public class Ticket {
 
 	public void setDatetime(Timestamp datetime) {
 		this.datetime = datetime;
+		this.setTimeAgo(new PrettyTime().format(this.getDatetime()));
 	}
 
 	@Override
