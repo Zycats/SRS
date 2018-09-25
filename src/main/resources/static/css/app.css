@@ -281,17 +281,11 @@ div.status-bubble{
 	position: absolute;
 	z-index: 10000;
 	border-radius: 6px;	
-<<<<<<< HEAD
+
 	padding: 0 16px;
 	opacity: 0;
 	transition: opacity 100ms;	
-=======
-	visibility: hidden;
-	tranform:visibility 100ms;
-	padding-left: 8px;
-	padding-right: 8px;
-	
->>>>>>> branch 'master' of https://github.com/Zycats/SRS
+
 }
 .comment-time{
 	font-size: 12px;
@@ -402,4 +396,7 @@ div.search{
 }
 #statusBtnDiv .dropdown-toggle{
 	width: 100%;
+}
+#issuesTable{
+	margin-bottom: 0;
 }

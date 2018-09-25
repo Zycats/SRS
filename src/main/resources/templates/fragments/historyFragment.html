@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
-<meta charset="utf-8">
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
 </head>
 <body>
-	<div th:fragment="newIssuesFragment">
-		<h1>New SRS Raised</h1>
+
+	<div th:fragment="historyExeFragment">
+		<h1>History</h1>
 		<hr>
 		<p class="imp">View latest SRSs raised</p>
 		<div>
@@ -14,25 +16,27 @@
 					<div class="col">
 						<div class="dropdown" ng-click="ignoreEvent($event); $event.stopPropagation();">
 							<button class="btn btn-info dropdown-toggle" type="button"
-								id="changeIssueCategoryButton" data-toggle="dropdown" aria-haspopup="true"
+								id="changeIssueStatusButton2" data-toggle="dropdown" aria-haspopup="true"
 								aria-expanded="false">Select Main Category</button>
 							<div class="dropdown-menu" id="issueCategoryDropdownMenu" aria-labelledby="dropdownMenu1">
-								<a class="dropdown-item"  ng-repeat="cat in categoryData"
-									ng-click="changeCategory($event);" id={{cat.id}}>{{cat.name}}</a>
+								<a class="dropdown-item"
+									ng-click="changeHistoryFilter($event);" id="drop_OPEN">Open</a>
+									
+								<a class="dropdown-item"
+									ng-click="changeHistoryFilter($event);" id="drop_ONHOLD">On Hold</a>
+									
+								<a class="dropdown-item"
+									ng-click="changeHistoryFilter($event);" id="drop_CLOSED">Resolved</a>
+									
+								<a class="dropdown-item"
+									ng-click="changeHistoryFilter($event);" id="drop_WORKING">Working On</a>
+									
+								<a class="dropdown-item"
+									ng-click="changeHistoryFilter($event);" id="drop_UNRESOLVABLE">Unresolvable</a>				
 							</div>
 						</div>
 					</div>
-					<div class="col">
-						<div class="dropdown">
-							<button class="btn btn-info dropdown-toggle" type="button"
-								id="changeIssueSubCategoryButton" data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false">Select Sub-Category</button>
-							<div class="dropdown-menu" id="issueSubCategoryDropdownMenu" aria-labelledby="dropdownMenu1">
-							<a class="dropdown-item" ng-repeat="subCat in subCategoryData"
-									ng-click="changeSubCategory($event);" id={{subCat.id}}>{{subCat.name}}</a>
-							</div>
-						</div>
-					</div>
+					
 					<div class="col row-submit">
 						<button class="btn btn-info submit-btn" id="filter-btn" ng-click="filterData(); $event.stopPropagation();">Submit</button>
 					</div>
@@ -40,7 +44,7 @@
 			</div>
 		</div>
 			<form class="table-responsive">
-				<table class="table table-striped" id = "issuesTable">
+				<table class="table" id = "issuesTable">
 					<thead>
 						<tr>
 							<th></th>
@@ -53,7 +57,7 @@
 						</tr>
 					</thead>
 					<tbody>
-					<tr ng-repeat="issue in issuesData">
+					<tr ng-repeat="issue in history.issuesData">
 						<td>
 							<button  ng-if="issue.subCategory.issueType == 'INCIDENT'" ng-click="showSlider(issue); $event.stopPropagation();" class="btn btn-warning btn-tag">INCIDENT</button>
 							<button  ng-if="issue.subCategory.issueType == 'REQUEST'" ng-click="showSlider(issue); $event.stopPropagation();" class="btn btn-primary btn-tag">REQUEST</button>
@@ -70,5 +74,6 @@
 			</form>
 			
 	</div>
+
 </body>
 </html>

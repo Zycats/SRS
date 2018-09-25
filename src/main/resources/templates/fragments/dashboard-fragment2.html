@@ -6,20 +6,22 @@
 <body>
 	<div th:fragment="dashboard">
 		<h1>
-			Dashboard - <span class="username">Welcome <span ng-cloak>{{empData.employee.displayName}}</span>
-				to SRS System
-			</span>
+
+			Dashboard - <span class="username">Welcome <span ng-cloak>{{empData.employee.displayName}}</span> to SRS
+				System </span>
 		</h1>
 		<hr>
 		<div class="row cards-container">
 			<div class="col-xl-4">
-				<div class="card text-white bg-info mb-3" style="max-width: 18rem;">
-					<div class="card-header">Issues Raised</div>
-					<div class="card-body icon-card-body">
-						<i class="fas fa-question-circle mn-icon"></i> <span ng-cloak
-							class="info-title">{{issuesRaised}}</span>
+				<a href="#">
+					<div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+						<div class="card-header">Issues Raised</div>
+						<div class="card-body icon-card-body">
+							<i class="fas fa-question-circle mn-icon"></i> <span ng-cloak
+								class="info-title">{{issuesRaised}}</span>
+						</div>
 					</div>
-				</div>
+				</a>
 			</div>
 			<div class="col-xl-4">
 				<div class="card text-white bg-success mb-3"
@@ -34,10 +36,7 @@
 			<div class="col-xl-4">
 				<div class="card text-white bg-danger mb-3"
 					style="max-width: 18rem;">
-					<div class="card-header">
-						Unresolvable Issues
-						<button class="btn view-btn btn-sm">View All</button>
-					</div>
+					<div class="card-header">Unresolvable Issues <button class="btn view-btn btn-sm">View All</button></div>
 					<div class="card-body icon-card-body">
 						<i class="fas fa-exclamation-circle mn-icon"></i> <span ng-cloak
 							class="info-title">{{issuesUnresolvable}}</span>
@@ -63,12 +62,8 @@
 					<tbody>
 						<tr ng-repeat="recent in recentSrs" ng-cloak>
 							<td>
-								<button ng-if="recent.subCategory.issueType == 'INCIDENT'"
-									ng-click="showSlider(recent); $event.stopPropagation(); console.log('clicked on main container');"
-									class="btn btn-warning btn-tag">INCIDENT</button>
-								<button ng-if="recent.subCategory.issueType == 'REQUEST'"
-									ng-click="showSlider(recent); $event.stopPropagation(); console.log('clicked on main container');"
-									class="btn btn-primary btn-tag">REQUEST</button>
+								<button  ng-if="recent.subCategory.issueType == 'INCIDENT'" ng-click="showSlider(recent); $event.stopPropagation(); console.log('clicked on main container');" class="btn btn-warning btn-tag">INCIDENT</button>
+								<button  ng-if="recent.subCategory.issueType == 'REQUEST'" ng-click="showSlider(recent); $event.stopPropagation(); console.log('clicked on main container');" class="btn btn-primary btn-tag">REQUEST</button>
 							</td>
 							<td class="idTd"><span class="tokenLink">{{recent.id}}</span></td>
 							<td class="description">{{recent.description}}</td>
@@ -107,18 +102,21 @@
 		</h1>
 		<hr>
 		<div class="row cards-container">
-			<div class="col-xl-4">
-				<div class="card text-white bg-info mb-3" style="max-width: 18rem;">
-					<div class="card-header">Issues Raised</div>
-					<div class="card-body icon-card-body">
-						<i class="fas fa-question-circle mn-icon"></i> <span ng-cloak
-							class="info-title">{{issuesRaised}}</span>
+				<div class="col-xl-4">
+				
+					<div class="card text-white bg-info mb-3" style="max-width: 18rem;" id="OPEN" ng-click="clickedForHistory($event)">
+						<div class="card-header">Issues Raised</div>
+						<div class="card-body icon-card-body">
+							<i class="fas fa-question-circle mn-icon"></i> <span ng-cloak
+								class="info-title">{{issuesRaised}}</span>
+						</div>
 					</div>
-				</div>
+					
+				
 			</div>
 			<div class="col-xl-4">
 				<div class="card text-white bg-warning mb-3"
-					style="max-width: 18rem;">
+					style="max-width: 18rem;" id="ONHOLD" ng-click="clickedForHistory($event)">
 					<div class="card-header">Issues On Hold</div>
 					<div class="card-body icon-card-body">
 						<i class="fas fa-stopwatch mn-icon"></i> <span ng-cloak
@@ -128,7 +126,7 @@
 			</div>
 			<div class="col-xl-4">
 				<div class="card text-white bg-danger mb-3"
-					style="max-width: 18rem;">
+					style="max-width: 18rem;" id="CLOSED" ng-click="clickedForHistory($event)">
 					<div class="card-header">Issues Resolved</div>
 					<div class="card-body icon-card-body">
 						<i class="fas fa-check mn-icon"></i> <span ng-cloak
@@ -137,8 +135,7 @@
 				</div>
 			</div>
 			<div class="col-xl-4">
-				<div class="card text-white bg-success mb-3"
-					style="max-width: 18rem;">
+				<div class="card text-white bg-success mb-3" style="max-width: 18rem;" id="WORKING" ng-click="clickedForHistory($event)">
 					<div class="card-header">Issues Working On</div>
 					<div class="card-body icon-card-body">
 						<i class="fas fa-tasks mn-icon"></i> <span ng-cloak
@@ -148,7 +145,7 @@
 			</div>
 			<div class="col-xl-4">
 				<div class="card text-black bg-default mb-3"
-					style="max-width: 18rem;">
+					style="max-width: 18rem;" id="UNRESOLVABLE" ng-click="clickedForHistory($event)">
 					<div class="card-header">Issues Unresolvable</div>
 					<div class="card-body icon-card-body">
 						<i class="fas fa-exclamation-triangle mn-icon"></i> <span ng-cloak
@@ -158,60 +155,6 @@
 			</div>
 		</div>
 		<div class="card recent-card">
-			<div class="card-body table-card-body">
-				<h3 id="recentId">Recently Raised Issues</h3>
-				<table class="table table-striped recent-table table-curved">
-					<thead>
-						<tr>
-							<th>Classification</th>
-							<th>#Id</th>
-							<th>Description</th>
-							<th>Priority</th>
-							<th>Time of Ticket</th>
-							<th>Raised By</th>
-							<th>Status</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="issue in recentIssuesData">
-							<td>
-								<button ng-if="issue.subCategory.issueType == 'INCIDENT'"
-									ng-click="showSlider(issue); $event.stopPropagation();"
-									class="btn btn-warning btn-tag">INCIDENT</button>
-								<button ng-if="issue.subCategory.issueType == 'REQUEST'"
-									ng-click="showSlider(issue); $event.stopPropagation();"
-									class="btn btn-primary btn-tag">REQUEST</button>
-							</td>
-							<td>{{ issue.id }}</td>
-							<td class="description">{{ issue.description }}</td>
-							<td>{{ issue.subCategory.issuePriority }}</td>
-							<td>{{ issue.timeAgo }}</td>
-							<td>{{ issue.employee.id }}</td>
-							<td>{{ issue.status }}</td>
-						</tr>
-						<!--<tr>
-							<td><button class="btn btn-warning btn-sm">Incident</button></td>
-							<td><span class="tokenLink">1234</span></td>
-							<td class="description">Internet is not working. Internet is not working. Internet is not working. Internet is not working. Internet is not working. Internet is not working. Internet is not working.</td>
-							<td>Unresolved</td>
-						</tr>
-						<tr>
-							<td><button class="btn btn-primary btn-sm">Request</button></td>
-							<td><span class="tokenLink">1235</span></td>
-							<td>Install more ram</td>
-							<td>Resolved</td>
-						</tr>
-						<tr>
-							<td><button class="btn btn-warning btn-sm">Incident</button></td>
-							<td><span class="tokenLink">1236</span></td>
-							<td>Change the whole system</td>
-							<td>Unresolvable</td>
-						</tr> -->
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<!-- <div class="card recent-card">
 			<div class="card-header recent-card-header">Recenlty Raised
 				Issues</div>
 			<form class="table-responsive">
@@ -243,7 +186,8 @@
 					</tbody>
 				</table>
 			</form>
-		</div> -->
+		</div>
+
 	</div>
 
 </body>
