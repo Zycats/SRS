@@ -599,6 +599,10 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	
 	$scope.changeHistoryFilter = function(event){
 		
+		console.log(event.currentTarget.id)
+		$scope.getHistoryIssues(event.currentTarget.id.split("_")[1])
+		$("#changeIssueStatusButton2").html($("#"+event.currentTarget.id).html())
+		$("#changeIssueStatusButton2").trigger("click");
 	}
 	
 	
