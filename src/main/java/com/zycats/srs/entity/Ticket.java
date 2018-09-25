@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity
@@ -45,6 +47,7 @@ public class Ticket {
 	private String timeAgo;
 
 	public String getTimeAgo() {
+		this.setTimeAgo(new PrettyTime().format(datetime));
 		return timeAgo;
 	}
 
