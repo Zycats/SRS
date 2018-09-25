@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zycats.srs.aspects.Demo;
 import com.zycats.srs.entity.Ticket;
 import com.zycats.srs.exception.InsufficientPriviledgesException;
 import com.zycats.srs.service.ITicketService;
@@ -21,7 +22,7 @@ public class TicketController {
 
 	@Autowired
 	private ITicketService ticketService;
-
+	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public Ticket addTicket(@RequestBody Ticket ticket, Authentication auth, HttpServletRequest request) {
 		return ticketService.add(ticket, auth, request.getRemoteAddr());
@@ -42,7 +43,8 @@ public class TicketController {
 	public Ticket getTicketById(@RequestParam Integer id) {
 		return ticketService.getById(id);
 	}
-
+	
+	@Demo
 	@RequestMapping(value = "get/all", method = RequestMethod.GET)
 	public Iterable<Ticket> getAllTicket() {
 		return ticketService.getAll();
