@@ -67,4 +67,6 @@ public interface ITicketService {
 
 	Ticket setAssigned(Ticket ticket, String idFromAuth);
 
+	Ticket update(Ticket ticket);
+
 }

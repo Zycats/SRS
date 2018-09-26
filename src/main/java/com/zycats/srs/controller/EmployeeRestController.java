@@ -6,6 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zycats.srs.dto.EmployeeLocationDTO;
 import com.zycats.srs.entity.Employee;
+import com.zycats.srs.entity.Role;
 import com.zycats.srs.entity.Status;
 import com.zycats.srs.entity.Ticket;
+import com.zycats.srs.property.RoleConverter;
 import com.zycats.srs.service.EmployeeService;
 import com.zycats.srs.service.IEmployeeService;
 import com.zycats.srs.service.ITicketService;
@@ -122,6 +127,18 @@ public class EmployeeRestController {
 		return ticketService.getNoOfIssuesByStatusEmployee(
 				Status.valueOf(data.get("status")),
 				EmployeeService.getIdFromAuth(auth.getName()));
+	}
+
+	// utility rest call to update roll
+	@RequestMapping(value = "set/role/{role}", produces = "application/json")
+	public boolean getAllTicketNoByStatusEmployee(@PathVariable("role") Role role, Authentication auth) {
+
+		return employeeService.setRole(role, auth);
+	}
+
+	@InitBinder
+	public void initBinder(final WebDataBinder webdataBinder) {
+		webdataBinder.registerCustomEditor(Role.class, new RoleConverter());
 	}
 
 }

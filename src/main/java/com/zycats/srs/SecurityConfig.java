@@ -16,7 +16,7 @@ import waffle.spring.NegotiateSecurityFilterEntryPoint;
 import waffle.spring.WindowsAuthenticationProvider;
 
 @Configuration
-@ComponentScan(basePackages = { "com.zycats.srs.controller", "com.zycats.srs.service", "com.zycats.srs.scheduler", "com.zycats.srs.config"})
+@ComponentScan(basePackages = { "com.zycats.srs.controller", "com.zycats.srs.service", "com.zycats.srs.event", "com.zycats.srs.scheduler", "com.zycats.srs.config"})
 @EntityScan(basePackages = "com.zycats.srs.entity")
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = false)
