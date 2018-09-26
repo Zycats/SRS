@@ -9,7 +9,6 @@
 	<div th:fragment="historyExeFragment">
 		<h1>History</h1>
 		<hr>
-		<p class="imp">View latest SRSs raised</p>
 		<div>
 			<div class="form-group">
 				<div class="row dropdown-group">
@@ -19,6 +18,8 @@
 								id="changeIssueStatusButton2" data-toggle="dropdown" aria-haspopup="true"
 								aria-expanded="false">Select Main Category</button>
 							<div class="dropdown-menu" id="issueCategoryDropdownMenu" aria-labelledby="dropdownMenu1">
+								<a class="dropdown-item"
+									ng-click="changeHistoryFilter($event);" id="drop_ALL">ALL</a>
 								<a class="dropdown-item"
 									ng-click="changeHistoryFilter($event);" id="drop_OPEN">Open</a>
 									
@@ -43,7 +44,37 @@
 				</div>
 			</div>
 		</div>
-			<form class="table-responsive">
+		<div class="card recent-card">
+				<h3 id="recentId">Recently Raised Issues</h3>
+				<table class="table table-striped recent-table" id = "issuesHistoryTable">
+					<thead>
+						<tr>
+							<th>Classification</th>
+							<th>#Id</th>
+							<th class="description">Description</th>
+							<th ng-click="sortByPriority(IsSortByPriority)">Priority</th>
+							<th ng-click="sortByTime(IsSortByTime)">Time of Ticket</th>
+							<th>Raised By</th>
+							<th ng-click="sortByStatus(IsSortByStatus)">Status</th>
+						</tr>
+					</thead>
+					<tbody>
+					<tr ng-repeat="issue in history.issuesData">
+						<td>
+							<button  ng-if="issue.subCategory.issueType == 'INCIDENT'" ng-click="showSlider(issue); $event.stopPropagation();" class="btn btn-warning btn-tag">INCIDENT</button>
+							<button  ng-if="issue.subCategory.issueType == 'REQUEST'" ng-click="showSlider(issue); $event.stopPropagation();" class="btn btn-primary btn-tag">REQUEST</button>
+						</td>
+						<td>{{ issue.id }}</td>
+						<td class="description">{{ issue.description }}</td>
+						<td>{{ issue.subCategory.issuePriority }}</td>
+						<td>{{ issue.timeAgo }}</td>
+						<td>{{ issue.employee.id }}</td>
+						<td>{{ issue.status }}</td>
+					</tr>
+					</tbody>
+				</table>
+		</div>
+			<!-- <form class="table-responsive">
 				<table class="table" id = "issuesTable">
 					<thead>
 						<tr>
@@ -71,7 +102,7 @@
 					</tr>
 					</tbody>
 				</table>
-			</form>
+			</form> -->
 			
 	</div>
 

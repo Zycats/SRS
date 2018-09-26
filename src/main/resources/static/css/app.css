@@ -188,7 +188,7 @@ input[type=text] {
 	font-size: 14px;
 }
 
-.dropdown-menu {
+.dropdown-menu:not (#navbarMenu ) {
 	width: 100%;
 }
 
@@ -310,9 +310,9 @@ h3#recentId {
 
 div.status-bubble {
 	width: auto;
-	height: 40px;
+	height: 34px;
 	text-align: center;
-	line-height: 40px;
+	line-height: 34px;
 	background-color: rgba(0, 0, 0, 0.8);
 	color: #FFFFFF;
 	position: absolute;
@@ -336,10 +336,10 @@ div.triangle {
 	position: absolute;
 	top: 12px;
 	left: 100%;
-	border-top: 8px solid transparent;
-	border-left: 8px solid rgba(0, 0, 0, 0.8);
+	border-top: 4px solid transparent;
+	border-left: 4px solid rgba(0, 0, 0, 0.8);
 	border-right: 0;
-	border-bottom: 8px solid transparent;
+	border-bottom: 4px solid transparent;
 }
 
 @media only screen and (max-width: 576px) {
@@ -393,70 +393,27 @@ div.search {
 }
 
 /* Safari */
-@
--webkit-keyframes spin { 0% {
-	-webkit-transform: rotate(0deg);
+@-webkit-keyframes spin { 
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+
+	100%{
+		-webkit-transform: rotate (360 deg);
+	}
 }
-
-100%
-{
--webkit-transform
-
-
-
-
-:
-
-
- 
-
-
-rotate
-
-
-
-
-(360
-deg
-
-
-);
-}
-}
-@
-keyframes spin { 0% {
-	transform: rotate(0deg);
-}
-
-100%
-{
-transform
-
-
-
-
-:
-
-
- 
-
-
-rotate
-
-
-
-
-(360
-deg
-
-
-);
-}
+@keyframes spin { 
+	0% {
+		transform: rotate(0deg);
+	}
+	100%{
+		transform: rotate(360deg);
+	}
 }
 .from, .to {
 	text-transform: uppercase;
 	font-weight: bold;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .from {
@@ -502,4 +459,8 @@ deg
 
 #issuesTable {
 	margin-bottom: 0;
+}
+
+.banner {
+	cursor: pointer;
 }

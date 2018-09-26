@@ -528,17 +528,21 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		var x = $event.target.getBoundingClientRect().x;
 		var y = $event.target.getBoundingClientRect().y;
 		var width= $event.target.getBoundingClientRect().width;
-		var heigth = $event.target.getBoundingClientRect().height;
+		var height = $event.target.getBoundingClientRect().height;
+		var scroll = $(window).scrollTop();
 		
 		var bubbleWidth = document.getElementById('bubble').getBoundingClientRect().width;
 		var bubbleHeight = document.getElementById('bubble').getBoundingClientRect().height;
+		
+		var diff = bubbleHeight - height;
 		
 		console.log(x, y, width, bubbleWidth, comment);
 		
 		
 		$(".status-bubble").css({
-			"top": (y - (bubbleHeight/4)) + "px",
-			"right": ($(window).outerWidth()) - x + 20 + "px",
+			"visibility": "visible",
+			"top": (y - (diff/2) + scroll) + "px",
+			"right": ($(window).outerWidth()) - x + 10 + "px",
 			"opacity": "1"
 		})
 		
@@ -551,6 +555,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	
 	$scope.hideBubble = function(){
 		$(".status-bubble").css({
+			"visibility": "visible",
 			"opacity": "0"
 		})	
 	}
@@ -611,10 +616,20 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		
 		var url = "";
 		var method = ""
-		if(status != "OPEN"){
+		if (status == "OPEN")
+		{
+			url =  "/rest/executive/get/status";
+			method =  "POST";
+		}
+		else if (status == "ALLENG")
+		{
+			url = "/rest/executive/get/engId",
+			method = "POST",
+			status = "";
+		}
+		else if(status != "ALL"){
 			url = "/rest/executive/get/status/engId"
-				method = "POST"
-			
+			method = "POST"
 		}
 		else{
 			url = "/rest/ticket/get/all"
@@ -640,5 +655,26 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	} 
 	
 	// $interval(getTimeAgo, 3000);
+	
+	//All Tickets History
+	
+	$scope.getAllTickets = function()
+	{
+		$http({
+			url: "/rest/ticket/get/all",
+			method: "GET",
+		})
+		.then(function(response){
+			var issuesData = response.data;
+			console.log(issuesData);
+			
+			issuesData.forEach(function(data){
+				data.formattedTime = String(new Date(data.datetime));
+			});
+			
+			$scope.history.issuesData = issuesData;
+			console.log($scope.issuesData);	
+		})
+	}
 	
 })

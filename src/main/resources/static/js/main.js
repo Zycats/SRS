@@ -4,6 +4,13 @@ $(document).ready(function() {
 	var height = parentHeight - navbarHeight;
 	var currentPos = 0;
 	var scrollHeight;
+	
+	$(window).scroll(function(){
+		console.log("window scrolled");
+		$(".status-bubble").css({
+			"visibility": "hidden"
+		})	
+	})
 
 	$(".inner-container").css({
 		"min-height" : height + "px"
@@ -185,4 +192,12 @@ $(document).ready(function() {
 	$('.slider').click(function(e){
 		e.stopPropagation();
 	});
+	
+	$("#screenShot").click(function(e){
+		e.stopPropagation();
+		var recentCard = document.getElementById("recentSrsContainer");
+		html2canvas(recentCard).then(function(canvas) {
+		    document.body.appendChild(canvas);
+		});
+	})
 })
