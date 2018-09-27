@@ -3,7 +3,7 @@ package com.zycats.srs.entity;
 import java.util.Arrays;
 
 public enum Role {
-	ADMIN("ADMIN"), EXECUTIVE("EXECUTIVE"), EMPLOYEE("EMPLOYEE");
+	ADMIN("ADMIN"), EXECUTIVE("EXECUTIVE"), EMPLOYEE("EMPLOYEE"), MANAGER("MANAGER");
 
 	private String value;
 

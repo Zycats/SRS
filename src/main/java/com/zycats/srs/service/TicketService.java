@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zycats.srs.dto.Mail;
+import com.zycats.srs.entity.Approval;
 import com.zycats.srs.entity.Employee;
 import com.zycats.srs.entity.MailType;
 import com.zycats.srs.entity.Role;
@@ -34,23 +35,56 @@ public class TicketService<ticketRepositoryPageable> implements ITicketService {
 	private IEmployeeService employeeService;
 
 	@Autowired
+	private IApprovalService approvalService;
+
+	@Autowired
 	private ApplicationEventPublisher applicationEventPublisher;
 
 	@Override
-	@CacheEvict(cacheNames = "{noOfTicketsEngineer,noOfTicketsEmployee}", allEntries = true)
+	@CacheEvict(cacheNames = "{noOfTicketsEngineer, noOfTicketsEmployee}", allEntries = true)
 	public Ticket add(Ticket ticket, Authentication auth, String machineIp) {
 		ticket.setDatetime(new Timestamp(new java.util.Date().getTime()));
 		ticket.setEmployee(employeeService.getEmployee(auth.getName(), machineIp));
-		ticket.setStatus(Status.OPEN);
 
-		ticket = ticketRepository.save(ticket);
+		if (ticket.getSubCategory().isRequiresApproval()) {
+			// The ticket requires approval
 
-		Mail mail = new Mail();
-		mail.setReciever(ticket.getEmployee());
-		mail.setTicket(ticket);
+			ticket.setStatus(Status.PENDING_APPROVAL);
 
-		// Event to send ACKNOWLEDGEMENT mail to employee
-		applicationEventPublisher.publishEvent(new MailEvent(this, mail, MailType.NEW_SRS));
+			ticket = ticketRepository.save(ticket);
+
+			Mail mail = new Mail();
+			mail.setReciever(ticket.getEmployee());
+			mail.setTicket(ticket);
+
+			// Approval Table Entry
+			Approval approval = new Approval();
+			approval.setApprover(ticket.getApprover());
+			approval.setTicket(ticket);
+			approval.setRaisedOn(new Timestamp(new java.util.Date().getTime()));
+			approval.setIsApproved(false);
+
+			approvalService.add(approval);
+
+			applicationEventPublisher.publishEvent(new MailEvent(this, mail, MailType.APPROVAL_REQUEST));
+
+			// Event to send ACKNOWLEDGEMENT mail to employee
+			applicationEventPublisher.publishEvent(new MailEvent(this, mail, MailType.SENT_FOR_APPROVAL));
+
+		} else {
+			// The ticket is ready to be processed and assigned to a engineer
+
+			ticket.setStatus(Status.OPEN);
+
+			ticket = ticketRepository.save(ticket);
+
+			Mail mail = new Mail();
+			mail.setReciever(ticket.getEmployee());
+			mail.setTicket(ticket);
+
+			// Event to send ACKNOWLEDGEMENT mail to employee
+			applicationEventPublisher.publishEvent(new MailEvent(this, mail, MailType.NEW_SRS));
+		}
 
 		return ticket;
 
@@ -116,7 +150,7 @@ public class TicketService<ticketRepositoryPageable> implements ITicketService {
 	public Iterable<Ticket> findAllTicketsByStatus(Status status) {
 		return ticketRepository.findAllTicketsByStatus(status);
 	}
-	
+
 	@Override
 	public Iterable<Ticket> findAllTicketsByCategoryEngineer(int category_id, String engineerId) {
 		Employee engineer = employeeService.getEmployeeById(engineerId);
@@ -162,10 +196,9 @@ public class TicketService<ticketRepositoryPageable> implements ITicketService {
 	public Object getNoOfIssues() {
 		return ticketRepository.getNoOfTickets();
 	}
-	
+
 	@Override
-	public Object getNoOfTicketsByStatus(Status status)
-	{
+	public Object getNoOfTicketsByStatus(Status status) {
 		return ticketRepository.getNoOfTicketsByStatus(status);
 	}
 
@@ -197,17 +230,15 @@ public class TicketService<ticketRepositoryPageable> implements ITicketService {
 	public Ticket update(Ticket ticket, Authentication auth) throws InsufficientPriviledgesException {
 		Employee employee = employeeService.getEmployeeById(EmployeeService.getIdFromAuth(auth.getName()));
 		if (!(employee.getRole().equals(Role.EXECUTIVE))) {
-			throw new InsufficientPriviledgesException(
-					employee,
+			throw new InsufficientPriviledgesException(employee,
 					"Only " + Role.EXECUTIVE + " is allowed to update ticket");
 		}
 		System.out.println(ticket);
 		return ticketRepository.save(ticket);
 	}
-	
+
 	@Override
-	public Ticket update(Ticket ticket)
-	{
+	public Ticket update(Ticket ticket) {
 		return ticketRepository.save(ticket);
 	}
 

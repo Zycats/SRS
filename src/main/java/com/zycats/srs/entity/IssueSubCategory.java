@@ -1,5 +1,6 @@
 package com.zycats.srs.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -27,6 +28,9 @@ public class IssueSubCategory {
 
 	private IssueType issueType;
 	private IssuePriority issuePriority;
+
+	@Column(nullable = true)
+	private Boolean requiresApproval;
 
 	public int getId() {
 		return id;
@@ -70,10 +74,21 @@ public class IssueSubCategory {
 		this.issuePriority = issuePriority;
 	}
 
+	public Boolean isRequiresApproval() {
+		return requiresApproval;
+	}
+
+	public void setRequiresApproval(Boolean requiresApproval) {
+		this.requiresApproval = requiresApproval;
+	}
+
 	@Override
 	public String toString() {
 		return "IssueSubCategory [id=" + id + ", name=" + name + ", issueCategory=" + issueCategory + ", issueType="
-				+ issueType + ", issuePriority=" + issuePriority + "]";
+				+ issueType + ", issuePriority=" + issuePriority + ", requiresApproval=" + requiresApproval
+				+ ", getId()=" + getId() + ", getName()=" + getName() + ", getIssueCategory()=" + getIssueCategory()
+				+ ", getIssueType()=" + getIssueType() + ", getIssuePriority()=" + getIssuePriority()
+				+ ", isRequiresApproval()=" + isRequiresApproval() + "]";
 	}
 
 }

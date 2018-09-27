@@ -44,6 +44,10 @@ public class Ticket {
 
 	@JsonInclude
 	@Transient
+	private Employee approver;
+
+	@JsonInclude
+	@Transient
 	private String timeAgo;
 
 	public String getTimeAgo() {
@@ -130,11 +134,19 @@ public class Ticket {
 		this.datetime = datetime;
 	}
 
+	public Employee getApprover() {
+		return approver;
+	}
+
+	public void setApprover(Employee approver) {
+		this.approver = approver;
+	}
+
 	@Override
 	public String toString() {
 		return "Ticket [id=" + id + ", employee=" + employee + ", subCategory=" + subCategory + ", engineer=" + engineer
 				+ ", osType=" + osType + ", status=" + status + ", description=" + description + ", datetime="
-				+ datetime + "]";
+				+ datetime + ", approver=" + approver + ", timeAgo=" + timeAgo + ", comments=" + comments + "]";
 	}
 
 }
