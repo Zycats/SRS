@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,10 +14,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zycats.srs.dto.Mail;
 import com.zycats.srs.entity.Employee;
+import com.zycats.srs.entity.MailType;
 import com.zycats.srs.entity.Role;
 import com.zycats.srs.entity.Status;
 import com.zycats.srs.entity.Ticket;
+import com.zycats.srs.event.MailEvent;
 import com.zycats.srs.exception.InsufficientPriviledgesException;
 import com.zycats.srs.repository.TicketRepositoryPageable;
 
@@ -29,13 +33,26 @@ public class TicketService<ticketRepositoryPageable> implements ITicketService {
 	@Autowired
 	private IEmployeeService employeeService;
 
+	@Autowired
+	private ApplicationEventPublisher applicationEventPublisher;
+
 	@Override
 	@CacheEvict(cacheNames = "{noOfTicketsEngineer,noOfTicketsEmployee}", allEntries = true)
 	public Ticket add(Ticket ticket, Authentication auth, String machineIp) {
 		ticket.setDatetime(new Timestamp(new java.util.Date().getTime()));
 		ticket.setEmployee(employeeService.getEmployee(auth.getName(), machineIp));
 		ticket.setStatus(Status.OPEN);
-		return ticketRepository.save(ticket);
+
+		ticket = ticketRepository.save(ticket);
+
+		Mail mail = new Mail();
+		mail.setReciever(ticket.getEmployee());
+		mail.setTicket(ticket);
+
+		// Event to send ACKNOWLEDGEMENT mail to employee
+		applicationEventPublisher.publishEvent(new MailEvent(this, mail, MailType.NEW_SRS));
+
+		return ticket;
 
 	}
 

@@ -3,6 +3,7 @@ package com.zycats.srs.dto;
 import java.util.List;
 
 import com.zycats.srs.entity.Employee;
+import com.zycats.srs.entity.Ticket;
 
 public class Mail {
 
@@ -12,6 +13,7 @@ public class Mail {
 	private List<Employee> bcc;
 	private String subject;
 	private String body;
+	private Ticket ticket;
 
 	public Employee getSender() {
 		return sender;
@@ -59,6 +61,14 @@ public class Mail {
 
 	public void setBody(String body) {
 		this.body = body;
+	}
+
+	public Ticket getTicket() {
+		return ticket;
+	}
+
+	public void setTicket(Ticket ticket) {
+		this.ticket = ticket;
 	}
 
 	@Override
