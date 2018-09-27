@@ -48,150 +48,6 @@ $(document).ready(function() {
 		$("#container-4").css("left", "0");
 	})
 	
-	/*$("#raise").click(function() {
-		if (currentPos != 1) {
-			if (currentPos == 0) {
-				$("#dashboard").css({
-					marginLeft : "-100%"
-				});
-			} else if (currentPos == 2) {
-				$("#raiseContainer").css({
-					marginLeft : "0"
-				});
-			}
-			currentPos = 1;
-		}
-	})
-	
-	$("#new-issues").click(function() {
-		if (currentPos != 1) {
-			if (currentPos == 0) {
-				$("#dashboard").css({
-					marginLeft : "-100%"
-				});
-			} else if (currentPos == 2) {
-				$("#newIssuesContainer").css({
-					marginLeft : "0"
-				});
-			}
-			currentPos = 1;
-		}
-	})
-
-	$("#history").click(function() {
-		if (currentPos != 2) {
-			if (currentPos == 0) {
-				$("#dashboard").css({
-					marginLeft : "-200%"
-				});
-				$("#raiseContainer").css({
-					marginLeft : "-100%"
-				});
-				$("#historyContainer").css({
-					marginLeft : "0"
-				});
-				$("#approvalContainer").css({
-					marginLeft : "100%"
-				});
-			} else if (currentPos == 1) {
-				$("#raiseContainer").css({
-					marginLeft : "-100%"
-				});
-				
-			} else if (currentPos == 3) {
-				$("#approvalContainer").css({
-					marginLeft : "100%"
-				});
-				$("#historyContainer").css({
-					marginLeft : "0"
-				});
-			}
-			currentPos = 2;
-		}
-	})
-	
-	$("#approvals").click(function() {
-		if (currentPos != 3) {
-			if (currentPos == 0) {
-				$("#dashboard").css({
-					marginLeft : "-300%"
-				});
-				$("#raiseContainer").css({
-					marginLeft : "-200%"
-				});
-				$("#historyContainer").css({
-					marginLeft : "-100%"
-				});
-				$("#approvalContainer").css({
-					marginLeft: "0"
-				})
-				
-			} else if (currentPos == 1) {
-				$("#raiseContainer").css({
-					marginLeft : "-200%"
-				});
-				$("#historyContainer").css({
-					marginLeft : "-100%"
-				});
-				$("#approvalContainer").css({
-					marginLeft: "0"
-				})
-			} else if(currentPos == 2){
-				$("#historyContainer").css({
-					marginLeft : "-100%"
-				});
-				$("#approvalContainer").css({
-					marginLeft: "0"
-				})
-			}
-			currentPos = 3;
-		}
-	})
-	
-	$("#all-issues-history").click(function() {
-		if (currentPos != 2) {
-			if (currentPos == 0) {
-				$("#dashboard").css({
-					marginLeft : "-100%"
-				});
-				$("#newIssuesContainer").css({
-					marginLeft : "-100%"
-				});
-			} else if (currentPos == 1) {
-				$("#newIssuesContainer").css({
-					marginLeft : "-100%"
-				});
-			}
-			currentPos = 2;
-		}
-	})
-
-	$("#home").click(function() {
-		if (currentPos != 0) {
-			$("#dashboard").css({
-				marginLeft : "0"
-			});
-			$("#raiseContainer").css({
-				marginLeft : "0"
-			});
-			currentPos = 0;
-		}
-		
-		
-	})
-	
-	$("#home-exec").click(function() {
-		if (currentPos != 0) {
-			$("#dashboard").css({
-				marginLeft : "0"
-			});
-			$("#newIssuesContainer").css({
-				marginLeft : "0"
-			});
-			currentPos = 0;
-		}
-	})*/
-	
 	$(".tokenLink").click(function(){
 		
 		if ($(window).outerWidth() < 576)
@@ -259,7 +115,9 @@ $(document).ready(function() {
 		if (!($(".commentText").is(":focus")) && 
 				!($("#comment").is(":focus")) && 
 				!($("#emp_seatno_input").is(":focus")) &&
+				!($("#searchManagerInput").is(":focus")) &&
 				!($("#emp_extno_input").is(":focus")))
+			
 		{
 			$('.search input[type=text]').focus();
 		}

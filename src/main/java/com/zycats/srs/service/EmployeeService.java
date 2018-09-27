@@ -131,4 +131,10 @@ public class EmployeeService implements IEmployeeService {
 		return true;
 	}
 
+	@Override
+	public Iterable<Employee> allManagers(String search) {
+		search = search == null ? "" : search;
+		return employeeRepository.getManagersByName(search);
+	}
+
 }

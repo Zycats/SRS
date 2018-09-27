@@ -24,4 +24,6 @@ public interface IEmployeeService {
 
 	boolean setRole(Role role, Authentication auth);
 
+	Iterable<Employee> allManagers(String search);
+
 }

@@ -326,6 +326,36 @@ srsApp.controller("controller", function($scope, $http){
 		
 	}
 	
+	$scope.searchManager = function(){
+		
+		if($scope.repoManager.length < 2)
+			return;
+		
+		$http({
+			url : "/rest/employee/get/manager/all",
+			method: "POST",
+			data : {
+				"search" : $scope.repoManager
+			},
+			dataType: "application/json",
+	
+			success: function(response){
+				$scope.managers = response.data;
+				console.log(response.data);
+				
+				if($scope.managers.length == 1)
+					$scope.repoManager = $scope.managers[0].id;
+			},
+			error: function(error){
+				$scope.managers = error.responseText;
+				console.log(error.reponseText);
+				
+				if($scope.managers.length == 1)
+					$scope.repoManager = $scope.managers[0].id;
+			}
+		})
+	}
+	
 	//===================MANAGER CONTROLLER STARTS=============================
 	
 	$http({
