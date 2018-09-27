@@ -24,7 +24,7 @@ public class TicketController {
 
 	@Autowired
 	private ITicketService ticketService;
-
+	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public Ticket addTicket(@RequestBody Ticket ticket, Authentication auth, HttpServletRequest request) {
 		return ticketService.add(ticket, auth, request.getRemoteAddr());
@@ -45,7 +45,8 @@ public class TicketController {
 	public Ticket getTicketById(@RequestParam Integer id) {
 		return ticketService.getById(id);
 	}
-
+	
+	
 	@RequestMapping(value = "get/all", method = RequestMethod.GET)
 	public Iterable<Ticket> getAllTicket() {
 		return ticketService.getAll();

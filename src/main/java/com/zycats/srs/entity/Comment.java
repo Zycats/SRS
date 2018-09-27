@@ -99,4 +99,6 @@ public class Comment {
 				+ ", statusFrom=" + statusFrom + ", statusTo=" + statusTo + ", ticket=" + ticket + "]";
 	}
 
+
+
 }
