@@ -326,4 +326,21 @@ srsApp.controller("controller", function($scope, $http){
 		
 	}
 	
+	//===================MANAGER CONTROLLER STARTS=============================
+	
+	$http({
+		url: "/rest/manager/get/approval/all",
+		method: "POST",
+	})
+	.then(function(response){
+		$scope.approvalIssuesData = response.data;
+	})
+	
+	$http({
+		url: "/rest/manager/get/approval/delegate",
+		method: "POST",
+	})
+	.then(function(response){
+		$scope.delegatedApprovalIssuesData = response.data;
+	})
 })
