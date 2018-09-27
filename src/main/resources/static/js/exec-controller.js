@@ -1,4 +1,4 @@
-srsApp2.controller("dashboardController", function($scope, $http, $interval){
+srsApp.controller("controller", function($scope, $http, $interval){
 	
 	$scope.loaderShow = false;
 	$scope.openSrsFirst = false;
@@ -272,6 +272,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	$scope.intervalFun = function()
 	{
 		$scope.getOpenSrs();
+		$interval.cancel(pollingPromise);
 	}
 	
 	var pollingPromise = $interval($scope.intervalFun, 3000);
@@ -286,6 +287,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 
 			response.data.forEach(function(data){
 				data.formattedTime = String(new Date(data.datetime));
+				data.backgroundClass = data.statusTo.toLowerCase().split("_")[0] + "-background-color";	
 			});
 			
 			$scope.commentData = response.data;

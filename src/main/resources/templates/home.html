@@ -32,23 +32,47 @@
 <script th:src="@{/js/main.js}"></script>
 </head>
 <body>
+	<script src="https://code.angularjs.org/1.7.4/angular.js"></script>
+	<script type='text/javascript'
+		src='https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.js'></script>
+	<script th:src="@{/js/app.js}"></script>
+	<script th:src="@{/js/moment.js}"></script>
 	<div class="container-fluid main-container" ng-app="srsApp"
-		ng-controller="userController">
-		<div class="status-bubble">
+		ng-controller="controller">
+		<div class="status-bubble" id="bubble">
+			<span class="from">{{from}}</span> &#8594; <span class="to">{{to}}</span>
 			<div class="triangle"></div>
 		</div>
-		<div class="navbarContainer"
-			th:insert="fragments/navbar-fragment2 :: navbar"></div>
+		<th:block th:if="${role == 'employee'}">
+			<div class="navbarContainer"
+				th:insert="fragments/employee/navbar :: navbar"></div>
+		</th:block>
+		<th:block th:if="${role == 'executive'}">
+			<div class="navbarContainer"
+				th:insert="fragments/executive/navbar :: navbar"></div>
+		</th:block>
 		<div class="container-fluid inner-container">
 			<div class="views-container">
-				<div class="dashboard-container" id="dashboard"
-					th:insert="fragments/dashboard-fragment2 :: dashboard"></div>
-				<div class="raise-container" id="raiseContainer"
-					th:insert="fragments/raise-fragment :: raiseFragment"></div>
-				<div class="history-container" id="historyContainer">
-					<h1>History</h1>
-					<hr>
-				</div>
+				<th:block th:if="${role == 'employee'}">
+					<div class="dashboard-container" id="dashboard"
+						th:insert="fragments/employee/dashboard :: dashboard"></div>
+					<div class="raise-container" id="raiseContainer"
+						th:insert="fragments/employee/raise-fragment :: raiseFragment"></div>
+					<div class="history-container" id="historyContainer">
+						<h1>History</h1>
+						<hr>
+					</div>
+					<script th:src="@{/js/controller.js}"></script>
+				</th:block>
+				<th:block th:if="${role == 'executive'}">
+					<div class="dashboard-container" id="dashboard"
+						th:insert="fragments/executive/dashboard :: dashboard"></div>
+					<div class="raise-container" id="newIssuesContainer"
+						th:insert="fragments/executive/new-issues-fragment :: newIssuesFragment"></div>
+					<div class="history-container" id="historyContainer"
+						th:insert="fragments/executive/historyFragment ::historyExeFragment"></div>
+					<script th:src="@{/js/exec-controller.js}"></script>
+				</th:block>
 			</div>
 		</div>
 		<div class="modalContainer"
@@ -56,11 +80,5 @@
 		<div class="slider"
 			th:insert="fragments/slider-fragment :: sliderFragment-exec"></div>
 	</div>
-	<script src="https://code.angularjs.org/1.7.4/angular.js"></script>
-	<script type='text/javascript'
-		src='https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.js'></script>
-	<script th:src="@{/js/app.js}"></script>
-	<script th:src="@{/js/moment.js}"></script>
-	<script th:src="@{/js/controller.js}"></script>
 </body>
 </html>

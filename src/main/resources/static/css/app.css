@@ -342,13 +342,6 @@ div.triangle {
 	border-bottom: 4px solid transparent;
 }
 
-@media only screen and (max-width: 576px) {
-	div.slider {
-		width: 100%;
-		height: 100%;
-	}
-}
-
 .btn-tag {
 	font-size: 10px !important;
 	width: 100%;
@@ -463,4 +456,77 @@ div.search {
 
 .banner {
 	cursor: pointer;
+}
+.open-color{
+	color: #03a9f4;
+}
+.open-background-color{
+	background-color: #007bff;
+	border-color: #007bff;
+}
+
+/**
+	Status wise color coding
+**/
+
+/* CLOSED status text color */
+.closed-color{
+	color: #9e9e9e;
+}
+
+/* CLOSED status background color */
+.closed-background-color{
+	background-color: #9e9e9e;
+	border-color: #9e9e9e;
+}
+
+/* ONHOLD status text color */
+.onhold-color{
+	color: #ffeb3b;
+}
+
+/* ONHOLD status background color */
+.onhold-background-color{
+	background-color: #ffc107;
+	border-color: #ffc107;
+}
+
+/* UNRESOLVABLE status text color */
+.unresolvable-color{
+	color: #607d8b;
+}
+
+/* UNRESOLVABLE status background color */
+.unresolvable-background-color{
+	background-color: #607d8b;
+	border-color: #607d8b;
+}
+
+/* WORKINGG status text color */
+.working-color{
+	color: #4caf50;
+}
+
+/* WORKING status background color */
+.working-background-color{
+	background-color: #4caf50;
+	border-color: #4caf50;
+}
+
+/* PENDING status text color */
+.pending-color{
+	color: #f44336;
+}
+
+/* PENDING status background color */
+.pending-background-color{
+	background-color: #f44336;
+	border-color: #f44336;
+}
+
+@media only screen and (max-width: 576px) {
+	div.slider {
+		width: 100%;
+		height: 100%;
+	}
 }

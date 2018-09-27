@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div th:fragment="dashboard">
+		<h1>
+
+			Dashboard - <span class="username">Welcome <span ng-cloak>{{empData.employee.displayName}}</span> to SRS
+				System </span>
+		</h1>
+		<hr>
+		<div class="row cards-container">
+			<div class="col-xl-4">
+				<a href="#">
+					<div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+						<div class="card-header">Issues Raised</div>
+						<div class="card-body icon-card-body">
+							<i class="fas fa-question-circle mn-icon"></i> <span ng-cloak
+								class="info-title">{{openIssuesCount}}</span>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-xl-4">
+				<div class="card text-white bg-success mb-3"
+					style="max-width: 18rem;">
+					<div class="card-header">Issues Resolved</div>
+					<div class="card-body icon-card-body">
+						<i class="fas fa-check-circle mn-icon"></i> <span ng-cloak
+							class="info-title">{{issuesResolved}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-4">
+				<div class="card text-white bg-danger mb-3"
+					style="max-width: 18rem;">
+					<div class="card-header">Unresolvable Issues <button class="btn view-btn btn-sm">View All</button></div>
+					<div class="card-body icon-card-body">
+						<i class="fas fa-exclamation-circle mn-icon"></i> <span ng-cloak
+							class="info-title">{{issuesUnresolvable}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card recent-card">
+			<div class="card-body table-card-body">
+				<h3 id="recentId">Recently Raised Issues</h3>
+				<table class="table table-striped recent-table">
+					<thead>
+						<tr>
+							<th>Classification</th>
+							<th>#Id</th>
+							<th>Description</th>
+							<th>Priority</th>
+							<th>Time of Ticket</th>
+							<th>Assigned Engineer</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="recent in recentSrs" ng-cloak>
+							<td>
+								<button  ng-if="recent.subCategory.issueType == 'INCIDENT'" ng-click="showSlider(recent); $event.stopPropagation(); console.log('clicked on main container');" class="btn btn-warning btn-tag">INCIDENT</button>
+								<button  ng-if="recent.subCategory.issueType == 'REQUEST'" ng-click="showSlider(recent); $event.stopPropagation(); console.log('clicked on main container');" class="btn btn-primary btn-tag">REQUEST</button>
+							</td>
+							<td class="idTd"><span class="tokenLink">{{recent.id}}</span></td>
+							<td class="description">{{recent.description}}</td>
+							<td>{{recent.subCategory.issuePriority}}</td>
+							<td>{{recent.timeAgo}}</td>
+							<td>{{recent.engineer.id}}</td>
+							<td>{{recent.status}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
