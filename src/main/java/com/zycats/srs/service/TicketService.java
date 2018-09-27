@@ -162,6 +162,12 @@ public class TicketService<ticketRepositoryPageable> implements ITicketService {
 	public Object getNoOfIssues() {
 		return ticketRepository.getNoOfTickets();
 	}
+	
+	@Override
+	public Object getNoOfTicketsByStatus(Status status)
+	{
+		return ticketRepository.getNoOfTicketsByStatus(status);
+	}
 
 	@Override
 	public Object getNoOfIssues(String employeeId) {
