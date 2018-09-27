@@ -272,11 +272,11 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	$scope.intervalFun = function()
 	{
 		$scope.getOpenSrs();
+		$interval.cancel(pollingPromise);
 	}
 	
 	var pollingPromise = $interval($scope.intervalFun, 3000);
 	
-	//$interval.cancel(pollingPromise);
 	
 	getComments = function(issue){
 		$http({
