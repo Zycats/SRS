@@ -1,14 +1,27 @@
 package com.zycats.srs.aspects;
 
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.zycats.srs.entity.Comment;
+import com.zycats.srs.entity.Report;
+import com.zycats.srs.service.ICommentService;
+import com.zycats.srs.service.ReportService;
 
 @Aspect
 @Component
 public class DemoAspect {
-	@Around("@annotation(com.zycats.srs.aspects.Demo) && execution(public * *(..))")
+	
+	@Autowired
+	private ICommentService commentService; 
+	
+	@Autowired
+	private ReportService reportService;
+	
+	
+	/*@Around("@annotation(com.zycats.srs.aspects.Demo) && execution(public * *(..))")
 	public Object performDemo(final ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
 		
 		System.out.println("this has happen before join point");
@@ -33,7 +46,25 @@ public class DemoAspect {
 		return value;
 		
 		
-	}
+	}*/
+	
+	@AfterReturning(pointcut="@annotation(com.zycats.srs.aspects.Demo) && execution(public * *(..))", returning="comment")
+    public void createReportOnComment(Object comment) throws Throwable
+    {
+       System.out.println("status changed ============ ");
+       System.out.println((Comment)comment);
+       Comment comm = (Comment)comment;
+       Report report = new Report();
+       report.setTicket( comm.getTicket() );
+       report.setStatusFrom( comm.getStatusFrom());
+       report.setStatusTo( comm.getStatusTo());
+       report.setComment(comm);
+       report.setExecutive(comm.getTicket().getEngineer());
+       
+       reportService.addReport(report);
+       
+    }
+	
 	
 
 }

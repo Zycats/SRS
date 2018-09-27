@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.zycats.srs.aspects.Demo;
 import com.zycats.srs.entity.Comment;
 import com.zycats.srs.entity.Employee;
 import com.zycats.srs.exception.InsufficientPriviledgesException;
@@ -23,6 +24,7 @@ public class CommentService implements ICommentService {
 	@Autowired
 	private IEmployeeService employeeService;
 
+	@Demo
 	@Override
 	public Comment add(Comment comment, Authentication auth) throws InsufficientPriviledgesException {
 		Employee employee = employeeService.getEmployeeById(EmployeeService.getIdFromAuth(auth.getName()));

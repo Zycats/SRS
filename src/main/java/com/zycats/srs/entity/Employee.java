@@ -18,6 +18,10 @@ public class Employee {
 	@JoinColumn(name = "department_id")
 	private Department department;
 
+	@ManyToOne
+	@JoinColumn(name = "reporting_manager_id")
+	private Employee reportingManager;
+	
 	private String email;
 	private String seatNo;
 	private int extNo;
@@ -86,6 +90,14 @@ public class Employee {
 
 	public void setFirstLogin(boolean firstLogin) {
 		this.firstLogin = firstLogin;
+	}
+
+	public Employee getReportingManager() {
+		return reportingManager;
+	}
+
+	public void setReportingManager(Employee reportingManager) {
+		this.reportingManager = reportingManager;
 	}
 
 	@Override
