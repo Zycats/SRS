@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = "com.zycats.srs.repository")
+// @EnableScheduling
 public class Application {
 
 	public static void main(String[] args) {

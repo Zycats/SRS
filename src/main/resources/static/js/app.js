@@ -8,7 +8,7 @@ var srsApp = angular.module("srsApp", ['angular-loading-bar'])
     }
 ]);
 
-var srsApp2 = angular.module("srsApp2", ['angular-loading-bar'])
+/*var srsApp2 = angular.module("srsApp2", ['angular-loading-bar'])
 .config([
     '$compileProvider',
     function( $compileProvider )
@@ -16,4 +16,4 @@ var srsApp2 = angular.module("srsApp2", ['angular-loading-bar'])
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|http|sip|mailto):/);
         // Angular before v1.2 uses $compileProvider.urlSanitizationWhitelist(...)
     }
-]);
+]);*/

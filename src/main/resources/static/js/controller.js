@@ -1,4 +1,4 @@
-srsApp.controller("userController", function($scope, $http){
+srsApp.controller("controller", function($scope, $http){
 	
 	$scope.srsErrorShow = false;
 	$scope.srsSuccessShow = false;

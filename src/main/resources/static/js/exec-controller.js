@@ -1,4 +1,4 @@
-srsApp2.controller("dashboardController", function($scope, $http, $interval){
+srsApp.controller("controller", function($scope, $http, $interval){
 	
 	$scope.loaderShow = false;
 	$scope.openSrsFirst = false;
@@ -27,6 +27,19 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		}).then(function success(response){
 			
 			$scope.issuesRaised = response.data;
+		})
+		
+		$http({
+			url : "/rest/ticket/get/count",
+			method : "POST",
+			data: {
+				"status": "OPEN"
+			}
+			
+		}).then(function success(response){
+			console.log(response.data);
+			$scope.openIssuesCount = response.data;
+			console.log($scope.openIssuesCount);
 		})
 		
 		$http({
@@ -241,7 +254,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 			issuesData.forEach(function(data){
 				data.formattedTime = String(new Date(data.datetime));
 				
-				if (data.engineer == null)
+				if (data.status == "OPEN")
 				{
 					data.showAssigned = true;
 				}
@@ -259,10 +272,11 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	$scope.intervalFun = function()
 	{
 		$scope.getOpenSrs();
+		$interval.cancel(pollingPromise);
 	}
 	
+	var pollingPromise = $interval($scope.intervalFun, 3000);
 	
-	$interval($scope.intervalFun, 3000);
 	
 	getComments = function(issue){
 		$http({
@@ -272,6 +286,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 
 			response.data.forEach(function(data){
 				data.formattedTime = String(new Date(data.datetime));
+				data.backgroundClass = data.statusTo.toLowerCase().split("_")[0] + "-background-color";	
 			});
 			
 			$scope.commentData = response.data;
@@ -528,17 +543,21 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		var x = $event.target.getBoundingClientRect().x;
 		var y = $event.target.getBoundingClientRect().y;
 		var width= $event.target.getBoundingClientRect().width;
-		var heigth = $event.target.getBoundingClientRect().height;
+		var height = $event.target.getBoundingClientRect().height;
+		var scroll = $(window).scrollTop();
 		
 		var bubbleWidth = document.getElementById('bubble').getBoundingClientRect().width;
 		var bubbleHeight = document.getElementById('bubble').getBoundingClientRect().height;
+		
+		var diff = bubbleHeight - height;
 		
 		console.log(x, y, width, bubbleWidth, comment);
 		
 		
 		$(".status-bubble").css({
-			"top": (y - (bubbleHeight/4)) + "px",
-			"right": ($(window).outerWidth()) - x + 20 + "px",
+			"visibility": "visible",
+			"top": (y - (diff/2) + scroll) + "px",
+			"right": ($(window).outerWidth()) - x + 10 + "px",
 			"opacity": "1"
 		})
 		
@@ -551,6 +570,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	
 	$scope.hideBubble = function(){
 		$(".status-bubble").css({
+			"visibility": "visible",
 			"opacity": "0"
 		})	
 	}
@@ -610,11 +630,21 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	$scope.getHistoryIssues = function(status) {
 		
 		var url = "";
-		var methos = ""
-		if(status != "OPEN"){
+		var method = ""
+		if (status == "OPEN")
+		{
+			url =  "/rest/executive/get/status";
+			method =  "POST";
+		}
+		else if (status == "ALLENG")
+		{
+			url = "/rest/executive/get/engId",
+			method = "POST",
+			status = "";
+		}
+		else if(status != "ALL"){
 			url = "/rest/executive/get/status/engId"
-				method = "POST"
-			
+			method = "POST"
 		}
 		else{
 			url = "/rest/ticket/get/all"
@@ -640,5 +670,26 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	} 
 	
 	// $interval(getTimeAgo, 3000);
+	
+	//All Tickets History
+	
+	$scope.getAllTickets = function()
+	{
+		$http({
+			url: "/rest/ticket/get/all",
+			method: "GET",
+		})
+		.then(function(response){
+			var issuesData = response.data;
+			console.log(issuesData);
+			
+			issuesData.forEach(function(data){
+				data.formattedTime = String(new Date(data.datetime));
+			});
+			
+			$scope.history.issuesData = issuesData;
+			console.log($scope.issuesData);	
+		})
+	}
 	
 })

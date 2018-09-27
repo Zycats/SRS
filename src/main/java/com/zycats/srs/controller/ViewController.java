@@ -21,9 +21,11 @@ public class ViewController {
 		
 		switch (employeeService.getEmployee(auth.getName(), request.getRemoteAddr()).getRole().toString()) {
 		case "EMPLOYEE":
-			return "home-new2";
+			model.addAttribute("role","employee");
+			return "home";
 		case "EXECUTIVE":
-			return "home-exec";
+			model.addAttribute("role","executive");
+			return "home";
 		default:
 			return "Invalid role!";
 		}

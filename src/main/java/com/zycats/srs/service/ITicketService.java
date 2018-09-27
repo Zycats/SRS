@@ -45,6 +45,8 @@ public interface ITicketService {
 	Object getNoOfIssues(String employeeId);
 
 	Object getNoOfIssues();
+	
+	Object getNoOfTicketsByStatus(Status status);
 
 	////////////////////////////
 	// Count methods For Employee
@@ -66,5 +68,7 @@ public interface ITicketService {
 	Iterable<Ticket> findAllTicketsByStatus(Status status);
 
 	Ticket setAssigned(Ticket ticket, String idFromAuth);
+
+	Ticket update(Ticket ticket);
 
 }

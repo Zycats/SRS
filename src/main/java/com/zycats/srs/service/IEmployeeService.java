@@ -4,6 +4,7 @@ import org.springframework.security.core.Authentication;
 
 import com.zycats.srs.dto.EmployeeLocationDTO;
 import com.zycats.srs.entity.Employee;
+import com.zycats.srs.entity.Role;
 
 public interface IEmployeeService {
 
@@ -20,5 +21,7 @@ public interface IEmployeeService {
 	Employee getEmployeeById(String id);
 
 	EmployeeLocationDTO getEmployeeLocation(String id, String machineIp);
+
+	boolean setRole(Role role, Authentication auth);
 
 }

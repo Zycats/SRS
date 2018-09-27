@@ -4,6 +4,7 @@ import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,9 @@ public class EmployeeService implements IEmployeeService {
 	@Autowired
 	DepartmentRepository departmentRepository;
 
+	@Autowired
+	private ApplicationEventPublisher applicationEventPublisher;
+
 	@Override
 	public Employee register(Employee employee) {
 		return employeeRepository.save(employee);
@@ -29,8 +33,10 @@ public class EmployeeService implements IEmployeeService {
 
 	@Override
 	public EmployeeLocationDTO getEmployeeLocation(String id, String machineIp) {
+
 		EmployeeLocationDTO employeeLocationDTO = new EmployeeLocationDTO();
 		Employee employee = getEmployee(id, machineIp);
+
 		employeeLocationDTO.setEmployee(employee);
 		if (employee.getDepartment() != null)
 			employeeLocationDTO
@@ -110,6 +116,19 @@ public class EmployeeService implements IEmployeeService {
 
 	public static String getIdFromAuth(String authId) {
 		return authId.replaceAll(Pattern.quote("\\"), "\\\\").split("\\\\")[1];
+	}
+
+	@Override
+	public boolean setRole(Role role, Authentication auth) {
+		try {
+			Employee employee = getEmployeeById(getIdFromAuth(auth.getName()));
+			employee.setRole(role);
+			employeeRepository.save(employee);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 }
