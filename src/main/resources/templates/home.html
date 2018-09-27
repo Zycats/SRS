@@ -37,6 +37,12 @@
 		top: 0;
 		transition: left 300ms;
 	}
+	#container-4{
+		position: absolute;
+		left: 100%;
+		top: 0;
+		transition: left 300ms;
+	}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -89,16 +95,16 @@
 					<script th:src="@{/js/controller.js}"></script>
 				</th:block>
 				<th:block th:if="${role == 'manager'}">
-					<div class="dashboard-container" id="dashboard"
+					<div class="vcontainer" id="container-1" 
 						th:insert="fragments/employee/dashboard :: dashboard"></div>
-					<div class="raise-container" id="raiseContainer"
+					<div class="vcontainer" id="container-2"
 						th:insert="fragments/employee/raise-fragment :: raiseFragment"></div>
-					<div class="approval-container" id="approvalContainer"
-						th:insert="fragments/manager/approval-fragment :: approvalFragment"></div>
-					<div class="history-container" id="historyContainer">
+					<div class="vcontainer" id="container-3">
 						<h1>History</h1>
 						<hr>
 					</div>
+					<div class="vcontainer" id="container-4"
+						th:insert="fragments/manager/approval-fragment :: approvalFragment"></div>
 					<script th:src="@{/js/controller.js}"></script>
 				</th:block>
 				<th:block th:if="${role == 'executive'}">

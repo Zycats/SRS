@@ -604,9 +604,9 @@ srsApp.controller("controller", function($scope, $http, $interval){
 	// history Page Controller
 	$scope.clickedForHistory = function(event) {
 		console.log(event.currentTarget.id)
-		$("#all-issues-history").trigger("click");
-		$("#all-issues-history").addClass("active")
-		$("#home-exec").removeClass("active")
+		$("#menu-item-3").trigger("click");
+		$("#menu-item-3").addClass("active")
+		$("#menu-item-1").removeClass("active")
 		
 		// fetch all the issues by status specific to executive
 		$scope.getHistoryIssues(event.currentTarget.id)
@@ -675,6 +675,9 @@ srsApp.controller("controller", function($scope, $http, $interval){
 	
 	$scope.getAllTickets = function()
 	{
+		
+		$('.dropdown-menu').removeClass("show");
+		
 		$http({
 			url: "/rest/ticket/get/all",
 			method: "GET",

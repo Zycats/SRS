@@ -105,9 +105,18 @@
 				</div>
 				<div class="col">
 					<div class="form-group">
-						<label for="formGroupExampleInput">Status</label> <input
-							type="text" class="form-control" id="formGroupExampleInput"
-							placeholder="Example input" disabled value="Open">
+						<label for="formGroupStatus">Status</label> <input
+							type="text" class="form-control" id="formGroupStatus"
+							placeholder="Status" disabled value="Open">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="form-group">
+						<label for="formGroupManager">Manager</label> <input
+							type="text" class="form-control" id="searchManagerInput"
+							placeholder="Manager" ng-model="repoManager" ng-keyup="searchManager()">
 					</div>
 				</div>
 			</div>

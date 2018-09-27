@@ -49,6 +49,11 @@ public class EmployeeRestController {
 		return employeeService.allEmployees();
 	}
 
+	@RequestMapping(value = "get/manager/all", method = RequestMethod.POST)
+	public Iterable<Employee> getAllManagers(@RequestBody Map<String, String> data) {
+		return employeeService.allManagers(data.get("search"));
+	}
+
 	@RequestMapping(value = "post", method = RequestMethod.POST)
 	public Employee setFirstLoginEmployee(@RequestBody Employee employee, Authentication auth) {
 		return employeeService.update(employee, auth);
@@ -67,42 +72,27 @@ public class EmployeeRestController {
 	// ticket related rest controls
 
 	// accepts status and employeeId and returns all the tickets
-	@RequestMapping(
-					value = "get/status/empId",
-					method = RequestMethod.POST,
-					consumes = "application/json",
-					produces = "application/json")
+	@RequestMapping(value = "get/status/empId", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public Iterable<Ticket> getAllTicketByStatus(@RequestBody Map<String, String> data, Authentication auth) {
 
-		return ticketService.findAllTicketsByStatusEmployee(
-				Status.valueOf(data.get("status")),
+		return ticketService.findAllTicketsByStatusEmployee(Status.valueOf(data.get("status")),
 				EmployeeService.getIdFromAuth(auth.getName()));
 	}
 
 	// accepts category and employeeId and returns all the tickets
-	@RequestMapping(
-					value = "get/category/empId",
-					method = RequestMethod.POST,
-					consumes = "application/json",
-					produces = "application/json")
+	@RequestMapping(value = "get/category/empId", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public Iterable<Ticket> getAllTicketByCategory(@RequestBody Map<String, String> data, Authentication auth) {
 
-		return ticketService.findAllTicketsByCategoryEmployee(
-				Integer.parseInt(data.get("category_id")),
+		return ticketService.findAllTicketsByCategoryEmployee(Integer.parseInt(data.get("category_id")),
 				EmployeeService.getIdFromAuth(auth.getName()));
 
 	}
 
 	// accepts sub_category and employeeId and returns all the tickets
-	@RequestMapping(
-					value = "get/sub_category/empId",
-					method = RequestMethod.POST,
-					consumes = "application/json",
-					produces = "application/json")
+	@RequestMapping(value = "get/sub_category/empId", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public Iterable<Ticket> getAllTicketBySubCategory(@RequestBody Map<String, String> data, Authentication auth) {
 
-		return ticketService.findAllTicketsBySubCategoryEmployee(
-				Integer.parseInt(data.get("sub_category_id")),
+		return ticketService.findAllTicketsBySubCategoryEmployee(Integer.parseInt(data.get("sub_category_id")),
 				EmployeeService.getIdFromAuth(auth.getName()));
 	}
 
@@ -124,8 +114,7 @@ public class EmployeeRestController {
 	@RequestMapping(value = "get/status/ticket-no", produces = "application/json")
 	public Object getAllTicketNoByStatusEmployee(@RequestBody Map<String, String> data, Authentication auth) {
 
-		return ticketService.getNoOfIssuesByStatusEmployee(
-				Status.valueOf(data.get("status")),
+		return ticketService.getNoOfIssuesByStatusEmployee(Status.valueOf(data.get("status")),
 				EmployeeService.getIdFromAuth(auth.getName()));
 	}
 
