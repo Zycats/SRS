@@ -45,6 +45,8 @@ public interface ITicketService {
 	Object getNoOfIssues(String employeeId);
 
 	Object getNoOfIssues();
+	
+	Object getNoOfTicketsByStatus(Status status);
 
 	////////////////////////////
 	// Count methods For Employee

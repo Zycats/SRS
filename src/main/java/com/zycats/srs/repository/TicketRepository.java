@@ -69,10 +69,13 @@ public interface TicketRepository extends PagingAndSortingRepository<Ticket, Int
 
 	// -------------------------------------------------COUNTS
 	// ---------------------------------------------------////
-
+	
 	// -- ticket count queries ----------///
 	@Query(value = "SELECT COUNT(t.id) FROM Ticket t")
 	Object getNoOfTickets();
+	
+	@Query(value="Select COUNT(t.id) from Ticket t where t.status=:enumStatus")
+	Object getNoOfTicketsByStatus(@Param("enumStatus") Status status);
 
 	// ---- Executive Related Queries----------//////
 	@Query(value = "SELECT COUNT(t.id) FROM Ticket t where t.status = :enumStatus and t.engineer = :engineer")

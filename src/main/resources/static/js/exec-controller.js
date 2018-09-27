@@ -30,6 +30,19 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		})
 		
 		$http({
+			url : "/rest/ticket/get/count",
+			method : "POST",
+			data: {
+				"status": "OPEN"
+			}
+			
+		}).then(function success(response){
+			console.log(response.data);
+			$scope.openIssuesCount = response.data;
+			console.log($scope.openIssuesCount);
+		})
+		
+		$http({
 			url : "/rest/"+role+"/get/status/ticket-no",
 			method : "POST",
 			data : {
@@ -241,7 +254,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 			issuesData.forEach(function(data){
 				data.formattedTime = String(new Date(data.datetime));
 				
-				if (data.engineer == null)
+				if (data.status == "OPEN")
 				{
 					data.showAssigned = true;
 				}
@@ -261,8 +274,9 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		$scope.getOpenSrs();
 	}
 	
+	var pollingPromise = $interval($scope.intervalFun, 3000);
 	
-	$interval($scope.intervalFun, 3000);
+	//$interval.cancel(pollingPromise);
 	
 	getComments = function(issue){
 		$http({

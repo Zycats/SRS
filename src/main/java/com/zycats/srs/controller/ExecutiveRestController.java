@@ -134,6 +134,13 @@ public class ExecutiveRestController {
 
 		return ticketService.getNoOfIssues();
 	}
+	
+	// accepts employeeId and returns all the tickets
+		@RequestMapping(value = "get/ticket/count/open", produces = "application/json")
+		public Object getOpenTicketsCount(Authentication auth) {
+
+			return ticketService.getNoOfIssues();
+		}
 
 	// accepts employeeId and returns all the tickets having some status
 	@RequestMapping(value = "get/status/ticket-no", produces = "application/json")
