@@ -47,6 +47,10 @@
 			<div class="navbarContainer"
 				th:insert="fragments/employee/navbar :: navbar"></div>
 		</th:block>
+		<th:block th:if="${role == 'manager'}">
+			<div class="navbarContainer"
+				th:insert="fragments/manager/navbar :: navbar"></div>
+		</th:block>
 		<th:block th:if="${role == 'executive'}">
 			<div class="navbarContainer"
 				th:insert="fragments/executive/navbar :: navbar"></div>
@@ -58,6 +62,19 @@
 						th:insert="fragments/employee/dashboard :: dashboard"></div>
 					<div class="raise-container" id="raiseContainer"
 						th:insert="fragments/employee/raise-fragment :: raiseFragment"></div>
+					<div class="history-container" id="historyContainer">
+						<h1>History</h1>
+						<hr>
+					</div>
+					<script th:src="@{/js/controller.js}"></script>
+				</th:block>
+				<th:block th:if="${role == 'manager'}">
+					<div class="dashboard-container" id="dashboard"
+						th:insert="fragments/employee/dashboard :: dashboard"></div>
+					<div class="raise-container" id="raiseContainer"
+						th:insert="fragments/employee/raise-fragment :: raiseFragment"></div>
+					<div class="approval-container" id="approvalContainer"
+						th:insert="fragments/manager/approval-fragment :: approvalFragment"></div>
 					<div class="history-container" id="historyContainer">
 						<h1>History</h1>
 						<hr>

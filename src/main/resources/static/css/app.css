@@ -50,13 +50,13 @@ div.inner-container {
 }
 
 div.views-container {
-	width: 300%;
+	width: 400%;
 	height: auto;
 	overflow: auto;
 }
 
 div.dashboard-container {
-	width: 33.33%;
+	width: 25%;
 	height: auto;
 	overflow: auto;
 	display: block;
@@ -66,8 +66,8 @@ div.dashboard-container {
 	transition: margin-left 800ms ease;
 }
 
-div.raise-container, div.history-container {
-	width: 33.33%;
+div.raise-container, div.history-container, div.approval-container {
+	width: 25%;
 	float: left;
 	box-sizing: border-box;
 	padding: 30px 50px;

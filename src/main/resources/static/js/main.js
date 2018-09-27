@@ -50,17 +50,69 @@ $(document).ready(function() {
 		if (currentPos != 2) {
 			if (currentPos == 0) {
 				$("#dashboard").css({
-					marginLeft : "-100%"
+					marginLeft : "-200%"
 				});
 				$("#raiseContainer").css({
 					marginLeft : "-100%"
+				});
+				$("#historyContainer").css({
+					marginLeft : "0"
+				});
+				$("#approvalContainer").css({
+					marginLeft : "100%"
 				});
 			} else if (currentPos == 1) {
 				$("#raiseContainer").css({
 					marginLeft : "-100%"
 				});
+				
+			} else if (currentPos == 3) {
+				$("#approvalContainer").css({
+					marginLeft : "100%"
+				});
+				$("#historyContainer").css({
+					marginLeft : "0"
+				});
 			}
 			currentPos = 2;
+		}
+	})
+	
+	$("#approvals").click(function() {
+		if (currentPos != 3) {
+			if (currentPos == 0) {
+				$("#dashboard").css({
+					marginLeft : "-300%"
+				});
+				$("#raiseContainer").css({
+					marginLeft : "-200%"
+				});
+				$("#historyContainer").css({
+					marginLeft : "-100%"
+				});
+				$("#approvalContainer").css({
+					marginLeft: "0"
+				})
+				
+			} else if (currentPos == 1) {
+				$("#raiseContainer").css({
+					marginLeft : "-200%"
+				});
+				$("#historyContainer").css({
+					marginLeft : "-100%"
+				});
+				$("#approvalContainer").css({
+					marginLeft: "0"
+				})
+			} else if(currentPos == 2){
+				$("#historyContainer").css({
+					marginLeft : "-100%"
+				});
+				$("#approvalContainer").css({
+					marginLeft: "0"
+				})
+			}
+			currentPos = 3;
 		}
 	})
 	
