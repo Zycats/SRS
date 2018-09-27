@@ -26,6 +26,9 @@ public class ViewController {
 		case "EXECUTIVE":
 			model.addAttribute("role","executive");
 			return "home";
+		case "ADMIN":
+			model.addAttribute("role", "admin");
+			return "home";
 		default:
 			return "Invalid role!";
 		}

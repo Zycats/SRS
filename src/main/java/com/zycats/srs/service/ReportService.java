@@ -65,7 +65,7 @@ public class ReportService implements IReportService {
 				Report report = new Report();
 
 				if ((comment.getStatusFrom().equals(Status.OPEN))
-						|| (comment.getStatusFrom().equals(Status.PENDING_REQUEST))) {
+						|| (comment.getStatusFrom().equals(Status.PENDING_APPROVAL))) {
 					if (initial) {
 						statusFromTime = ticket.getDatetime();
 						initial = false;
