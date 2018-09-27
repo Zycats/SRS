@@ -277,7 +277,6 @@ srsApp.controller("controller", function($scope, $http, $interval){
 	
 	var pollingPromise = $interval($scope.intervalFun, 3000);
 	
-	//$interval.cancel(pollingPromise);
 	
 	getComments = function(issue){
 		$http({
