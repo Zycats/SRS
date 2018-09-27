@@ -47,7 +47,7 @@
 		<div class="card recent-card">
 			<div class="card-body table-card-body">
 				<h3 id="recentId">Recently Raised Issues</h3>
-				<table class="table table-striped recent-table table-curved">
+				<table class="table table-striped recent-table">
 					<thead>
 						<tr>
 							<th>Classification</th>
@@ -104,8 +104,8 @@
 		<div class="row cards-container">
 				<div class="col-xl-4">
 				
-					<div class="card text-white bg-info mb-3" style="max-width: 18rem;" id="OPEN" ng-click="clickedForHistory($event)">
-						<div class="card-header">Issues Raised</div>
+					<div class="card text-white bg-info mb-3 banner" style="max-width: 18rem;" id="OPEN" ng-click="clickedForHistory($event)">
+						<div class="card-header">Issues Raised <button class="btn btn-sm" id="screenShot">Take ScreenShot</button></div>
 						<div class="card-body icon-card-body">
 							<i class="fas fa-question-circle mn-icon"></i> <span ng-cloak
 								class="info-title">{{issuesRaised}}</span>
@@ -115,7 +115,7 @@
 				
 			</div>
 			<div class="col-xl-4">
-				<div class="card text-white bg-warning mb-3"
+				<div class="card text-white bg-warning mb-3 banner"
 					style="max-width: 18rem;" id="ONHOLD" ng-click="clickedForHistory($event)">
 					<div class="card-header">Issues On Hold</div>
 					<div class="card-body icon-card-body">
@@ -125,7 +125,7 @@
 				</div>
 			</div>
 			<div class="col-xl-4">
-				<div class="card text-white bg-danger mb-3"
+				<div class="card text-white bg-danger mb-3 banner"
 					style="max-width: 18rem;" id="CLOSED" ng-click="clickedForHistory($event)">
 					<div class="card-header">Issues Resolved</div>
 					<div class="card-body icon-card-body">
@@ -135,7 +135,7 @@
 				</div>
 			</div>
 			<div class="col-xl-4">
-				<div class="card text-white bg-success mb-3" style="max-width: 18rem;" id="WORKING" ng-click="clickedForHistory($event)">
+				<div class="card text-white bg-success mb-3 banner" style="max-width: 18rem;" id="WORKING" ng-click="clickedForHistory($event)">
 					<div class="card-header">Issues Working On</div>
 					<div class="card-body icon-card-body">
 						<i class="fas fa-tasks mn-icon"></i> <span ng-cloak
@@ -144,7 +144,7 @@
 				</div>
 			</div>
 			<div class="col-xl-4">
-				<div class="card text-black bg-default mb-3"
+				<div class="card text-black bg-default mb-3 banner"
 					style="max-width: 18rem;" id="UNRESOLVABLE" ng-click="clickedForHistory($event)">
 					<div class="card-header">Issues Unresolvable</div>
 					<div class="card-body icon-card-body">
@@ -154,16 +154,14 @@
 				</div>
 			</div>
 		</div>
-		<div class="card recent-card">
-			<div class="card-header recent-card-header">Recenlty Raised
-				Issues</div>
-			<form class="table-responsive">
-				<table class="table" id = "issuesTable">
+		<div class="card recent-card" id="recentSrsContainer">
+				<h3 id="recentId">Recently Raised Issues</h3>
+				<table class="table table-striped recent-table" id = "issuesTable">
 					<thead>
 						<tr>
-							<th></th>
+							<th>Classification</th>
 							<th>#Id</th>
-							<th>Description</th>
+							<th class="description">Description</th>
 							<th>Priority</th>
 							<th>Time of Ticket</th>
 							<th>Raised By</th>
@@ -171,13 +169,13 @@
 						</tr>
 					</thead>
 					<tbody>
-					<tr ng-repeat="issue in recentIssuesData">
+					<tr ng-repeat="issue in recentIssuesData | limitTo:5">
 						<td>
 							<button  ng-if="issue.subCategory.issueType == 'INCIDENT'" ng-click="showSlider(issue); $event.stopPropagation();" class="btn btn-warning btn-tag">INCIDENT</button>
 							<button  ng-if="issue.subCategory.issueType == 'REQUEST'" ng-click="showSlider(issue); $event.stopPropagation();" class="btn btn-primary btn-tag">REQUEST</button>
 						</td>
 						<td>{{ issue.id }}</td>
-						<td>{{ issue.description }}</td>
+						<td class="description">{{ issue.description }}</td>
 						<td>{{ issue.subCategory.issuePriority }}</td>
 						<td>{{ issue.timeAgo }}</td>
 						<td>{{ issue.employee.id }}</td>
@@ -185,7 +183,6 @@
 					</tr>
 					</tbody>
 				</table>
-			</form>
 		</div>
 
 	</div>

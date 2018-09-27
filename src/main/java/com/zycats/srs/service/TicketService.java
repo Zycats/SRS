@@ -116,7 +116,7 @@ public class TicketService<ticketRepositoryPageable> implements ITicketService {
 	public Iterable<Ticket> findAllTicketsByStatus(Status status) {
 		return ticketRepository.findAllTicketsByStatus(status);
 	}
-
+	
 	@Override
 	public Iterable<Ticket> findAllTicketsByCategoryEngineer(int category_id, String engineerId) {
 		Employee engineer = employeeService.getEmployeeById(engineerId);
@@ -196,6 +196,12 @@ public class TicketService<ticketRepositoryPageable> implements ITicketService {
 					"Only " + Role.EXECUTIVE + " is allowed to update ticket");
 		}
 		System.out.println(ticket);
+		return ticketRepository.save(ticket);
+	}
+	
+	@Override
+	public Ticket update(Ticket ticket)
+	{
 		return ticketRepository.save(ticket);
 	}
 
