@@ -16,7 +16,39 @@ $(document).ready(function() {
 		"min-height" : height + "px"
 	})
 	
-	$("#raise").click(function() {
+	$("#menu-item-1").click(function(e){
+		e.stopPropagation();
+		$("#container-1").css("left", "0");
+		$("#container-2").css("left", "100%");
+		$("#container-3").css("left", "100%");
+		$("#container-4").css("left", "100%");
+	})
+	
+	$("#menu-item-2").click(function(e){
+		e.stopPropagation();
+		$("#container-1").css("left", "-100%");
+		$("#container-2").css("left", "0");
+		$("#container-3").css("left", "100%");
+		$("#container-4").css("left", "100%");
+	})
+	
+	$("#menu-item-3").click(function(e){
+		e.stopPropagation();
+		$("#container-1").css("left", "-100%");
+		$("#container-2").css("left", "-100%");
+		$("#container-3").css("left", "0");
+		$("#container-4").css("left", "100%");
+	})
+	
+	$("#menu-item-4").click(function(e){
+		e.stopPropagation();
+		$("#container-1").css("left", "-100%");
+		$("#container-2").css("left", "-100%");
+		$("#container-3").css("left", "-100%");
+		$("#container-4").css("left", "0");
+	})
+	
+	/*$("#raise").click(function() {
 		if (currentPos != 1) {
 			if (currentPos == 0) {
 				$("#dashboard").css({
@@ -158,7 +190,7 @@ $(document).ready(function() {
 			});
 			currentPos = 0;
 		}
-	})
+	})*/
 	
 	$(".tokenLink").click(function(){
 		
