@@ -9,10 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.zycats.srs.dto.EmployeeLocationDTO;
-import com.zycats.srs.dto.Mail;
 import com.zycats.srs.entity.Employee;
 import com.zycats.srs.entity.Role;
-import com.zycats.srs.event.MailEvent;
 import com.zycats.srs.repository.DepartmentRepository;
 import com.zycats.srs.repository.EmployeeRepository;
 
@@ -38,14 +36,6 @@ public class EmployeeService implements IEmployeeService {
 
 		EmployeeLocationDTO employeeLocationDTO = new EmployeeLocationDTO();
 		Employee employee = getEmployee(id, machineIp);
-
-		System.out.println(
-				"===================================STARTED MAIL OPERATION===================================");
-		Mail mail = new Mail();
-		mail.setSender(employee);
-		applicationEventPublisher.publishEvent(new MailEvent(this, mail));
-		System.out.println(
-				"===================================COMPLETED MAIL OPERATION=================================");
 
 		employeeLocationDTO.setEmployee(employee);
 		if (employee.getDepartment() != null)
