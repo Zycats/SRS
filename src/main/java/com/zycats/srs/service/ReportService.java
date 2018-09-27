@@ -21,11 +21,16 @@ public class ReportService implements IReportService {
 
 	@Autowired
 	private ITicketService ticketService;
+	
+	@Autowired
+	private IEmployeeService employeeService;
 
 	@Override
-	public Iterable<Report> getAllReports() {
+	public Iterable<Report> getAllReportsByDate(String fromDate, String toDate) {
 
-		return reportRepository.findAll();
+		return reportRepository.getReportsByDate(Timestamp.valueOf(fromDate), Timestamp.valueOf(toDate));
+	
+		
 	}
 
 	@Override
@@ -102,5 +107,27 @@ public class ReportService implements IReportService {
 		}
 
 	}
+
+	
+	// provide date from to to and fetch the list
+	
+		//----Reports By Ticket
+	@Override
+	public Iterable<Report> getReportsByTicketAndDate(int ticket_id,String fromDate, String toDate) {
+		return	reportRepository.getReportsByTicketAndDate(ticketService.getById(ticket_id), 
+																Timestamp.valueOf(fromDate), 
+																Timestamp.valueOf(toDate));
+	}
+
+		//----Reports By Executives
+	@Override
+	public Iterable<Report> getReportsByExecutiveAndDate(String executive_id,String fromDate, String toDate) {
+		
+		return reportRepository.getReportsByExecutiveAndDate(employeeService.getEmployeeById(executive_id), 
+																Timestamp.valueOf(fromDate), 
+																Timestamp.valueOf(toDate));
+		
+	}
+	
 
 }
