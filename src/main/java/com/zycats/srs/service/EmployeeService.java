@@ -73,7 +73,7 @@ public class EmployeeService implements IEmployeeService {
 
 	@Override
 	public Employee update(Employee employee, Authentication auth) {
-		Employee emp;
+		Employee emp, manager;
 
 		String id = getIdFromAuth(auth.getName());
 		employee.setId(id);
@@ -81,6 +81,10 @@ public class EmployeeService implements IEmployeeService {
 
 		try {
 			emp = employeeRepository.findById(id).get();
+			if (employee.getReportingManager() != null) {
+				manager = employeeRepository.findById(employee.getReportingManager().getId()).get();
+				employee.setReportingManager(manager);
+			}
 
 			// If found then persist the role
 			employee.setRole(emp.getRole());

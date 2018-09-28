@@ -38,13 +38,19 @@ public class TicketService<ticketRepositoryPageable> implements ITicketService {
 	private IApprovalService approvalService;
 
 	@Autowired
+	private IIssueSubCategoryService subCategoryService;
+
+	@Autowired
 	private ApplicationEventPublisher applicationEventPublisher;
 
 	@Override
+	@Transactional
 	@CacheEvict(cacheNames = "{noOfTicketsEngineer, noOfTicketsEmployee}", allEntries = true)
 	public Ticket add(Ticket ticket, Authentication auth, String machineIp) {
 		ticket.setDatetime(new Timestamp(new java.util.Date().getTime()));
 		ticket.setEmployee(employeeService.getEmployee(auth.getName(), machineIp));
+
+		ticket.setSubCategory(subCategoryService.getById(ticket.getSubCategory().getId()));
 
 		if (ticket.getSubCategory().isRequiresApproval()) {
 			// The ticket requires approval

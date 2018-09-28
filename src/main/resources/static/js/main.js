@@ -115,7 +115,7 @@ $(document).ready(function() {
 		if (!($(".commentText").is(":focus")) && 
 				!($("#comment").is(":focus")) && 
 				!($("#emp_seatno_input").is(":focus")) &&
-				!($("#searchManagerInput").is(":focus")) &&
+				!($(".searchManagerInput").is(":focus")) &&
 				!($("#emp_extno_input").is(":focus")))
 			
 		{
