@@ -3,6 +3,7 @@ package com.zycats.srs.entity;
 import java.sql.Timestamp;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -67,7 +68,7 @@ public class Ticket {
 		this.comments = comments;
 	}
 
-	@OneToMany(mappedBy = "ticket", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "ticket", fetch = FetchType.EAGER,cascade=CascadeType.ALL)
 	private Set<Comment> comments;
 
 	public int getId() {
