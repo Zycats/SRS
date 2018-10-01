@@ -479,7 +479,8 @@ srsApp.controller("controller", function($scope, $http, $interval){
 				$scope.showSlider(response.data);
 			}
 			$scope.loaderShow = false;
-		}, function error(error){				
+		}, function error(error){			
+			console.log(error);
 			alert("No ticket with Ticket Id : " + id);
 			$scope.loaderShow = false;
 		})

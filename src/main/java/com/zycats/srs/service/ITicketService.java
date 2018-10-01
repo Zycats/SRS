@@ -2,6 +2,7 @@ package com.zycats.srs.service;
 
 import org.springframework.security.core.Authentication;
 
+import com.zycats.srs.entity.Approval;
 import com.zycats.srs.entity.Status;
 import com.zycats.srs.entity.Ticket;
 import com.zycats.srs.exception.InsufficientPriviledgesException;
@@ -45,7 +46,7 @@ public interface ITicketService {
 	Object getNoOfIssues(String employeeId);
 
 	Object getNoOfIssues();
-	
+
 	Object getNoOfTicketsByStatus(Status status);
 
 	////////////////////////////
@@ -70,5 +71,7 @@ public interface ITicketService {
 	Ticket setAssigned(Ticket ticket, String idFromAuth);
 
 	Ticket update(Ticket ticket);
+
+	Approval updateApproval(Approval approval, Authentication auth);
 
 }

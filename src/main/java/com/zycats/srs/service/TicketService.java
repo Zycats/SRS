@@ -1,6 +1,9 @@
 package com.zycats.srs.service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -16,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zycats.srs.dto.Mail;
 import com.zycats.srs.entity.Approval;
+import com.zycats.srs.entity.Comment;
 import com.zycats.srs.entity.Employee;
 import com.zycats.srs.entity.MailType;
 import com.zycats.srs.entity.Role;
@@ -236,7 +240,8 @@ public class TicketService<ticketRepositoryPageable> implements ITicketService {
 	public Ticket update(Ticket ticket, Authentication auth) throws InsufficientPriviledgesException {
 		Employee employee = employeeService.getEmployeeById(EmployeeService.getIdFromAuth(auth.getName()));
 		if (!(employee.getRole().equals(Role.EXECUTIVE))) {
-			throw new InsufficientPriviledgesException(employee,
+			throw new InsufficientPriviledgesException(
+					employee,
 					"Only " + Role.EXECUTIVE + " is allowed to update ticket");
 		}
 		System.out.println(ticket);
@@ -279,6 +284,47 @@ public class TicketService<ticketRepositoryPageable> implements ITicketService {
 		ticket.setEngineer(employeeService.getEmployeeById(idFromAuth));
 		ticketRepository.setAssign(ticket.getEngineer().getId(), ticket.getId());
 		return null;
+	}
+
+	@Transactional
+	@Override
+	public Approval updateApproval(Approval approval, Authentication auth) {
+		Employee employee = employeeService.getEmployeeById(EmployeeService.getIdFromAuth(auth.getName()));
+
+		approval.setApprovedOn(new Timestamp(new java.util.Date().getTime()));
+		approval.setApprover(employee);
+
+		Ticket ticket = ticketRepository.findById(approval.getTicket().getId()).get();
+
+		Comment comment = new Comment();
+		comment.setDatetime(approval.getApprovedOn());
+		comment.setCommentBy(employee);
+		comment.setMessage(approval.getMessage());
+		comment.setStatusFrom(Status.PENDING_APPROVAL);
+		comment.setTicket(approval.getTicket());
+
+		// fetch last comment status from
+		List<Comment> comments = new ArrayList<Comment>(ticket.getComments());
+
+		if (approval.getIsApproved()) {
+			// Request has been approved
+			if (comments.size() > 0) {
+				comments.stream().sorted((x, y) -> x.getDatetime().compareTo(y.getDatetime())).collect(
+						Collectors.toList());
+				comment.setStatusTo(comments.get(0).getStatusFrom());
+			} else {
+				comment.setStatusTo(Status.OPEN);
+			}
+
+		} else {
+			// Request has been disapproved
+			comment.setStatusTo(Status.CLOSED);
+		}
+
+		ticket.getComments().add(comment);
+
+		ticketRepository.save(ticket);
+		return approvalService.add(approval);
 	}
 
 }
