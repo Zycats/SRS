@@ -64,7 +64,6 @@ div.vcontainer {
 	padding: 30px 50px;
 }
 
-<<<<<<< HEAD
 #container-1{
 		position: absolute;
 		left: 0;
@@ -77,9 +76,6 @@ div.vcontainer {
 	top: 0;
 	transition: left 300ms;
 }
-
-=======
->>>>>>> branch 'master' of https://github.com/Zycats/SRS
 h1 {
 	font-size: 26px;
 }
@@ -416,15 +412,6 @@ div.search {
 	font-size: 12px;
 }
 
-.from {
-	color: #5cb85c;
-}
-
-.to {
-	color: #000000;
-	text-shadow: 0 0 5px #FFFFFF;
-}
-
 .newCommentBox {
 	margin-top: 16px;
 	margin-bottom: 16px;
@@ -487,9 +474,21 @@ div.search {
 	border-color: #9e9e9e;
 }
 
+.closed-background-color:hover, .closed-background-color:focus, .closed-background-color:active, .closed-background-color.active{
+    color: #fff;
+    background-color: #808080;
+    border-color: #808080; /*set the color you want here*/
+}
+
 /* ONHOLD status text color */
 .onhold-color{
 	color: #ffeb3b;
+}
+
+.onhold-background-color:hover, .onhold-background-color:focus, .onhold-background-color:active, .onhold-background-color.active{
+    color: #fff;
+    background-color: #e6cf00;
+    border-color: #e6cf00; /*set the color you want here*/
 }
 
 /* ONHOLD status background color */
@@ -503,6 +502,12 @@ div.search {
 	color: #607d8b;
 }
 
+.unresolvable-background-color:hover, .unresolvable-background-color:focus, .unresolvable-background-color:active, .unresolvable-background-color.active{
+    color: #fff;
+    background-color: #546c78;
+    border-color: #546c78; /*set the color you want here*/
+}
+
 /* UNRESOLVABLE status background color */
 .unresolvable-background-color{
 	background-color: #607d8b;
@@ -514,6 +519,12 @@ div.search {
 	color: #4caf50;
 }
 
+.working-background-color:hover, .working-background-color:focus, .working-background-color:active, .working-background-color.active{
+    color: #fff;
+    background-color: #367c39;
+    border-color: #367c39; /*set the color you want here*/
+}
+
 /* WORKING status background color */
 .working-background-color{
 	background-color: #4caf50;
@@ -523,6 +534,12 @@ div.search {
 /* PENDING status text color */
 .pending-color{
 	color: #f44336;
+}
+
+.pending-background-color:hover, .pending-background-color:focus, .pending-background-color:active, .pending-background-color.active{
+    color: #fff;
+    background-color: #da190b;
+    border-color: #da190b; /*set the color you want here*/
 }
 
 /* PENDING status background color */

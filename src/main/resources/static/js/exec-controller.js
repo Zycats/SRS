@@ -593,7 +593,9 @@ srsApp.controller("controller", function($scope, $http, $interval){
 		
 		
 		$scope.from = comment.statusFrom;
+		$scope.fromClass = comment.statusFrom.toLowerCase().split("_")[0] + "-color";
 		$scope.to = comment.statusTo;
+		$scope.toClass = comment.statusTo.toLowerCase().split("_")[0] + "-color";
 	
 		console.log(comment);
 	}

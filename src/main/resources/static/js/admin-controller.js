@@ -35,6 +35,8 @@ srsApp.controller("controller", function($scope, $http, $interval){
 			}).then(function(response){
 				console.log(response);
 				
+				console.log(response.data);
+				
 				google.charts.load("current", {packages:["timeline"]});
 				google.charts.setOnLoadCallback(drawChart);
 				function drawChart() {
@@ -52,9 +54,9 @@ srsApp.controller("controller", function($scope, $http, $interval){
 					rows.push([d.ticket.id.toString(), d.statusTo, new Date(d.statusFromTime), new Date(d.statusToTime)]);
 				})
 					
-				    dataTable.addRows(rows);
+				dataTable.addRows(rows);
 
-				    chart.draw(dataTable);
+				chart.draw(dataTable);
 				}
 				
 			})
