@@ -145,4 +145,8 @@ $(document).ready(function() {
 		    document.body.appendChild(canvas);
 		});
 	})
+	
+	$(".dropdown-item").click(function(){
+		$(".dropdown-menu").removeClass("show");
+	})
 })

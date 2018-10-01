@@ -21,14 +21,14 @@ public class ReportService implements IReportService {
 
 	@Autowired
 	private ITicketService ticketService;
-
+	
 	@Autowired
 	private IEmployeeService employeeService;
 
 	@Override
-	public Iterable<Report> getAllReportsByDate(String fromDate, String toDate) {
+	public Iterable<Report> getAllReportsByDate(Timestamp fromDate, Timestamp toDate) {
 
-		return reportRepository.getReportsByDate(Timestamp.valueOf(fromDate), Timestamp.valueOf(toDate));
+		return reportRepository.getReportsByDate(fromDate, toDate);
 
 	}
 
@@ -52,7 +52,7 @@ public class ReportService implements IReportService {
 
 			Timestamp statusFromTime = null;
 			Timestamp statusToTime = null;
-
+			
 			List<Comment> ticketComments = ticket.getComments().stream()
 					.sorted((c1, c2) -> c1.getDatetime().compareTo(c2.getDatetime())).collect(Collectors.toList());
 			boolean initial = true; // to separate initial comment which can
@@ -73,10 +73,12 @@ public class ReportService implements IReportService {
 					} else {
 						statusFromTime = statusToTime;
 					}
-				} else {
+				}
+				else{
 					statusFromTime = statusToTime;
 				}
-
+				
+			
 				statusToTime = comment.getDatetime();
 
 				report.setStatusFrom(comment.getStatusFrom());
@@ -106,22 +108,31 @@ public class ReportService implements IReportService {
 
 	}
 
+	
 	// provide date from to to and fetch the list
-
-	// ----Reports By Ticket
+	
+		//----Reports By Ticket
 	@Override
-	public Iterable<Report> getReportsByTicketAndDate(int ticket_id, String fromDate, String toDate) {
-		return reportRepository.getReportsByTicketAndDate(ticketService.getById(ticket_id), Timestamp.valueOf(fromDate),
-				Timestamp.valueOf(toDate));
+	public Iterable<Report> getReportsByTicketAndDate(int ticket_id,String fromDate, String toDate) {
+		return	reportRepository.getReportsByTicketAndDate(ticketService.getById(ticket_id), 
+																Timestamp.valueOf(fromDate), 
+																Timestamp.valueOf(toDate));
+	}
+	
+	@Override
+	public Iterable<Report> getReportsByTicket(int ticket_id) {
+		return	reportRepository.getReportsByTicket(ticketService.getById(ticket_id));
 	}
 
-	// ----Reports By Executives
+		//----Reports By Executives
 	@Override
-	public Iterable<Report> getReportsByExecutiveAndDate(String executive_id, String fromDate, String toDate) {
-
-		return reportRepository.getReportsByExecutiveAndDate(employeeService.getEmployeeById(executive_id),
-				Timestamp.valueOf(fromDate), Timestamp.valueOf(toDate));
-
+	public Iterable<Report> getReportsByExecutiveAndDate(String executive_id,String fromDate, String toDate) {
+		
+		return reportRepository.getReportsByExecutiveAndDate(employeeService.getEmployeeById(executive_id), 
+																Timestamp.valueOf(fromDate), 
+																Timestamp.valueOf(toDate));
+		
 	}
+	
 
 }

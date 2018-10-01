@@ -34,6 +34,13 @@ public interface ReportRepository extends PagingAndSortingRepository<Report, Int
 			+ "ORDER BY r.statusToTime")
 	public List<Report> getReportsByTicketAndDate(@Param("ticket") Ticket ticket ,@Param("fromDate") Timestamp fromDate, @Param("toDate") Timestamp toDate);
 	
+	@Query(value = "SELECT r "
+			+ "FROM Report r "
+			+ "WHERE "
+			+ "r.ticket = :ticket "
+			+ "ORDER BY r.statusToTime")
+	public List<Report> getReportsByTicket(@Param("ticket") Ticket ticket);
+	
 	
 	@Query(value = "SELECT r "
 			+ "FROM Report r "

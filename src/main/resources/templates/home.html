@@ -18,6 +18,8 @@
 	href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i"
 	rel="stylesheet">
 <link rel="stylesheet" th:href="@{/css/app.css}">
+<<<<<<< HEAD
+=======
 <style>
 	#container-1{
 		position: absolute;
@@ -44,6 +46,7 @@
 		transition: left 300ms;
 	}
 </style>
+>>>>>>> branch 'master' of https://github.com/Zycats/SRS
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
@@ -81,6 +84,10 @@
 			<div class="navbarContainer"
 				th:insert="fragments/executive/navbar :: navbar"></div>
 		</th:block>
+		<th:block th:if="${role == 'admin'}">
+			<div class="navbarContainer"
+				th:insert="fragments/admin/navbar :: navbar"></div>
+		</th:block>
 		<div class="container-fluid inner-container">
 			<div class="views-container">
 				<th:block th:if="${role == 'employee'}">
@@ -115,6 +122,16 @@
 					<div class="vcontainer" id="container-3"
 						th:insert="fragments/executive/historyFragment ::historyExeFragment"></div>
 					<script th:src="@{/js/exec-controller.js}"></script>
+				</th:block>
+				<th:block th:if="${role == 'admin'}">
+					<div class="vcontainer" id="container-1"
+						th:insert="fragments/admin/dashboard :: dashboard"></div>
+					<div class="vcontainer" id="container-2"
+						th:insert="fragments/admin/reports-fragment :: report"></div>
+					<div class="vcontainer" id="container-3"
+						th:insert="fragments/executive/historyFragment ::historyExeFragment"></div>
+					<script th:src="@{/js/admin-controller.js}"></script>
+					<script src="https://www.gstatic.com/charts/loader.js"></script>
 				</th:block>
 			</div>
 		</div>

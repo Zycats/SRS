@@ -64,6 +64,22 @@ div.vcontainer {
 	padding: 30px 50px;
 }
 
+<<<<<<< HEAD
+#container-1{
+		position: absolute;
+		left: 0;
+		top: 0;
+		transition: left 300ms;
+	}
+#container-2, #container-3, #container-4 {
+	position: absolute;
+	left: 100%;
+	top: 0;
+	transition: left 300ms;
+}
+
+=======
+>>>>>>> branch 'master' of https://github.com/Zycats/SRS
 h1 {
 	font-size: 26px;
 }
@@ -215,6 +231,7 @@ input[type=text] {
 }
 
 .dropdown-menu {
+	width: 100%;
 	box-shadow: 0px 0px 5px #CCCCCC;
 }
 
@@ -513,7 +530,18 @@ div.search {
 	background-color: #f44336;
 	border-color: #f44336;
 }
-
+#reportFormGroup{
+	margin-top: 32px;
+}
+input[type=date]{
+	border: none;
+	padding: 8px;
+	box-sizing: border-box;
+	width: 100%;
+	border: 1px solid rgba(0, 0, 0, 0.125);
+	font-size: 16px;
+	border-radius: 8px;
+}
 @media only screen and (max-width: 576px) {
 	div.slider {
 		width: 100%;
