@@ -17,6 +17,12 @@ public class MailEventListener implements ApplicationListener<MailEvent> {
 		switch (event.getMailType()) {
 		case NEW_SRS:
 			emailService.newSRSMail(event.getMail());
+		case APPROVAL_REQUEST:
+			break;
+		case SENT_FOR_APPROVAL:
+			break;
+		default:
+			break;
 		}
 	}
 

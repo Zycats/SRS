@@ -1,5 +1,7 @@
 package com.zycats.srs.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zycats.srs.entity.Status;
 import com.zycats.srs.entity.Ticket;
 import com.zycats.srs.exception.InsufficientPriviledgesException;
 import com.zycats.srs.service.ITicketService;
@@ -21,7 +24,7 @@ public class TicketController {
 
 	@Autowired
 	private ITicketService ticketService;
-
+	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public Ticket addTicket(@RequestBody Ticket ticket, Authentication auth, HttpServletRequest request) {
 		return ticketService.add(ticket, auth, request.getRemoteAddr());
@@ -42,7 +45,8 @@ public class TicketController {
 	public Ticket getTicketById(@RequestParam Integer id) {
 		return ticketService.getById(id);
 	}
-
+	
+	
 	@RequestMapping(value = "get/all", method = RequestMethod.GET)
 	public Iterable<Ticket> getAllTicket() {
 		return ticketService.getAll();
@@ -51,6 +55,13 @@ public class TicketController {
 	@RequestMapping(value = "get/pageable", method = RequestMethod.GET)
 	public Iterable<Ticket> getAllTicketPageable() {
 		return ticketService.getAllTicketsPageable(1, 1);
+	}
+	
+	// -------Status wise Tickets Count ------------
+	
+	@RequestMapping(value = "get/count", method = RequestMethod.POST)
+	public long getTicketsCountByStatus(@RequestBody Map<String, Status> data) {
+		return (Long) ticketService.getNoOfTicketsByStatus(data.get("status"));
 	}
 
 }

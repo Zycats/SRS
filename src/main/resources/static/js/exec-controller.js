@@ -1,4 +1,4 @@
-srsApp2.controller("dashboardController", function($scope, $http, $interval){
+srsApp.controller("controller", function($scope, $http, $interval){
 	
 	$scope.loaderShow = false;
 	$scope.openSrsFirst = false;
@@ -27,6 +27,19 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		}).then(function success(response){
 			
 			$scope.issuesRaised = response.data;
+		})
+		
+		$http({
+			url : "/rest/ticket/get/count",
+			method : "POST",
+			data: {
+				"status": "OPEN"
+			}
+			
+		}).then(function success(response){
+			console.log(response.data);
+			$scope.openIssuesCount = response.data;
+			console.log($scope.openIssuesCount);
 		})
 		
 		$http({
@@ -241,7 +254,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 			issuesData.forEach(function(data){
 				data.formattedTime = String(new Date(data.datetime));
 				
-				if (data.engineer == null)
+				if (data.status == "OPEN")
 				{
 					data.showAssigned = true;
 				}
@@ -259,10 +272,11 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	$scope.intervalFun = function()
 	{
 		$scope.getOpenSrs();
+		$interval.cancel(pollingPromise);
 	}
 	
+	var pollingPromise = $interval($scope.intervalFun, 3000);
 	
-	$interval($scope.intervalFun, 3000);
 	
 	getComments = function(issue){
 		$http({
@@ -272,6 +286,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 
 			response.data.forEach(function(data){
 				data.formattedTime = String(new Date(data.datetime));
+				data.backgroundClass = data.statusTo.toLowerCase().split("_")[0] + "-background-color";	
 			});
 			
 			$scope.commentData = response.data;
@@ -281,6 +296,34 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	
 	$scope.showSlider = function(issue){
 		$scope.issue = issue;
+		$("#commentText").val("")
+		$("#changeCommentStatusButton").html("Select Status")
+		
+		console.log("inside ||  "+$scope.statusData)
+		
+		$scope.showCommentBox = false;
+		
+		if($scope.empData.role == 'EMPLOYEE'){
+			if(empData.id == issue.employee.id){
+				$scope.showCommentBox = true;
+			}
+		}
+		else if($scope.empData.role == 'EXECUTIVE'){
+			if(issue.engineer != null){
+				if($scope.empData.id == issue.engineer.id){
+					$scope.showCommentBox = true;
+				}
+			}
+		}
+		else if($scope.empData.role == 'MANAGER'){
+			if(issue.employee.reportingManager != null){
+				if($scope.empData.id == issue.employee.reportingManager.id){
+					$scope.showCommentBox = true;
+				}
+			}
+		}
+		
+		
 		
 		getComments(issue);
 		
@@ -301,6 +344,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	
 	
 	$scope.changeCommentStatus = function($event){
+		$event.stopPropagation();
 		var target = $event.currentTarget;
 		$('.dropdown-menu').removeClass("show");
 		$("#changeCommentStatusButton").text(target.innerHTML);
@@ -411,6 +455,7 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 		}).then(function(data){
 			console.log(data);
 			getComments(issue);
+			getTicket(issue.id,issue)
 			$scope.issuesData.forEach(function(i){
 				if(i.id == issue.id){
 					i.status = data.data.statusTo;
@@ -589,9 +634,9 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	// history Page Controller
 	$scope.clickedForHistory = function(event) {
 		console.log(event.currentTarget.id)
-		$("#all-issues-history").trigger("click");
-		$("#all-issues-history").addClass("active")
-		$("#home-exec").removeClass("active")
+		$("#menu-item-3").trigger("click");
+		$("#menu-item-3").addClass("active")
+		$("#menu-item-1").removeClass("active")
 		
 		// fetch all the issues by status specific to executive
 		$scope.getHistoryIssues(event.currentTarget.id)
@@ -660,6 +705,9 @@ srsApp2.controller("dashboardController", function($scope, $http, $interval){
 	
 	$scope.getAllTickets = function()
 	{
+		
+		$('.dropdown-menu').removeClass("show");
+		
 		$http({
 			url: "/rest/ticket/get/all",
 			method: "GET",

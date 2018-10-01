@@ -3,6 +3,8 @@ package com.zycats.srs;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.hateoas.VndErrors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,11 @@ public class RestControllerAdvice {
 
 	@ExceptionHandler(NoSuchElementException.class)
 	public ResponseEntity<VndErrors> noSuchElementException(final NoSuchElementException e) {
+		return error(e, HttpStatus.NOT_FOUND, e.getLocalizedMessage());
+	}
+
+	@ExceptionHandler(EntityNotFoundException.class)
+	public ResponseEntity<VndErrors> entityNotFoundException(final EntityNotFoundException e) {
 		return error(e, HttpStatus.NOT_FOUND, e.getLocalizedMessage());
 	}
 

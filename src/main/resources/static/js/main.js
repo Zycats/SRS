@@ -16,96 +16,36 @@ $(document).ready(function() {
 		"min-height" : height + "px"
 	})
 	
-	$("#raise").click(function() {
-		if (currentPos != 1) {
-			if (currentPos == 0) {
-				$("#dashboard").css({
-					marginLeft : "-100%"
-				});
-			} else if (currentPos == 2) {
-				$("#raiseContainer").css({
-					marginLeft : "0"
-				});
-			}
-			currentPos = 1;
-		}
+	$("#menu-item-1").click(function(e){
+		e.stopPropagation();
+		$("#container-1").css("left", "0");
+		$("#container-2").css("left", "100%");
+		$("#container-3").css("left", "100%");
+		$("#container-4").css("left", "100%");
 	})
 	
-	$("#new-issues").click(function() {
-		if (currentPos != 1) {
-			if (currentPos == 0) {
-				$("#dashboard").css({
-					marginLeft : "-100%"
-				});
-			} else if (currentPos == 2) {
-				$("#newIssuesContainer").css({
-					marginLeft : "0"
-				});
-			}
-			currentPos = 1;
-		}
-	})
-
-	$("#history").click(function() {
-		if (currentPos != 2) {
-			if (currentPos == 0) {
-				$("#dashboard").css({
-					marginLeft : "-100%"
-				});
-				$("#raiseContainer").css({
-					marginLeft : "-100%"
-				});
-			} else if (currentPos == 1) {
-				$("#raiseContainer").css({
-					marginLeft : "-100%"
-				});
-			}
-			currentPos = 2;
-		}
+	$("#menu-item-2").click(function(e){
+		e.stopPropagation();
+		$("#container-1").css("left", "-100%");
+		$("#container-2").css("left", "0");
+		$("#container-3").css("left", "100%");
+		$("#container-4").css("left", "100%");
 	})
 	
-	$("#all-issues-history").click(function() {
-		if (currentPos != 2) {
-			if (currentPos == 0) {
-				$("#dashboard").css({
-					marginLeft : "-100%"
-				});
-				$("#newIssuesContainer").css({
-					marginLeft : "-100%"
-				});
-			} else if (currentPos == 1) {
-				$("#newIssuesContainer").css({
-					marginLeft : "-100%"
-				});
-			}
-			currentPos = 2;
-		}
-	})
-
-	$("#home").click(function() {
-		if (currentPos != 0) {
-			$("#dashboard").css({
-				marginLeft : "0"
-			});
-			$("#raiseContainer").css({
-				marginLeft : "0"
-			});
-			currentPos = 0;
-		}
-		
-		
+	$("#menu-item-3").click(function(e){
+		e.stopPropagation();
+		$("#container-1").css("left", "-100%");
+		$("#container-2").css("left", "-100%");
+		$("#container-3").css("left", "0");
+		$("#container-4").css("left", "100%");
 	})
 	
-	$("#home-exec").click(function() {
-		if (currentPos != 0) {
-			$("#dashboard").css({
-				marginLeft : "0"
-			});
-			$("#newIssuesContainer").css({
-				marginLeft : "0"
-			});
-			currentPos = 0;
-		}
+	$("#menu-item-4").click(function(e){
+		e.stopPropagation();
+		$("#container-1").css("left", "-100%");
+		$("#container-2").css("left", "-100%");
+		$("#container-3").css("left", "-100%");
+		$("#container-4").css("left", "0");
 	})
 	
 	$(".tokenLink").click(function(){
@@ -172,7 +112,12 @@ $(document).ready(function() {
 		
 		e.stopPropagation();
 		
-		if (!($(".commentText").is(":focus")) && !($("#comment").is(":focus")) && !($("#emp_seatno_input").is(":focus")))
+		if (!($(".commentText").is(":focus")) && 
+				!($("#comment").is(":focus")) && 
+				!($("#emp_seatno_input").is(":focus")) &&
+				!($(".searchManagerInput").is(":focus")) &&
+				!($("#emp_extno_input").is(":focus")))
+			
 		{
 			$('.search input[type=text]').focus();
 		}

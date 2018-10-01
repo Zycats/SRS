@@ -80,6 +80,24 @@
 								</div>
 							</div>
 						</div>
+						<div class="row">
+							<div class="col">
+								<div class="form-group">
+									<label for="formGroupManager">Manager</label>
+									<div class="row">
+										<div class="col">
+											<input type="text" class="form-control searchManagerInput" id="searchManagerInput"
+												placeholder="Edit Manager"
+												ng-model="empData.employee.reportingManager.id"
+												ng-keyup="searchManager($event)" disabled>
+										</div>
+										<div class="col">
+											<button class="btn btn-primary" ng-click="editManager($event)">Edit</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 						<div class="alert alert-danger">{{genError}}</div>
 						<div class="alert alert-success">{{successMsg}}</div>
 					</form>

@@ -1,4 +1,4 @@
-srsApp.controller("userController", function($scope, $http){
+srsApp.controller("controller", function($scope, $http){
 	
 	$scope.srsErrorShow = false;
 	$scope.srsSuccessShow = false;
@@ -25,7 +25,7 @@ srsApp.controller("userController", function($scope, $http){
 		
 	})
 	
-// ----- ticket counts for employee-------------///	
+// ----- ticket counts for employee-------------///
 		$http({
 			url : "/rest/employee/get/ticket-no",
 			method : "POST"
@@ -62,7 +62,7 @@ srsApp.controller("userController", function($scope, $http){
 			$scope.issuesUnresolvable = response.data;
 		})
 		
-//------------------------------------------------------------------------		
+// ------------------------------------------------------------------------
 	
 	
 	
@@ -144,6 +144,7 @@ srsApp.controller("userController", function($scope, $http){
 				$scope.subCat = subCat;
 				$scope.classification = subCat.issueType;
 				$scope.priority = subCat.issuePriority;
+				$scope.requiresApproval = subCat.requiresApproval;
 				break;
 			}	
 		}
@@ -183,7 +184,10 @@ srsApp.controller("userController", function($scope, $http){
 			$scope.empData.department = $scope.department;
 			$scope.empData.extNo = parseInt($scope.empData.extNo);
 			$scope.empData.seatNo = parseInt($scope.empData.seatNo);
+			$scope.empData.reportingManager = $scope.empData.employee.reportingManager;
 			$scope.empData.firstLogin = false;
+			
+			console.log($scope.empData);
 			
 			$http({
 				url: "/rest/employee/post",
@@ -250,6 +254,10 @@ srsApp.controller("userController", function($scope, $http){
 			$scope.srsErrorShow = true;
 			$scope.srsError = "Please enter description of your problem."
 		}
+		else if($scope.subCat.requiresApproval && ($scope.empData.employee.reportingManager == null || $scope.empData.employee.reportingManager.id == null || $scope.empData.employee.reportingManager.id == "")){
+			$scope.srsErrorShow = true;
+			$scope.srsError = "Manager is not set. Please edit and add manager for approval.";
+		}
 		else
 		{
 			var srsData = {
@@ -257,7 +265,8 @@ srsApp.controller("userController", function($scope, $http){
 			            "id": $scope.subCat.id
 			        },
 			    "osType": $scope.osType,
-			    "description": $scope.description
+			    "description": $scope.description,
+			    "approver": $scope.empData.employee.reportingManager
 			};
 			
 			$http({
@@ -326,4 +335,53 @@ srsApp.controller("userController", function($scope, $http){
 		
 	}
 	
+	$scope.searchManager = function($event){
+		
+		if($event.keyCode == 8)
+			return;
+		
+		if($scope.empData.employee.reportingManager.id.length < 2)
+			return;
+		
+		$http({
+			url : "/rest/employee/get/manager/all",
+			method: "POST",
+			data : {
+				"search" : $scope.empData.employee.reportingManager.id
+			}
+		}).then(function(response){
+			$scope.managers = response.data;
+			
+			if($scope.managers.length == 1){				
+				$scope.empData.employee.reportingManager.id = $scope.managers[0].id;
+				$event.target.disabled = true;
+			}
+			console.log($scope.empData.employee);
+		})
+	}
+	
+	$scope.editManager = function($event){
+		$event.stopPropagation();
+		$(".searchManagerInput").prop("disabled", false);
+		$(".searchManagerInput").val("");
+		$(".searchManagerInput").focus();
+	}
+	
+	// ===================MANAGER CONTROLLER STARTS=============================
+	
+	$http({
+		url: "/rest/manager/get/approval/all",
+		method: "POST",
+	})
+	.then(function(response){
+		$scope.approvalIssuesData = response.data;
+	})
+	
+	$http({
+		url: "/rest/manager/get/approval/delegate",
+		method: "POST",
+	})
+	.then(function(response){
+		$scope.delegatedApprovalIssuesData = response.data;
+	})
 })

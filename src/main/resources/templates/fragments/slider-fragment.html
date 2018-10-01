@@ -24,7 +24,7 @@
 			<button class="btn btn-success btn-circle back-btn">
 				<i class="fas fa-chevron-right"></i>
 			</button>
-			SRS Report #{{issue.id}}
+			SRS Report #{{issue.id}} - {{issue.status}}
 		</h1>
 		<hr>
 		<div class="container-fluid srs-details">
@@ -60,7 +60,7 @@
 					Assigned Engineer:
 				</div>
 				<div class="col-xl-9 srs-col">
-					<button class="btn btn-primary btn-sm" ng-show="issue.showAssigned" ng-click="assignEngineer($event, issue)">Assign to Me</button>
+					<button class="btn btn-primary btn-sm" ng-show="issue.status == 'OPEN' " ng-click="assignEngineer($event, issue)">Assign to Me</button>
 					{{ issue.engineer.id }}
 				</div>
 			</div>
@@ -81,14 +81,14 @@
 		<div class="card comments-card">
 			<div class="card-header">Comments</div>
 			<div class="card-body">
-				<div class="comment-row" ng-repeat="comment in commentData">
+				<div class="comment-row" ng-repeat="comment in commentData | orderBy: 'datetime'">
 					<div class="comment-body">
 						<span class="comment-by">{{ comment.commentBy.id }}:</span> {{ comment.message }}
 					</div>
 					<div class="comment-status-button">
 						<span class="comment-time">{{ comment.formattedTime }}</span>
 						<div class="status-btn">
-							<button class="btn btn-sm btn-primary closeButton" id="1"
+							<button class="btn btn-sm btn-primary ng-class:comment.backgroundClass" id="1"
 								ng-mouseover="changeFromTo($event, comment)" ng-mouseleave="hideBubble()">{{comment.statusTo}}</button>
 						</div>
 					</div>
@@ -97,7 +97,7 @@
 		</div>
 		
 		
-		<div class="newCommentBox">
+		<div class="newCommentBox" ng-show="showCommentBox">
 			<div class="textareaDiv">
 				<label for="comment">Comment :</label>
 				<textarea rows="3" style="width: 100%;" ng-model="commentText"
@@ -110,7 +110,9 @@
 							id="changeCommentStatusButton" data-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false" >Select Status</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-							<a class="dropdown-item" ng-click="changeCommentStatus($event)" ng-repeat="status in statusData">{{ status }}</a>
+							<span ng-repeat="status in statusData">
+							<a class="dropdown-item" ng-click="changeCommentStatus($event)" ng-show="status != issue.status">{{ status }}</a>
+							</span>
 						</div>
 					</div>
 				</div>

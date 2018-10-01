@@ -18,21 +18,27 @@ public class ViewController {
 
 	@RequestMapping("/")
 	public String auth(Authentication auth, HttpServletRequest request, Model model) {
-		
+
 		switch (employeeService.getEmployee(auth.getName(), request.getRemoteAddr()).getRole().toString()) {
 		case "EMPLOYEE":
-			return "home-new2";
+			model.addAttribute("role", "employee");
+			return "home";
 		case "EXECUTIVE":
-			return "home-exec";
+			model.addAttribute("role", "executive");
+			return "home";
+		case "MANAGER":
+			model.addAttribute("role", "manager");
+			return "home";
+		case "ADMIN":
+			model.addAttribute("role", "admin");
+			return "home";
 		default:
 			return "Invalid role!";
 		}
 	}
-	
-	/*@RequestMapping("/login")
-	public String customLogin(){
-		return "login";
-	}*/
-	
-	
+
+	/*
+	 * @RequestMapping("/login") public String customLogin(){ return "login"; }
+	 */
+
 }
