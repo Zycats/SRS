@@ -64,6 +64,7 @@ div.vcontainer {
 	padding: 30px 50px;
 }
 
+<<<<<<< HEAD
 #container-1{
 		position: absolute;
 		left: 0;
@@ -77,6 +78,8 @@ div.vcontainer {
 	transition: left 300ms;
 }
 
+=======
+>>>>>>> branch 'master' of https://github.com/Zycats/SRS
 h1 {
 	font-size: 26px;
 }

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<div th:fragment="approvalFragment">
+		<h1>Approvals</h1>
+		<hr>
+			<form class="table-responsive">
+				<table class="table table-striped" id = "approvalTable">
+					<thead>
+						<tr>
+							<th></th>
+							<th>#Id</th>
+							<th>Description</th>
+							<th>Priority</th>
+							<th ng-click="sortByTime(IsSortByTime)">Time of Ticket</th>
+							<th>Raised By</th>
+							<th ng-click="sortByStatus(IsSortByStatus)">Status</th>
+						</tr>
+					</thead>
+					<tbody>
+					<tr ng-repeat="issue in approvalIssuesData">
+						<td>
+							<button  ng-if="issue.subCategory.issueType == 'INCIDENT'" ng-click="showSlider(issue); $event.stopPropagation();" class="btn btn-warning btn-tag">INCIDENT</button>
+							<button  ng-if="issue.subCategory.issueType == 'REQUEST'" ng-click="showSlider(issue); $event.stopPropagation();" class="btn btn-primary btn-tag">REQUEST</button>
+						</td>
+						<td>{{ issue.id }}</td>
+						<td>{{ issue.description }}</td>
+						<td>{{ issue.subCategory.issuePriority }}</td>
+						<td>{{ issue.timeAgo }}</td>
+						<td>{{ issue.employee.id }}</td>
+						<td>{{ issue.status }}</td>
+					</tr>
+					</tbody>
+				</table>
+			</form>
+			<br><br>
+		<h1>Delegated Approvals</h1>
+		<hr>
+			<form class="table-responsive">
+				<table class="table table-striped" id = "approvalTable">
+					<thead>
+						<tr>
+							<th></th>
+							<th>#Id</th>
+							<th>Description</th>
+							<th>Priority</th>
+							<th ng-click="sortByTime(IsSortByTime)">Time of Ticket</th>
+							<th>Raised By</th>
+							<th ng-click="sortByStatus(IsSortByStatus)">Status</th>
+						</tr>
+					</thead>
+					<tbody>
+					<tr ng-repeat="issue in delegatedApprovalIssuesData">
+						<td>
+							<button  ng-if="issue.subCategory.issueType == 'INCIDENT'" ng-click="showSlider(issue); $event.stopPropagation();" class="btn btn-warning btn-tag">INCIDENT</button>
+							<button  ng-if="issue.subCategory.issueType == 'REQUEST'" ng-click="showSlider(issue); $event.stopPropagation();" class="btn btn-primary btn-tag">REQUEST</button>
+						</td>
+						<td>{{ issue.id }}</td>
+						<td>{{ issue.description }}</td>
+						<td>{{ issue.subCategory.issuePriority }}</td>
+						<td>{{ issue.timeAgo }}</td>
+						<td>{{ issue.employee.id }}</td>
+						<td>{{ issue.status }}</td>
+					</tr>
+					</tbody>
+				</table>
+			</form>
+			
+	</div>
+</body>
+</html>

@@ -115,8 +115,9 @@ $(document).ready(function() {
 		if (!($(".commentText").is(":focus")) && 
 				!($("#comment").is(":focus")) && 
 				!($("#emp_seatno_input").is(":focus")) &&
-				!($("#emp_extno_input").is(":focus")) &&
-				!($("#fromDatePicker").is(":focus")))
+				!($(".searchManagerInput").is(":focus")) &&
+				!($("#emp_extno_input").is(":focus")))
+			
 		{
 			$('.search input[type=text]').focus();
 		}

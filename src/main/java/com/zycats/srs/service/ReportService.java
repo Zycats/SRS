@@ -29,8 +29,7 @@ public class ReportService implements IReportService {
 	public Iterable<Report> getAllReportsByDate(Timestamp fromDate, Timestamp toDate) {
 
 		return reportRepository.getReportsByDate(fromDate, toDate);
-	
-		
+
 	}
 
 	@Override
@@ -56,12 +55,13 @@ public class ReportService implements IReportService {
 			
 			List<Comment> ticketComments = ticket.getComments().stream()
 					.sorted((c1, c2) -> c1.getDatetime().compareTo(c2.getDatetime())).collect(Collectors.toList());
+			boolean initial = true; // to separate initial comment which can
+									// start with Open OR PendingApproval
+									// Status
 			for (Comment comment : ticketComments) {
 				System.out.println(comment.getTicket().getId() + " || " + comment.getDatetime().toString());
 
-				boolean initial = true; // to separate initial comment which can
-										// start with Open OR PendingApproval
-										// Status
+				
 				Report report = new Report();
 
 				if ((comment.getStatusFrom().equals(Status.OPEN))
