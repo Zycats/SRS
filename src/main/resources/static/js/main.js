@@ -48,98 +48,6 @@ $(document).ready(function() {
 		$("#container-4").css("left", "0");
 	})
 	
-	/*$("#raise").click(function() {
-		if (currentPos != 1) {
-			if (currentPos == 0) {
-				$("#dashboard").css({
-					marginLeft : "-100%"
-				});
-			} else if (currentPos == 2) {
-				$("#raiseContainer").css({
-					marginLeft : "0"
-				});
-			}
-			currentPos = 1;
-		}
-	})
-	
-	$("#new-issues").click(function() {
-		if (currentPos != 1) {
-			if (currentPos == 0) {
-				$("#dashboard").css({
-					marginLeft : "-100%"
-				});
-			} else if (currentPos == 2) {
-				$("#newIssuesContainer").css({
-					marginLeft : "0"
-				});
-			}
-			currentPos = 1;
-		}
-	})
-
-	$("#history").click(function() {
-		if (currentPos != 2) {
-			if (currentPos == 0) {
-				$("#dashboard").css({
-					marginLeft : "-100%"
-				});
-				$("#raiseContainer").css({
-					marginLeft : "-100%"
-				});
-			} else if (currentPos == 1) {
-				$("#raiseContainer").css({
-					marginLeft : "-100%"
-				});
-			}
-			currentPos = 2;
-		}
-	})
-	
-	$("#all-issues-history").click(function() {
-		if (currentPos != 2) {
-			if (currentPos == 0) {
-				$("#dashboard").css({
-					marginLeft : "-100%"
-				});
-				$("#newIssuesContainer").css({
-					marginLeft : "-100%"
-				});
-			} else if (currentPos == 1) {
-				$("#newIssuesContainer").css({
-					marginLeft : "-100%"
-				});
-			}
-			currentPos = 2;
-		}
-	})
-
-	$("#home").click(function() {
-		if (currentPos != 0) {
-			$("#dashboard").css({
-				marginLeft : "0"
-			});
-			$("#raiseContainer").css({
-				marginLeft : "0"
-			});
-			currentPos = 0;
-		}
-		
-		
-	})
-	
-	$("#home-exec").click(function() {
-		if (currentPos != 0) {
-			$("#dashboard").css({
-				marginLeft : "0"
-			});
-			$("#newIssuesContainer").css({
-				marginLeft : "0"
-			});
-			currentPos = 0;
-		}
-	})*/
-	
 	$(".tokenLink").click(function(){
 		
 		if ($(window).outerWidth() < 576)
@@ -207,7 +115,8 @@ $(document).ready(function() {
 		if (!($(".commentText").is(":focus")) && 
 				!($("#comment").is(":focus")) && 
 				!($("#emp_seatno_input").is(":focus")) &&
-				!($("#emp_extno_input").is(":focus")))
+				!($("#emp_extno_input").is(":focus")) &&
+				!($("#fromDatePicker").is(":focus")))
 		{
 			$('.search input[type=text]').focus();
 		}
@@ -234,5 +143,9 @@ $(document).ready(function() {
 		html2canvas(recentCard).then(function(canvas) {
 		    document.body.appendChild(canvas);
 		});
+	})
+	
+	$(".dropdown-item").click(function(){
+		$(".dropdown-menu").removeClass("show");
 	})
 })

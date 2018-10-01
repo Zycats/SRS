@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div th:fragment="report">
+		<h1>SRS Reports</h1>
+		<hr>
+		<div class="form-group" id="reportFormGroup">
+			<div class="row dropdown-group">
+				<div class="col">
+					<label>From</label>
+					<input size="16" type="date" value="" id="fromDatePicker" ng-model="fromDate">
+				</div>
+				<div class="col">
+					<label>Till</label>
+					<input size="16" type="date" value="" id="fromDatePicker" ng-model="tillDate">
+				</div>
+				<div class="col row-submit">
+					<button class="btn btn-info submit-btn" id="filter-btn"
+						ng-click="getReports(); $event.stopPropagation();">Submit</button>
+				</div>
+			</div>
+		</div>
+		<div id="gantt_chart" style="height: 500px;"></div>
+	</div>
+</body>
+</html>

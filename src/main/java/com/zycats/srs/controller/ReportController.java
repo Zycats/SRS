@@ -1,5 +1,6 @@
 package com.zycats.srs.controller;
 
+import java.sql.Timestamp;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class ReportController {
 	}
 	
 	@RequestMapping(value ="/get/all" , method = RequestMethod.POST, consumes="application/json",produces="application/json")
-	public Iterable<Report> getAllReportsByDate(@RequestBody Map<String, String> data){
+	public Iterable<Report> getAllReportsByDate(@RequestBody Map<String, Timestamp> data){
 
 		 return reportService.getAllReportsByDate(data.get("fromDate"),data.get("toDate"));
 		
@@ -39,6 +40,13 @@ public class ReportController {
 		 return reportService.getReportsByTicketAndDate(Integer.parseInt(data.get("ticket_id")),
 				 											data.get("fromDate"),
 				 											data.get("toDate"));
+		
+	}
+	
+	@RequestMapping(value ="/get/by-ticket" , method = RequestMethod.POST, consumes="application/json",produces="application/json")
+	public Iterable<Report> getAllReportsByTicket(@RequestBody Map<String, String> data){
+
+		 return reportService.getReportsByTicket(Integer.parseInt(data.get("ticket_id")));
 		
 	}
 	

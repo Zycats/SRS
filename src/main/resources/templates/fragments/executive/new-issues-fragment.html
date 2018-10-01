@@ -14,7 +14,7 @@
 						<div class="dropdown" ng-click="ignoreEvent($event); $event.stopPropagation();">
 							<button class="btn btn-info dropdown-toggle" type="button"
 								id="changeIssueCategoryButton" data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false">Select Main Category</button>
+								aria-expanded="false">From</button>
 							<div class="dropdown-menu" id="issueCategoryDropdownMenu" aria-labelledby="dropdownMenu1">
 								<a class="dropdown-item"  ng-repeat="cat in categoryData"
 									ng-click="changeCategory($event);" id={{cat.id}}>{{cat.name}}</a>
