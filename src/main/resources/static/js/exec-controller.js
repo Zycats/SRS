@@ -454,13 +454,14 @@ srsApp.controller("controller", function($scope, $http, $interval){
 			}
 		}).then(function(data){
 			console.log(data);
-			getComments(issue);
 			getTicket(issue.id,issue)
+			getComments(issue);
 			$scope.issuesData.forEach(function(i){
 				if(i.id == issue.id){
 					i.status = data.data.statusTo;
 				}
 			})
+			$scope.showSlider(issue);
 		});
 	}
 	
