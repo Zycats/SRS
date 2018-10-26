@@ -12,34 +12,28 @@ import com.zycats.srs.exception.InsufficientPriviledgesException;
 import com.zycats.srs.service.ITicketService;
 
 @Component
-public class PartScheduler
-{ 
+public class PartScheduler {
 	@Autowired
 	private ITicketService ticketService;
-	
-	@Scheduled(fixedDelay = 3000)
-	public void scheduleTaskWithFixedDelay() throws InsufficientPriviledgesException
-	{
-		System.out.println("scheduler called");
+
+	@Scheduled(fixedDelay = 10000)
+	public void scheduleTaskWithFixedDelay() throws InsufficientPriviledgesException {
 		Iterable<Ticket> pendingTickets = ticketService.findAllTicketsByStatus(Status.PENDING_APPROVAL);
-		
-		for (Ticket ticket : pendingTickets)
-		{
+
+		for (Ticket ticket : pendingTickets) {
 			long raiseTime = ticket.getDatetime().getTime();
 			long currentTime = new Date().getTime();
 			int days = getDaysFromMills(currentTime - raiseTime);
-			
-			if (days >= 3)
-			{
+
+			if (days >= 3) {
 				ticket.setStatus(Status.CLOSED);
 				ticketService.update(ticket);
 				System.out.println("ticket " + ticket.getId() + " closed");
 			}
 		}
 	}
-	
-	private int getDaysFromMills(long mills)
-	{
-		return (int) (mills / (1000*60*60*24));
+
+	private int getDaysFromMills(long mills) {
+		return (int) (mills / (1000 * 60 * 60 * 24));
 	}
 }

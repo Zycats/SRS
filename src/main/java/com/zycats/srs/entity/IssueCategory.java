@@ -4,7 +4,6 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -19,7 +18,7 @@ public class IssueCategory {
 	private int id;
 	private String name;
 
-	@OneToMany(mappedBy = "issueCategory", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "issueCategory", cascade = CascadeType.ALL)
 	private Set<IssueSubCategory> issueSubCategories;
 
 	public int getId() {

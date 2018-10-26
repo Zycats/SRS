@@ -19,7 +19,9 @@ public class IssueCategoryService implements IIssueCategoryService {
 
 	@Override
 	public IssueCategory getById(int id) {
-		return issueCategoryRepository.findById(id).get();
+		IssueCategory s = issueCategoryRepository.findById(id).get();
+		System.out.println(s.getIssueSubCategories());
+		return s;
 	}
 
 	@Override
